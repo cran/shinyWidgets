@@ -80,20 +80,13 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
     inputTag$attribs$checked <- "checked"
   switchInputTag <- tagList(
     tags$div(
-      style = "margin: 3px;",
+      style = "margin: 3px;", class = "shiny-input-container",
       inputTag,
       tags$script(paste0('$("#', inputId, '").bootstrapSwitch();'))
     )
   )
-
   # Dep
-  dep <- htmltools::htmlDependency(
-    "switchInput", "0.1.0", c(href="shinyWidgets"),
-    script = c("switchInput/js/bootstrap-switch.min.js",
-               "switchInput/switch-bindings.js"),
-    stylesheet = "switchInput/css/bootstrap-switch.min.css"
-  )
-  htmltools::attachDependencies(switchInputTag, dep)
+  attachShinyWidgetsDep(switchInputTag, "bsswitch")
 }
 
 

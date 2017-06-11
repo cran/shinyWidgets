@@ -8,8 +8,11 @@
 #' @param circle Logical. Use a circle button
 #' @param icon An icon to appear on the button.
 #' @param status Color of the button.
+#' @param size Size of the button : default, lg, sm, xs.
 #' @param label Label to appear on the button. If circle = TRUE and tooltip = TRUE, label is used in tooltip
 #' @param tooltip Put a tooltip on the button
+#' @param right The dropdown menu starts on the right
+#' @param up Display the dropdown menu above
 #' @param width Width of the dropdown menu
 #'
 #'
@@ -17,17 +20,32 @@
 #' @importFrom htmltools validateCssUnit tagList singleton
 #'
 #' @export
+#' @examples
+#' \dontrun{
+#' ## Only run examples in interactive R sessions
+#' if (interactive()) {
+#'
+#' dropdownButton(
+#'  "Your contents goes here ! You can pass several elements",
+#'  circle = TRUE, status = "danger", icon = icon("gear"), width = "300px",
+#'  tooltip = tooltipOptions(title = "Click to see inputs !")
+#' )
+#'
+#' }
+#' }
+#'
 
 
-dropdownButton <- function(..., circle = TRUE, status = "default", icon = NULL,
-                           label = NULL, tooltip = FALSE, width = NULL) {
+dropdownButton <- function(..., circle = TRUE, status = "default", size = "default", icon = NULL,
+                           label = NULL, tooltip = FALSE, right = FALSE, up = FALSE, width = NULL) {
 
   status <- match.arg(arg = status, choices = c("default", "primary", "success", "info", "warning", "danger"))
   buttonID <- paste0("drop", sample.int(1e9, 1))
 
   # dropdown content
   html_ul <- list(
-    class = "dropdown-menu",
+    class = paste("dropdown-menu", ifelse(right, "dropdown-menu-right", "")),
+    id = paste("dropdown-menu", buttonID, sep = "-"),
     style = if (!is.null(width))
       paste0("width: ", validateCssUnit(width), ";"),
     `aria-labelledby` = buttonID,
@@ -37,18 +55,18 @@ dropdownButton <- function(..., circle = TRUE, status = "default", icon = NULL,
   # button
   if (circle) {
     html_button <- circleButton(
-      inputId = buttonID, icon = icon, status = status,
-      class = "btn-lg dropdown-toggle", `data-toggle` = "dropdown"
+      inputId = buttonID, icon = icon, status = status, size = size,
+      class = "dropdown-toggle", `data-toggle` = "dropdown"
     )
   } else {
     html_button <- list(
-      class = paste0("btn btn-", status," dropdown-toggle"),
+      class = paste0("btn btn-", status," dropdown-toggle ", ifelse(size == "default", "", paste0("btn-", size))),
       type = "button",
       id = buttonID,
       `data-toggle` = "dropdown",
       `aria-haspopup` = "true",
       `aria-expanded` = "true",
-      label,
+      list(icon, label),
       tags$span(class = "caret")
     )
     html_button <- do.call(tags$button, html_button)
@@ -82,10 +100,10 @@ dropdownButton <- function(..., circle = TRUE, status = "default", icon = NULL,
   }
 
   tags$div(
-    class = "dropdown",
+    class = ifelse(up, "dropup", "dropdown"),
     html_button,
     do.call(tags$ul, html_ul),
-    tags$script("$('.dropdown-menu').click(function(e) {e.stopPropagation();});"),
+    tags$script(paste0("$('#", paste("dropdown-menu", buttonID, sep = "-"), "').click(function(e) {e.stopPropagation();});")),
     js_tooltip
   )
 }

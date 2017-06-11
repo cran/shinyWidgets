@@ -102,7 +102,7 @@ radioGroupButtons <- function(
 
   radioGroupButtonsTag <- tagList(
     tags$div(
-      id=inputId, class="radioGroupButtons", # , class="shiny-input-container"
+      id=inputId, class="radioGroupButtons", class="shiny-input-container",
       if (!is.null(label)) tags$label(class="control-label", `for`=inputId, label),
       if (!is.null(label)) br(),
       style="margin-top: 3px; margin-bottom: 3px; ",
@@ -134,14 +134,8 @@ radioGroupButtons <- function(
       )
     )
   )
-
   # Dep
-  dep <- htmltools::htmlDependency(
-    name = "radioGroupButtons", version = "0.1.0", src = c(href="shinyWidgets"),
-    script = "radioGroupButtons/radioGroupButtons-bindings.js",
-    stylesheet = "radioGroupButtons/radioGroupButtons.css"
-  )
-  htmltools::attachDependencies(radioGroupButtonsTag, dep)
+  attachShinyWidgetsDep(radioGroupButtonsTag)
 }
 
 

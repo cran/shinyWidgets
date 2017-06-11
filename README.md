@@ -1,13 +1,26 @@
-# shinyWidgets : Extend widgets available in shiny
+# shinyWidgets
 
+
+> Extend widgets available in shiny
+
+[![Travis-CI Build Status](https://travis-ci.org/dreamRs/shinyWidgets.svg?branch=master)](https://travis-ci.org/dreamRs/shinyWidgets)
+[![version](http://www.r-pkg.org/badges/version/shinyWidgets)](https://CRAN.R-project.org/package=shinyWidgets)
+[![cranlogs](http://cranlogs.r-pkg.org/badges/grand-total/shinyWidgets)](http://cran.rstudio.com/web/packages/shinyWidgets/index.html)
+
+
+## Overview
 
 This package provide some custom widgets to pimp your shiny apps !
 
 
 Installation :
 ```r
+# From CRAN
+install.packages("shinyWidgets")
+
+# From Github
 # install.packages("devtools")
-devtools::install_github("pvictor/shinyWidgets")
+devtools::install_github("dreamRs/shinyWidgets")
 ```
 
 Demo :
@@ -16,6 +29,10 @@ shinyWidgets::shinyWidgetsGallery()
 ```
 
 Or see the live version here : https://dreamrs-vic.shinyapps.io/shinyWidgets/
+
+You can find an introduction (in french) [here](https://dreamrs.github.io/shinyWidgets/articles/intro_shinyWidgets_fr.html).
+
+And how to construct a palette color picker [here](https://dreamrs.github.io/shinyWidgets/articles/palette_picker.html).
 
 
 ## Widgets available :

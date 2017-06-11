@@ -4,8 +4,9 @@
 \alias{dropdownButton}
 \title{Dropdown Button}
 \usage{
-dropdownButton(..., circle = TRUE, status = "default", icon = NULL,
-  label = NULL, tooltip = FALSE, width = NULL)
+dropdownButton(..., circle = TRUE, status = "default", size = "default",
+  icon = NULL, label = NULL, tooltip = FALSE, right = FALSE,
+  up = FALSE, width = NULL)
 }
 \arguments{
 \item{...}{List of tag to be displayed into the dropdown menu.}
@@ -14,14 +15,35 @@ dropdownButton(..., circle = TRUE, status = "default", icon = NULL,
 
 \item{status}{Color of the button.}
 
+\item{size}{Size of the button : default, lg, sm, xs.}
+
 \item{icon}{An icon to appear on the button.}
 
 \item{label}{Label to appear on the button. If circle = TRUE and tooltip = TRUE, label is used in tooltip}
 
 \item{tooltip}{Put a tooltip on the button}
 
+\item{right}{The dropdown menu starts on the right}
+
+\item{up}{Display the dropdown menu above}
+
 \item{width}{Width of the dropdown menu}
 }
 \description{
 Create a dropdown menu
+}
+\examples{
+\dontrun{
+## Only run examples in interactive R sessions
+if (interactive()) {
+
+dropdownButton(
+ "Your contents goes here ! You can pass several elements",
+ circle = TRUE, status = "danger", icon = icon("gear"), width = "300px",
+ tooltip = tooltipOptions(title = "Click to see inputs !")
+)
+
+}
+}
+
 }

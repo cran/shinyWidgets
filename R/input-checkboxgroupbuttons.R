@@ -96,7 +96,7 @@ checkboxGroupButtons <- function(
 
   checkboxGroupButtonsTag <- tagList(
     tags$div(
-      id=inputId, class="checkboxGroupButtons", # , class="shiny-input-container"
+      id=inputId, class="checkboxGroupButtons", class="shiny-input-container",
       if (!is.null(label)) tags$label(class="control-label", `for`=inputId, label),
       if (!is.null(label)) br(),
       style = "margin-top: 3px; margin-bottom: 3px;",
@@ -126,14 +126,8 @@ checkboxGroupButtons <- function(
       )
     )
   )
-
   # Dep
-  dep <- htmltools::htmlDependency(
-    "checkboxGroupButtons", "0.1.0", c(href="shinyWidgets"),
-    script = "checkboxGroupButtons/checkboxGroupButtons-bindings.js",
-    stylesheet = "checkboxGroupButtons/checkboxGroupButtons.css"
-  )
-  htmltools::attachDependencies(checkboxGroupButtonsTag, dep)
+  attachShinyWidgetsDep(checkboxGroupButtonsTag)
 }
 
 
