@@ -1,5 +1,9 @@
 
 
+# Unexported usefull functions from shiny
+
+
+
 # dropNulls
 dropNulls <- function (x)
 {
@@ -83,5 +87,24 @@ validateSelected <- function (selected, choices, inputId)
 }
 
 
+`%||%` <- function(x, y) {
+  if (!is.null(x)) x else y
+}
 
+escape_jquery <- function(string) {
+  gsub(x = string, pattern = "(\\W)", replacement = "\\\\\\\\\\1")
+}
+
+
+
+
+firstChoice <- function (choices)
+{
+  if (length(choices) == 0L)
+    return()
+  choice <- choices[[1]]
+  if (is.list(choice))
+    firstChoice(choice)
+  else choice
+}
 

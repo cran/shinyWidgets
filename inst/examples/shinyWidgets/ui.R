@@ -30,6 +30,7 @@ sidebar <- dashboardSidebar(
     menuItem(text = "materialSwitch", tabName = "tabMaterialSwitch", icon = icon("toggle-off")),
     menuItem(text = "pickerInput", tabName = "tabPickerInput", icon = icon("caret-down")),
     menuItem(text = "progressBar", tabName = "tabProgressBars", icon = icon("tasks")),
+    menuItem(text = "bttn", tabName = "tabBttn", icon = icon("square-o")),
     menuItem(text = "Other stuffs", tabName = "tabOtherStuff", icon = icon("plus-circle"))
   )
 )
@@ -1128,6 +1129,124 @@ body <- dashboardBody(
 
     ),
 
+    # tabBttn ----
+    tabItem(
+      tabName = "tabBttn",
+
+      tags$h1("bttn", style = "font-weight: bold; color: #d9534f;"),
+
+      fluidRow(
+
+        column(
+          width = 4,
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = NULL, style = "material-circle", color = "danger", icon = icon("bars"))
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "material-flat", style = "material-flat", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "pill", style = "pill", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "float", style = "float", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "unite", style = "unite", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "fill", style = "fill", color = "danger")
+            ),
+            footer = NULL
+          )
+        ),
+
+
+
+        column(
+          width = 4,
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = NULL, style = "simple", color = "primary", icon = icon("bars"))
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "bordered", style = "bordered", color = "success", icon = icon("sliders"))
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "minimal", style = "minimal", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "stretch", style = "stretch", color = "warning")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "jelly", style = "jelly", color = "danger")
+            ),
+            footer = NULL
+          ),
+          box_wrapper(
+            title = NULL,
+            widget_wrapper(
+              fun = actionBttn,
+              args = list(inputId = ID(ids), label = "gradient", style = "gradient", color = "danger", icon = icon("thumbs-up"))
+            ),
+            footer = NULL
+          )
+        )
+
+
+      )
+
+    ),
 
     # tabOtherStuff ----
     tabItem(
@@ -1140,7 +1259,7 @@ body <- dashboardBody(
         box(
           title = "Dropdown Button", status = "danger", width = 8,
           dropdownButton(
-            tags$h3("List of Input"),
+            tags$h3("List of Inputs"),
             selectInput(inputId = 'xcol', label = 'X Variable', choices = names(iris)),
             selectInput(inputId = 'ycol', label = 'Y Variable', choices = names(iris), selected = names(iris)[[2]]),
             sliderInput(inputId = 'clusters', label = 'Cluster count', value = 3, min = 1, max = 9),
@@ -1181,7 +1300,26 @@ body <- dashboardBody(
           )
         )
 
+      ),
+
+      fluidRow(
+
+        box(
+          title = "Dropdown (bis)", status = "danger", width = 8,
+          dropdown(
+            tags$h3("List of Input"),
+            pickerInput(inputId = 'xcol2', label = 'X Variable', choices = names(iris), options = list(`style` = "btn-info")),
+            pickerInput(inputId = 'ycol2', label = 'Y Variable', choices = names(iris), selected = names(iris)[[2]], options = list(`style` = "btn-warning")),
+            sliderInput(inputId = 'clusters2', label = 'Cluster count', value = 3, min = 1, max = 9),
+            style = "unite", icon = icon("gear"), status = "danger", width = "300px",
+            animate = animateOptions(enter = animations$fading_entrances$fadeInLeftBig, exit = animations$fading_exits$fadeOutRightBig)
+          ),
+          plotOutput(outputId = 'plot2'),
+          tags$p("In this version you can add animations and pickerInput will work in it.")
+        )
+
       )
+
     )
 
   )

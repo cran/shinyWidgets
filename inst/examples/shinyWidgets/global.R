@@ -7,17 +7,29 @@ library("shinydashboard")
 library("shinyWidgets")
 if (!require("formatR")) install.packages("formatR")
 
+# data("animations", package = "shinyWidgets")
+
+
+if (any(ls(".GlobalEnv") %in% ls("package:shinyWidgets")))
+  warning("Some function(s) from GlobalEnv will override those from shinyWidgets")
+
 
 
 # Ids widgets
-ids <- paste0("Id", sprintf("%03d", 1:73))
+ids <- paste0("Id", sprintf("%03d", 1:75))
+ids <- 1
 idss <- ids
 
+# ID <- function(ids) {
+#   if (length(ids) == 0) stop("Not enougth IDs")
+#   res <- ids[1]
+#   ids <<- ids[-1]
+#   return(res)
+# }
 ID <- function(ids) {
-  if (length(ids) == 0) stop("Not enougth IDs")
-  res <- ids[1]
-  ids <<- ids[-1]
-  return(res)
+  tmp <- paste0("Id", sprintf("%03d", ids))
+  ids <<- ids + 1
+  return(tmp)
 }
 
 
@@ -50,7 +62,7 @@ widget_wrapper <- function(fun, args){
   )$text.tidy
 
   tagList(
-    do.call(fun, args),
+    do.call(fun, args), hr(),
     tags$b("Value :"),
     verbatimTextOutput(outputId = paste0("res", args$inputId)),
     tags$b(tags$a(icon("code"), "Show code", `data-toggle`="collapse", href=paste0("#showcode", args$inputId))),
