@@ -12,7 +12,11 @@
 #' @param direction Horizontal or vertical
 #' @param justified If TRUE, fill the width of the parent div
 #' @param individual If TRUE, buttons are separated.
-#' @param checkIcon A list, if no empty must contain at least one element named 'yes' corresponding to an icon to display if the button is checked.
+#' @param checkIcon A list, if no empty must contain at least one element named 'yes'
+#'  corresponding to an icon to display if the button is checked.
+#' @param width The width of the input, e.g. '400px', or '100\%'.
+#'
+#'
 #' @return A buttons group control that can be added to a UI definition.
 #'
 #'
@@ -32,17 +36,19 @@
 #' }
 #' }
 #'
-#' @import shiny
-#' @importFrom htmltools htmlDependency attachDependencies
+#' @importFrom shiny restoreInput
+#' @importFrom htmltools tags HTML validateCssUnit
 #'
 #' @export
 
 
 radioGroupButtons <- function(
   inputId, label = NULL, choices, selected = NULL, status = "default", size = "normal",
-  direction = "horizontal", justified = FALSE, individual = FALSE, checkIcon = list()
+  direction = "horizontal", justified = FALSE, individual = FALSE, checkIcon = list(),
+  width = NULL
 ) {
   choices <- choicesWithNames(choices)
+  selected <- shiny::restoreInput(id = inputId, default = selected)
   if (!is.null(selected) && length(selected) > 1)
     stop("selected must be length 1")
   if (is.null(selected))
@@ -62,14 +68,16 @@ radioGroupButtons <- function(
     divClass <- paste0(divClass, " btn-group-", size)
   }
 
-  radioGroupButtonsTag <- tagList(
-    tags$div(
+  radioGroupButtonsTag <- htmltools::tags$div(
+    class="form-group shiny-input-container shiny-input-radiogroup shiny-input-container-inline",
+    style = if(!is.null(width)) paste("width:", htmltools::validateCssUnit(width)),
+    if (!is.null(label)) htmltools::tags$label(class="control-label", `for`=inputId, label),
+    if (!is.null(label)) htmltools::tags$br(),
+    htmltools::tags$div(
       id=inputId, class="radioGroupButtons",
-      if (!is.null(label)) tags$label(class="control-label", `for`=inputId, label),
-      if (!is.null(label)) br(),
       style="margin-top: 3px; margin-bottom: 3px; ",
       style=if (justified) "width: 100%;",
-      tags$div(
+      htmltools::tags$div(
         class=divClass, role="group", `aria-label`="...", `data-toggle`="buttons",
         class = "btn-group-container-sw",
         generateRGB(inputId, choices, selected, status, size, checkIcon)
@@ -90,18 +98,18 @@ generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
   lapply(
     X = seq_along(choices),
     FUN = function(i) {
-      tags$div(
+      htmltools::tags$div(
         class="btn-group",
         class=if (size != "normal") paste0("btn-group-", size),
         role="group",
-        tags$button(
+        htmltools::tags$button(
           class=paste0("btn radiobtn btn-", status),
           class=if (choices[i] %in% selected) "active",
           type="button",
-          if (displayIcon) tags$span(class="radio-btn-icon-yes", checkIcon$yes),
-          if (displayIcon) tags$span(class="radio-btn-icon-no", checkIcon$no),
-          tags$input(
-            type="radio", autocomplete="off", HTML(names(choices)[i]),
+          if (displayIcon) htmltools::tags$span(class="radio-btn-icon-yes", checkIcon$yes),
+          if (displayIcon) htmltools::tags$span(class="radio-btn-icon-no", checkIcon$no),
+          htmltools::tags$input(
+            type="radio", autocomplete="off", htmltools::HTML(names(choices)[i]),
             name=inputId, value=choices[i],
             checked=if (choices[i] %in% selected) "checked"
           )
@@ -129,6 +137,8 @@ generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
 #' @param checkIcon Icon, only used if choices is not NULL.
 #'
 #' @export
+#'
+#' @importFrom htmltools tagList
 #'
 #' @examples
 #' \dontrun{
@@ -202,7 +212,7 @@ updateRadioGroupButtons <- function(session, inputId, label = NULL, choices = NU
   if (!is.null(choices))
     choices <- choicesWithNames(choices)
   options <- if (!is.null(choices)) {
-    format(tagList(generateRGB(inputId, choices, selected, status = status, size = size,
+    format(htmltools::tagList(generateRGB(inputId, choices, selected, status = status, size = size,
                                checkIcon = checkIcon)))
   }
   message <- dropNulls(list(selected = selected, options = options, label = label))

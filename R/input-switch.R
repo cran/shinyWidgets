@@ -13,13 +13,23 @@
 #' @param size Size of the buttons ('default', 'mini', 'small', 'normal', 'large').
 #' @param labelWidth Width of the center handle in pixels.
 #' @param handleWidth Width of the left and right sides in pixels.
-#' @param disabled Logical. Disable the switch.
+#' @param disabled Logical, display the toggle switch in disabled state?.
+#' @param inline Logical, display the toggle switch inline?
+#' @param width The width of the input : 'auto', 'fit', '100px', '75\%'.
 #'
 #' @return A switch control that can be added to a UI definition.
 #'
 #'
+#'
+#' @importFrom shiny restoreInput
+#' @importFrom htmltools tags validateCssUnit
+#'
+#' @export
+#'
+#'
 #' @note All options are described here \url{http://bootstrapswitch.com/options.html}.
 #'
+#' @seealso \code{\link{updateSwitchInput}}, \code{\link{materialSwitch}}
 #'
 #' @examples
 #' \dontrun{
@@ -40,16 +50,10 @@
 #' shinyApp(ui, server)
 #' }
 #' }
-#'
-#' @import shiny
-#' @importFrom htmltools htmlDependency attachDependencies
-#'
-#' @export
-
-
 switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', offLabel = 'OFF',
                         onStatus = NULL, offStatus = NULL, size = "default", labelWidth = "auto",
-                        handleWidth = "auto", disabled = FALSE) {
+                        handleWidth = "auto", disabled = FALSE, inline = FALSE, width = NULL) {
+  value <- shiny::restoreInput(id = inputId, default = value)
   size <- match.arg(arg = size, choices = c('default', 'mini', 'small', 'normal', 'large'))
   switchProps <- dropNulls(
     list(
@@ -68,15 +72,16 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
       "false"
     else x
   })
-  inputTag <- do.call(tags$input, switchProps)
+  inputTag <- do.call(htmltools::tags$input, switchProps)
   if (!is.null(value) && value)
     inputTag$attribs$checked <- "checked"
-  switchInputTag <- tagList(
-    tags$div(
-      style = "margin: 3px;", class = "shiny-input-container",
-      inputTag,
-      tags$script(HTML(paste0('$("#', escape_jquery(inputId), '").bootstrapSwitch();')))
-    )
+  switchInputTag <- htmltools::tags$div(
+    style = "margin: 3px;", class = "form-group shiny-input-container",
+    class = if (inline) "shiny-input-container-inline",
+    style = if (inline) "display: inline-block;",
+    style = if (!is.null(width)) paste0("width: ", htmltools::validateCssUnit(width), ";"),
+    inputTag,
+    htmltools::tags$script(HTML(paste0('$("#', escape_jquery(inputId), '").bootstrapSwitch();')))
   )
   # Dep
   attachShinyWidgetsDep(switchInputTag, "bsswitch")
@@ -90,7 +95,7 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
 #' Change the value of a switch input on the client
 #'
 #' @param session The session object passed to function given to shinyServer.
-#' @param inputId	The id of the input object.
+#' @param inputId    The id of the input object.
 #' @param value The value to set for the input object.
 #' @param label The label to set for the input object.
 #' @param onLabel The onLabel to set for the input object.
@@ -101,67 +106,77 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
 #'
 #' @export
 #'
+#' @seealso \code{\link{switchInput}}
+#'
 #' @examples
 #' \dontrun{
 #'
 #' if (interactive()) {
+#'   library("shiny")
+#'   library("shinyWidgets")
 #'
-#' library("shiny")
-#' library("shinyWidgets")
 #'
+#'   ui <- fluidPage(
+#'     tags$h1("Update", tags$code("switchInput")),
+#'     br(),
+#'     fluidRow(
+#'       column(
+#'         width = 4,
+#'         panel(
+#'           switchInput(inputId = "switch1"),
+#'           verbatimTextOutput(outputId = "resup1"),
+#'           tags$div(
+#'             class = "btn-group",
+#'             actionButton(
+#'               inputId = "updatevaluetrue",
+#'               label = "Set to TRUE"
+#'             ),
+#'             actionButton(
+#'               inputId = "updatevaluefalse",
+#'               label = "Set to FALSE"
+#'             )
+#'           ),
+#'           heading = "Update value"
+#'         )
+#'       ),
 #'
-#' ui <- fluidPage(
-#'   tags$h1("Update", tags$code("switchInput")),
-#'   br(),
-#'   fluidRow(
+#'       column(
+#'         width = 4,
+#'         panel(
+#'           switchInput(inputId = "switch2",
+#'                       label = "My label"),
+#'           verbatimTextOutput(outputId = "resup2"),
+#'           textInput(inputId = "updatelabeltext",
+#'                     label = "Update label:"),
+#'           heading = "Update label"
+#'         )
+#'       ),
 #'
-#'     column(
-#'       width = 4,
-#'       panel(
-#'         switchInput(inputId = "switch1"),
-#'         verbatimTextOutput(outputId = "resup1"),
-#'         tags$div(
-#'           class = "btn-group",
-#'           actionButton(inputId = "updatevaluetrue", label = "Set to TRUE"),
-#'           actionButton(inputId = "updatevaluefalse", label = "Set to FALSE")
-#'         ),
-#'         heading = "Update value"
-#'       )
-#'     ),
-#'
-#'     column(
-#'       width = 4,
-#'       panel(
-#'         switchInput(inputId = "switch2", label = "My label"),
-#'         verbatimTextOutput(outputId = "resup2"),
-#'         textInput(inputId = "updatelabeltext", label = "Update label:"),
-#'         heading = "Update label"
-#'       )
-#'     ),
-#'
-#'     column(
-#'       width = 4,
-#'       panel(
-#'         switchInput(inputId = "switch3", onLabel = "Yeaah", offLabel = "Noooo"),
-#'         verbatimTextOutput(outputId = "resup3"),
-#'         fluidRow(
-#'           column(
+#'       column(
+#'         width = 4,
+#'         panel(
+#'           switchInput(
+#'             inputId = "switch3",
+#'             onLabel = "Yeaah",
+#'             offLabel = "Noooo"
+#'           ),
+#'           verbatimTextOutput(outputId = "resup3"),
+#'           fluidRow(column(
 #'             width = 6,
-#'             textInput(inputId = "updateonLabel", label = "Update onLabel:")
+#'             textInput(inputId = "updateonLabel",
+#'                       label = "Update onLabel:")
 #'           ),
 #'           column(
 #'             width = 6,
-#'             textInput(inputId = "updateoffLabel", label = "Update offLabel:")
-#'           )
-#'         ),
-#'         heading = "Update onLabel & offLabel"
+#'             textInput(inputId = "updateoffLabel",
+#'                       label = "Update offLabel:")
+#'           )),
+#'           heading = "Update onLabel & offLabel"
+#'         )
 #'       )
-#'     )
-#'   ),
+#'     ),
 #'
-#'   fluidRow(
-#'
-#'     column(
+#'     fluidRow(column(
 #'       width = 4,
 #'       panel(
 #'         switchInput(inputId = "switch4"),
@@ -169,13 +184,21 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
 #'         fluidRow(
 #'           column(
 #'             width = 6,
-#'             pickerInput(inputId = "updateonStatus", label = "Update onStatus:",
-#'                         choices = c("default", "primary", "success", "info", "warning", "danger"))
+#'             pickerInput(
+#'               inputId = "updateonStatus",
+#'               label = "Update onStatus:",
+#'               choices = c("default", "primary", "success",
+#'                           "info", "warning", "danger")
+#'             )
 #'           ),
 #'           column(
 #'             width = 6,
-#'             pickerInput(inputId = "updateoffStatus", label = "Update offStatus:",
-#'                         choices = c("default", "primary", "success", "info", "warning", "danger"))
+#'             pickerInput(
+#'               inputId = "updateoffStatus",
+#'               label = "Update offStatus:",
+#'               choices = c("default", "primary", "success",
+#'                           "info", "warning", "danger")
+#'             )
 #'           )
 #'         ),
 #'         heading = "Update onStatus & offStatusr"
@@ -187,73 +210,102 @@ switchInput <- function(inputId, label = NULL, value = FALSE, onLabel = 'ON', of
 #'       panel(
 #'         switchInput(inputId = "switch5"),
 #'         verbatimTextOutput(outputId = "resup5"),
-#'         checkboxInput(inputId = "disabled", label = "Disabled", value = FALSE),
+#'         checkboxInput(
+#'           inputId = "disabled",
+#'           label = "Disabled",
+#'           value = FALSE
+#'         ),
 #'         heading = "Disabled"
 #'       )
-#'     )
+#'     ))
 #'
 #'   )
 #'
-#' )
-#'
-#' server <- function(input, output, session) {
-#'
-#'   # Update value
-#'   observeEvent(input$updatevaluetrue, {
-#'     updateSwitchInput(session = session, inputId = "switch1", value = TRUE)
-#'   })
-#'   observeEvent(input$updatevaluefalse, {
-#'     updateSwitchInput(session = session, inputId = "switch1", value = FALSE)
-#'   })
-#'   output$resup1 <- renderPrint({
-#'     input$switch1
-#'   })
-#'
-#'
-#'   # Update label
-#'   observeEvent(input$updatelabeltext, {
-#'     updateSwitchInput(session = session, inputId = "switch2", label = input$updatelabeltext)
-#'   }, ignoreInit = TRUE)
-#'   output$resup2 <- renderPrint({
-#'     input$switch2
-#'   })
+#'   server <- function(input, output, session) {
+#'     # Update value
+#'     observeEvent(input$updatevaluetrue, {
+#'       updateSwitchInput(session = session,
+#'                         inputId = "switch1",
+#'                         value = TRUE)
+#'     })
+#'     observeEvent(input$updatevaluefalse, {
+#'       updateSwitchInput(session = session,
+#'                         inputId = "switch1",
+#'                         value = FALSE)
+#'     })
+#'     output$resup1 <- renderPrint({
+#'       input$switch1
+#'     })
 #'
 #'
-#'   # Update onLabel & offLabel
-#'   observeEvent(input$updateonLabel, {
-#'     updateSwitchInput(session = session, inputId = "switch3", onLabel = input$updateonLabel)
-#'   }, ignoreInit = TRUE)
-#'   observeEvent(input$updateoffLabel, {
-#'     updateSwitchInput(session = session, inputId = "switch3", offLabel = input$updateoffLabel)
-#'   }, ignoreInit = TRUE)
-#'   output$resup3 <- renderPrint({
-#'     input$switch3
-#'   })
+#'     # Update label
+#'     observeEvent(input$updatelabeltext, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch2",
+#'         label = input$updatelabeltext
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     output$resup2 <- renderPrint({
+#'       input$switch2
+#'     })
 #'
 #'
-#'   # Update onStatus & offStatus
-#'   observeEvent(input$updateonStatus, {
-#'     updateSwitchInput(session = session, inputId = "switch4", onStatus = input$updateonStatus)
-#'   }, ignoreInit = TRUE)
-#'   observeEvent(input$updateoffStatus, {
-#'     updateSwitchInput(session = session, inputId = "switch4", offStatus = input$updateoffStatus)
-#'   }, ignoreInit = TRUE)
-#'   output$resup4 <- renderPrint({
-#'     input$switch4
-#'   })
+#'     # Update onLabel & offLabel
+#'     observeEvent(input$updateonLabel, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch3",
+#'         onLabel = input$updateonLabel
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     observeEvent(input$updateoffLabel, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch3",
+#'         offLabel = input$updateoffLabel
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     output$resup3 <- renderPrint({
+#'       input$switch3
+#'     })
 #'
 #'
-#'   # Disabled
-#'   observeEvent(input$disabled, {
-#'     updateSwitchInput(session = session, inputId = "switch5", disabled = input$disabled)
-#'   }, ignoreInit = TRUE)
-#'   output$resup5 <- renderPrint({
-#'     input$switch5
-#'   })
+#'     # Update onStatus & offStatus
+#'     observeEvent(input$updateonStatus, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch4",
+#'         onStatus = input$updateonStatus
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     observeEvent(input$updateoffStatus, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch4",
+#'         offStatus = input$updateoffStatus
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     output$resup4 <- renderPrint({
+#'       input$switch4
+#'     })
 #'
-#' }
 #'
-#' shinyApp(ui = ui, server = server)
+#'     # Disabled
+#'     observeEvent(input$disabled, {
+#'       updateSwitchInput(
+#'         session = session,
+#'         inputId = "switch5",
+#'         disabled = input$disabled
+#'       )
+#'     }, ignoreInit = TRUE)
+#'     output$resup5 <- renderPrint({
+#'       input$switch5
+#'     })
+#'
+#'   }
+#'
+#'   shinyApp(ui = ui, server = server)
 #'
 #' }
 #'
@@ -271,5 +323,3 @@ updateSwitchInput <- function(session, inputId,
   )
   session$sendInputMessage(inputId, message)
 }
-
-
