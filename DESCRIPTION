@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.3.5
+Version: 0.3.6
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
@@ -34,7 +34,7 @@ RoxygenNote: 6.0.1
 Suggests: shinydashboard, formatR, viridisLite, RColorBrewer, testthat,
         covr
 NeedsCompilation: no
-Packaged: 2017-10-06 11:51:03 UTC; Victor
+Packaged: 2017-10-19 08:53:42 UTC; Victor
 Author: Victor Perrier [aut, cre],
   Fanny Meyer [aut],
   Silvio Moreto [ctb, cph] (bootstrap-select),
@@ -56,4 +56,4 @@ Author: Victor Perrier [aut, cre],
   Ganapati V S [ctb, cph] (bttn.css)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2017-10-06 16:22:16 UTC
+Date/Publication: 2017-10-19 19:51:40 UTC

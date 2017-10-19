@@ -5,13 +5,21 @@
 
 
 
+
 function(input, output, session) {
 
-  highlightCode(session, "code_dropdownButton")
+  # cleanup app
+  shiny::onStop(function() {
+    rm(.shinyWidgetGalleryFuns, .shinyWidgetGalleryId, envir = globalenv())
+    shiny::stopApp()
+  })
 
-  highlightCode(session, "code_dropdown")
+  # highlight code dropdowns & sweetalert
+  .shinyWidgetGalleryFuns$highlightCode(session, "code_dropdownButton")
 
-  highlightCode(session, "codeSA")
+  .shinyWidgetGalleryFuns$highlightCode(session, "code_dropdown")
+
+  .shinyWidgetGalleryFuns$highlightCode(session, "codeSA")
 
   # navigation ----
 
@@ -45,10 +53,10 @@ function(input, output, session) {
 
   # input values ----
   lapply(
-    X = seq_len(ids),
+    X = seq_len(.shinyWidgetGalleryId),
     FUN = function(i) {
       ii <- paste0("Id", sprintf("%03d", i))
-      highlightCode(session, paste0("code", ii))
+      .shinyWidgetGalleryFuns$highlightCode(session, paste0("code", ii))
       output[[paste0("res", ii)]] <- renderPrint({
         input[[ii]]
       })
@@ -179,6 +187,38 @@ function(input, output, session) {
 
 
 
+  # Update sliderText ----
+
+  output$resselectedSliderText <- renderPrint({
+    input$selectedSliderText
+  })
+  observeEvent(input$upSelectedSliderText, {
+    updateSliderTextInput(
+      session = session,
+      inputId = "selectedSliderText",
+      selected = input$upSelectedSliderText
+    )
+  }, ignoreInit = TRUE)
+
+  output$reschoicesSliderText <- renderPrint({
+    input$choicesSliderText
+  })
+  observeEvent(input$upChoicesSliderText, {
+    choices <- switch(
+      input$upChoicesSliderText,
+      "Abbreviations" = month.abb,
+      "Full names" = month.name
+    )
+    updateSliderTextInput(
+      session = session,
+      inputId = "choicesSliderText",
+      choices = choices
+    )
+  }, ignoreInit = TRUE)
+
+
+
+
   # dropdown : iris clustering example ----
   selectedData <- reactive({
     iris[, c(input$xcol, input$ycol)]
@@ -261,7 +301,7 @@ function(input, output, session) {
   lapply(
     X = paste0("pb", 1:10),
     FUN = function(i) {
-      highlightCode(session, paste0("code", i))
+      .shinyWidgetGalleryFuns$highlightCode(session, paste0("code", i))
     }
   )
 
