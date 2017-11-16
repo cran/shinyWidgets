@@ -58,7 +58,7 @@ awesomeCheckbox <- function (inputId, label, value = FALSE, status = "primary", 
 
 # Generate several checkbox
 
-generateAwesomeOptions <- function (inputId, choices, selected, inline, status)
+generateAwesomeOptions <- function(inputId, choices, selected, inline, status)
 {
   options <- mapply(choices, names(choices), FUN = function(value,
                                                             name) {
@@ -153,9 +153,9 @@ awesomeCheckboxGroup <- function (inputId, label, choices, selected = NULL, inli
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
   options <- generateAwesomeOptions(inputId, choices, selected, inline, status = status)
-  divClass <- "form-group shiny-input-container"
+  divClass <- "form-group shiny-input-container shiny-input-checkboxgroup"
   if (inline)
-    divClass <- paste(divClass, "shiny-input-container-inline shiny-input-checkboxgroup")
+    divClass <- paste(divClass, "shiny-input-container-inline")
   awesomeTag <- htmltools::tags$div(id = inputId, style = if (!is.null(width))
     paste0("width: ", htmltools::validateCssUnit(width), ";"), class = divClass,
     htmltools::tags$label(label, `for` = inputId, style = "margin-bottom: 10px;"), options)
@@ -239,16 +239,13 @@ awesomeCheckboxGroup <- function (inputId, label, choices, selected = NULL, inli
 #'
 #' }
 updateAwesomeCheckboxGroup <- function (session, inputId, label = NULL, choices = NULL, selected = NULL,
-          inline = FALSE, status = "primary")
-{
-  if (is.null(selected) && !is.null(choices))
-    selected <- choices[[1]]
+          inline = FALSE, status = "primary") {
   if (!is.null(choices))
     choices <- choicesWithNames(choices)
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
   options <- if (!is.null(choices)) {
-    format(tagList(generateAwesomeOptions(inputId, choices, selected, inline, status)))
+    format(tagList(generateAwesomeOptions(session$ns(inputId), choices, selected, inline, status)))
   }
   message <- dropNulls(list(label = label, options = options,
                             value = selected))

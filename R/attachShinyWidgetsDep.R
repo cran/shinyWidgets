@@ -44,10 +44,10 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "bootstrap-switch",
-          version = "3.3.4",
-          src = c(href="shinyWidgets/switchInput"),
-          script = "js/bootstrap-switch.min.js",
-          stylesheet = "css/bootstrap-switch.min.css"
+          version = "3.3.2",
+          src = c(href="shinyWidgets/switchInput/bootstrap-switch-3.3.2"),
+          script = "bootstrap-switch.min.js",
+          stylesheet = "bootstrap-switch.min.css"
         )
       )
     } else if (widget == "sweetalert") {
@@ -70,6 +70,16 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           src = c(href="shinyWidgets/multi"),
           script = "multi.min.js",
           stylesheet = c("multi.min.css", "multi-shiny.css")
+        )
+      )
+    } else if (widget == "jquery-knob") {
+      dep <- list(
+        dep,
+        htmltools::htmlDependency(
+          name = "jquery-knob", version = "1.2.13",
+          src = c(href = "shinyWidgets/jquery-knob"),
+          script = c("jquery.knob.min.js",
+                     "knob-input-binding.js")
         )
       )
     } else if (widget == "dropdown") {
@@ -111,6 +121,27 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           version = version,
           src = c(href="shinyWidgets/bttn"),
           stylesheet = "bttn.min.css"
+        )
+      )
+    } else if (widget == "spectrum") {
+      dep <- list(
+        dep,
+        htmltools::htmlDependency(
+          name = "bttn",
+          version = version,
+          src = c(href="shinyWidgets/spectrum"),
+          script = c("spectrum.min.js"),
+          stylesheet = c("spectrum.min.css", "sw-spectrum.css")
+        )
+      )
+    } else if (widget == "pretty") {
+      dep <- list(
+        dep,
+        htmltools::htmlDependency(
+          name = "bttn",
+          version = version,
+          src = c(href="shinyWidgets/pretty-checkbox"),
+          stylesheet = "pretty-checkbox.min.css"
         )
       )
     }

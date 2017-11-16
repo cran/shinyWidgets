@@ -1,8 +1,24 @@
+shinyWidgets 0.4.0
+======================
+
+* New widget : `spectrumInput` for choosing colors in palettes or custom one.
+* New widgets : `prettyCheckbox`, `prettySwitch`, `prettyToggle`, `prettyCheckboxGroup` and `prettyRadioButtons` for create pretty checkboxes,
+toggle switch, radio buttons with colors, icons and a lot of options.
+* New widget : `knobInput` a round slider, thanks to @DivadNojnarg.
+
+Bug fixes:
+* Bug when initializing (in modal window or in `renderUI`) `pickerInput` and `switchInput`.
+* `awesomeCheckboxGroup` not working when `inline = FALSE`, thanks to @meganhartwell-stemcell, @dStudio-git, @Nicolabo to report this.
+* Weird behavior of inputs in `dropdown` reported by @markdumke.
+
+
+
 shinyWidgets 0.3.6
 ==================
 
 * New widget : `sliderTextInput` : a slider for character vector.
 * New arguments `choiceNames` & `choiceValues` for `checkboxGroupButtons` & `radioGroupButtons` to easily pass HTML in the names displayed on the buttons.
+* New argument `inline` to `materialSwitch`, thanks to @FrissAnalytics.
 
 
 shinyWidgets 0.3.5

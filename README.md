@@ -50,6 +50,8 @@ Turn checkboxes into toggle switches : <br>
 switchInput(inputId = "id", value = TRUE)
 ```
 
+
+
 ### Material switch
 
 Turn checkboxes into toggle switches (again) : <br>
@@ -58,6 +60,41 @@ Turn checkboxes into toggle switches (again) : <br>
 ```r
 materialSwitch(inputId = "id", label = "Primary switch", status = "danger")
 ```
+
+
+
+### Pretty Checkbox
+
+Checkbox and radio buttons with the beautiful CSS library [pretty-checkbox](https://lokesh-coder.github.io/pretty-checkbox/) :
+![prettycheckbox](inst/images/pretty.png)
+
+
+```r
+prettyCheckbox(
+  inputId = "pretty_1", label = "Check me!", icon = icon("check")
+),
+prettyCheckbox(
+  inputId = "pretty_2", label = "Check me!", icon = icon("thumbs-up"), 
+  status = "default", shape = "curve", animation = "pulse"
+),
+prettyCheckbox(
+  inputId = "pretty_3", label = "Check me!", icon = icon("users"), 
+  animation = "pulse", plain = TRUE, outline = TRUE
+),
+prettyCheckbox(
+  inputId = "pretty_4", label = "Check me!",
+  status = "success", outline = TRUE
+),
+prettyCheckbox(
+  inputId = "pretty_5", label = "Check me!",
+  shape = "round", outline = TRUE, status = "info"
+),
+
+...
+
+```
+
+
 
 
 ### Slider Text
@@ -78,6 +115,26 @@ sliderTextInput(
 ```
 
 
+### Knob Input
+
+A [jQuery](https://github.com/aterrien/jQuery-Knob) based knob, similar to sliderInput or sliderTextInput: <br>
+![knobInput](inst/images/knobInput.png)
+
+```r
+knobInput(
+  inputId = "knob6", 
+  label = "Cursor mode:", 
+  value = 50, 
+  thickness = 0.3, 
+  cursor = TRUE, 
+  width = 150,
+  height = 150
+)
+
+...
+
+```
+
 ### Select picker
 
 Dropdown menu with a lot of options : <br>
@@ -97,6 +154,8 @@ pickerInput(
 )
 ```
 
+
+
 ### Checkbox and radio buttons
 
 Turn buttons into checkbox or radio : <br>
@@ -110,6 +169,7 @@ checkboxGroupButtons(
   checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("remove", lib = "glyphicon"))
 )
 ```
+
 
 
 ### Search bar
@@ -127,6 +187,7 @@ searchInput(
   width = "100%"
 )
 ```
+
 
 
 ### Dropdown button
