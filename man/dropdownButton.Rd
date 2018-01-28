@@ -6,14 +6,15 @@
 \usage{
 dropdownButton(..., circle = TRUE, status = "default", size = "default",
   icon = NULL, label = NULL, tooltip = FALSE, right = FALSE,
-  up = FALSE, width = NULL)
+  up = FALSE, width = NULL, inputId = NULL)
 }
 \arguments{
 \item{...}{List of tag to be displayed into the dropdown menu.}
 
 \item{circle}{Logical. Use a circle button}
 
-\item{status}{Color, must be a valid Bootstrap status : default, primary, info, success, warning, danger.}
+\item{status}{Add a class to the buttons, you can use Bootstrap status like 'info', 'primary', 'danger', 'warning' or 'success'.
+Or use an arbitrary strings to add a custom class, e.g. : with \code{status = 'myClass'}, buttons will have class \code{btn-myClass}.}
 
 \item{size}{Size of the button : default, lg, sm, xs.}
 
@@ -28,6 +29,9 @@ dropdownButton(..., circle = TRUE, status = "default", size = "default",
 \item{up}{Logical. Display the dropdown menu above.}
 
 \item{width}{Width of the dropdown menu content.}
+
+\item{inputId}{Optional, id for the button, the button act like an \code{actionButton},
+and you can use the id to toggle the droddown menu server-side.}
 }
 \description{
 Create a dropdown menu with Bootstrap

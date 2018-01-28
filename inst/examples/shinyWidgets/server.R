@@ -283,12 +283,12 @@ function(input, output, session) {
     )
   })
 
-  observeEvent(input$tags, {
-    sendSweetAlert(
-      session = session, title = "HTLM tags",
-      text = "normal <b>bold</b> <span style='color: steelblue;'>color</span> <h1>h1</h1>", html = TRUE, type = NULL
-    )
-  })
+  # observeEvent(input$tags, {
+  #   sendSweetAlert(
+  #     session = session, title = "HTLM tags",
+  #     text = "normal <b>bold</b> <span style='color: steelblue;'>color</span> <h1>h1</h1>", html = TRUE, type = NULL
+  #   )
+  # })
 
   observeEvent(input$warning, {
     sendSweetAlert(
@@ -297,6 +297,14 @@ function(input, output, session) {
     )
   })
 
+
+  observeEvent(input$launch_confirmation, {
+    confirmSweetAlert(
+      session = session, inputId = "myconfirmation", type = "warning",
+      title = "Want to confirm ?", danger_mode = TRUE
+    )
+  })
+  output$res_confirmation <- renderPrint(input$myconfirmation)
 
   # Progress Bars ----
 

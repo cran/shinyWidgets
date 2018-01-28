@@ -1678,14 +1678,14 @@ body <- dashboardBody(
               tags$a(href = "http://t4t5.github.io/sweetalert/", "sweetalert"),
               style="color: #d9534f;"
             ), br(), br(),
-            useSweetAlert(),
+            # useSweetAlert(),
             fluidRow(
               column(
                 width = 6,
                 actionButton(inputId = "success", label = "Success !", width = "100%", class = "btn-success", style = "color: #FFF"),
                 # receiveSweetAlert(messageId = "successmessage"),
-                br(), br(),
-                actionButton(inputId = "tags", label = "With HTML tags", width = "100%"),
+                # br(), br(),
+                # actionButton(inputId = "tags", label = "With HTML tags", width = "100%"),
                 # receiveSweetAlert(messageId = "tagsmessage"),
                 br(), br(),
                 actionButton(inputId = "info", label = "Info", width = "100%", class = "btn-info", style = "color: #FFF")
@@ -1709,6 +1709,12 @@ body <- dashboardBody(
                 code_sa
               )
             )
+          ),
+          box(
+            title = "Confirmation dialog", status = "danger", width = 12,
+            actionButton(inputId = "launch_confirmation", label = "Ask for confirmation"),
+            tags$br(),
+            verbatimTextOutput(outputId = "res_confirmation")
           )
         )
       )

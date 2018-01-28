@@ -44,8 +44,8 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "bootstrap-switch",
-          version = "3.3.2",
-          src = c(href="shinyWidgets/switchInput/bootstrap-switch-3.3.2"),
+          version = "3.3.4",
+          src = c(href="shinyWidgets/switchInput/bootstrap-switch-3.3.4"),
           script = "bootstrap-switch.min.js",
           stylesheet = "bootstrap-switch.min.css"
         )
@@ -57,8 +57,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           name = "sweetAlert",
           version = "0.1.0",
           src = c(href="shinyWidgets/sweetAlert"),
-          script = "js/sweetalert.min.js",
-          stylesheet = "css/sweetalert.min.css"
+          script = c("sweetalert.min.js", "sweetalert-bindings.js")
         )
       )
     } else if (widget == "multi") {
@@ -66,7 +65,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "multi",
-          version = "0.2.3",
+          version = "0.2.4",
           src = c(href="shinyWidgets/multi"),
           script = "multi.min.js",
           stylesheet = c("multi.min.css", "multi-shiny.css")
@@ -127,7 +126,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
       dep <- list(
         dep,
         htmltools::htmlDependency(
-          name = "bttn",
+          name = "spectrum",
           version = version,
           src = c(href="shinyWidgets/spectrum"),
           script = c("spectrum.min.js"),
@@ -138,7 +137,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
       dep <- list(
         dep,
         htmltools::htmlDependency(
-          name = "bttn",
+          name = "pretty",
           version = version,
           src = c(href="shinyWidgets/pretty-checkbox"),
           stylesheet = "pretty-checkbox.min.css"

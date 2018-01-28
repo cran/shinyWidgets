@@ -2,57 +2,17 @@
 % Please edit documentation in R/sweetalert.R
 \name{useSweetAlert}
 \alias{useSweetAlert}
-\alias{sendSweetAlert}
-\title{Display a Sweet Alert}
+\title{Load Sweet Alert dependencies}
 \usage{
 useSweetAlert()
-
-sendSweetAlert(session, title = "Title", text = "Text", type = NULL,
-  html = FALSE)
-}
-\arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
-\item{title}{Title of the alert}
-
-\item{text}{Text of the alert}
-
-\item{type}{Type of the alert : null, info, success, warning or error}
-
-\item{html}{Logical. Use HTML in the text}
 }
 \description{
-Send a message from the server and launch a sweet alert in the UI.
+This function is useless for \code{sendSweetAlert}, \code{confirmSweetAlert},
+ \code{inputSweetAlert}, but is still needed for \code{progressSweetAlert}.
 }
 \note{
 Use \code{receiveSweetAlert()} in the UI and \code{sendSweetAlert()} in the server.
 }
-\examples{
-\dontrun{
-if (interactive()) {
-
-shinyApp(
-  ui = fluidPage(
-    tags$h1("Click the button"),
-    actionButton(inputId = "success", label = "Launch a success sweet alert"),
-    actionButton(inputId = "error", label = "Launch an error sweet alert"),
-    useSweetAlert()
-  ),
-  server = function(input, output, session) {
-    observeEvent(input$success, {
-      sendSweetAlert(
-        session = session, title = "Success !!", text = "All in order", type = "success"
-      )
-    })
-    observeEvent(input$error, {
-      sendSweetAlert(
-        session = session, title = "Error !!", text = "It's broken...", type = "error"
-      )
-    })
-  }
-)
-
-}
-}
-
+\seealso{
+\code{\link{sendSweetAlert}}, \code{\link{confirmSweetAlert}}, \code{\link{inputSweetAlert}}
 }

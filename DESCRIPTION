@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
@@ -29,7 +29,7 @@ Authors@R: c(
 Description: Some custom inputs widgets to use in Shiny applications, like a toggle switch to replace checkboxes. And other components to pimp your apps.
 URL: https://github.com/dreamRs/shinyWidgets
 BugReports: https://github.com/dreamRs/shinyWidgets/issues
-Depends: R (>= 3.2.0)
+Depends: R (>= 3.1.0)
 Imports: shiny (>= 0.14), htmltools, jsonlite
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
@@ -38,7 +38,7 @@ RoxygenNote: 6.0.1
 Suggests: shinydashboard, formatR, viridisLite, RColorBrewer, testthat,
         covr
 NeedsCompilation: no
-Packaged: 2017-11-16 17:09:06 UTC; perri
+Packaged: 2018-01-27 22:50:51 UTC; perri
 Author: Victor Perrier [aut, cre],
   Fanny Meyer [aut],
   Silvio Moreto [ctb, cph] (bootstrap-select),
@@ -64,4 +64,4 @@ Author: Victor Perrier [aut, cre],
   Lokesh Rajendran [ctb, cph] (pretty-checkbox)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2017-11-16 22:07:52 UTC
+Date/Publication: 2018-01-28 16:03:27 UTC
