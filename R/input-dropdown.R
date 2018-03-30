@@ -18,6 +18,11 @@
 #' and you can use the id to toggle the droddown menu server-side.
 #'
 #'
+#' @note \code{pickerInput} doesn't work inside \code{dropdownButton} because that's also a
+#' dropdown and you can't nest them. Instead use \code{\link{dropdown}},
+#' it has similar features but is built differently so it works.
+#'
+#'
 #' @importFrom htmltools validateCssUnit tags tagList
 #'
 #' @export
@@ -26,19 +31,52 @@
 #' ## Only run examples in interactive R sessions
 #' if (interactive()) {
 #'
-#' dropdownButton(
-#'  "Your contents goes here ! You can pass several elements",
-#'  circle = TRUE, status = "danger", icon = icon("gear"), width = "300px",
-#'  tooltip = tooltipOptions(title = "Click to see inputs !")
+#' library(shiny)
+#' library(shinyWidgets)
+#'
+#' ui <- fluidPage(
+#'   dropdownButton(
+#'     label = "Controls",
+#'     icon = icon("sliders"),
+#'     status = "primary",
+#'     circle = FALSE,
+#'     sliderInput(
+#'       inputId = "n",
+#'       label = "Number of observations",
+#'       min = 10, max = 100, value = 30
+#'     ),
+#'     prettyToggle(
+#'       inputId = "na",
+#'       label_on = "NAs keeped",
+#'       label_off = "NAs removed",
+#'       icon_on = icon("check"),
+#'       icon_off = icon("remove")
+#'     )
+#'   ),
+#'   tags$div(style = "height: 140px;"), # spacing
+#'   verbatimTextOutput(outputId = "out")
 #' )
+#'
+#' server <- function(input, output, session) {
+#'
+#'   output$out <- renderPrint({
+#'     cat(
+#'       " # n\n", input$n, "\n",
+#'       "# na\n", input$na
+#'     )
+#'   })
+#'
+#' }
+#'
+#' shinyApp(ui, server)
 #'
 #' }
 #' }
 dropdownButton <- function(..., circle = TRUE, status = "default",
                            size = "default", icon = NULL,
-                           label = NULL, tooltip = FALSE, right =
-                             FALSE, up = FALSE, width = NULL,
-                           inputId = NULL) {
+                           label = NULL, tooltip = FALSE,
+                           right = FALSE, up = FALSE,
+                           width = NULL, inputId = NULL) {
   size <- match.arg(arg = size, choices = c("default", "lg", "sm", "xs"))
   if (is.null(inputId)) {
     inputId <- paste0("drop", sample.int(1e9, 1))
@@ -61,7 +99,6 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
     html_button <- circleButton(
       inputId = inputId, icon = icon, status = status, size = size,
       class = "dropdown-toggle",
-      # onclick = paste0("$(this).parent().toggleClass('open');")
       `data-toggle` = "dropdown"
     )
   } else {
@@ -71,7 +108,6 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
       type = "button",
       id = inputId,
       `data-toggle` = "dropdown",
-      # onclick = paste0("$(this).parent().toggleClass('open');"),
       `aria-haspopup` = "true",
       `aria-expanded` = "true",
       list(icon, label),
@@ -94,7 +130,7 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
     })
     tooltipJs <- htmltools::tags$script(
       sprintf(
-        "$('#%s').tooltip({ placement: '%s', title: '%s', html: %s });",
+        "$('#%s').tooltip({ placement: '%s', title: '%s', html: %s, trigger: 'hover' });",
         inputId, tooltip$placement, tooltip$title, tooltip$html
       )
     )
@@ -104,9 +140,12 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
 
   dropdownTag <- htmltools::tags$div(
     class = ifelse(up, "dropup", "dropdown"),
-    html_button,
+    html_button, id = paste("dropdown", inputId, sep = "-"),
     do.call(htmltools::tags$ul, html_ul),
-    tooltipJs
+    tooltipJs,
+    tags$script(sprintf(
+      "dropBtn('#%s', %s);", paste("dropdown", inputId, sep = "-"), "true" #  tolower(easyClose)
+    ))
   )
   attachShinyWidgetsDep(dropdownTag, "dropdown")
 }
@@ -139,8 +178,61 @@ tooltipOptions <- function(placement = "right", title = "Params", html
 #' @param inputId Id for the dropdown to toggle
 #'
 #' @export
+#' @importFrom shiny getDefaultReactiveDomain
 #'
-# @examples
+#' @examples
+#' \dontrun{
+#'
+#' if (interactive()) {
+#'
+#' library("shiny")
+#' library("shinyWidgets")
+#'
+#' ui <- fluidPage(
+#'   tags$h2("Toggle Dropdown Button"),
+#'   br(),
+#'   fluidRow(
+#'     column(
+#'       width = 6,
+#'       dropdownButton(
+#'         tags$h3("List of Inputs"),
+#'         selectInput(inputId = 'xcol',
+#'                     label = 'X Variable',
+#'                     choices = names(iris)),
+#'         sliderInput(inputId = 'clusters',
+#'                     label = 'Cluster count',
+#'                     value = 3,
+#'                     min = 1,
+#'                     max = 9),
+#'         actionButton(inputId = "toggle2",
+#'                      label = "Close dropdown"),
+#'         circle = TRUE, status = "danger",
+#'         inputId = "mydropdown",
+#'         icon = icon("gear"), width = "300px"
+#'       )
+#'     ),
+#'     column(
+#'       width = 6,
+#'       actionButton(inputId = "toggle1",
+#'                    label = "Open dropdown")
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'
+#'   observeEvent(list(input$toggle1, input$toggle2), {
+#'     toggleDropdownButton(inputId = "mydropdown")
+#'   }, ignoreInit = TRUE)
+#'
+#' }
+#'
+#' shinyApp(ui = ui, server = server)
+#'
+#' }
+#'
+#'
+#' }
 toggleDropdownButton <- function(inputId) {
   session <- shiny::getDefaultReactiveDomain()
   session$sendCustomMessage(

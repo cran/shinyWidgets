@@ -55,7 +55,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "sweetAlert",
-          version = "0.1.0",
+          version = "0.2.0",
           src = c(href="shinyWidgets/sweetAlert"),
           script = c("sweetalert.min.js", "sweetalert-bindings.js")
         )
@@ -141,6 +141,17 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           version = version,
           src = c(href="shinyWidgets/pretty-checkbox"),
           stylesheet = "pretty-checkbox.min.css"
+        )
+      )
+    } else if (widget == "nouislider") {
+      dep <- list(
+        dep,
+        htmltools::htmlDependency(
+          name = "nouislider",
+          version = "11.0.3",
+          src = c(href="shinyWidgets/nouislider"),
+          script = c("nouislider.min.js", "wNumb.js"),
+          stylesheet = "nouislider.min.css"
         )
       )
     }

@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
@@ -24,7 +24,8 @@ Authors@R: c(
   person("Daniel", "Eden", role = c("ctb", "cph"), comment = "animate.css"),
   person("Ganapati", "V S", role = c("ctb", "cph"), comment = "bttn.css"),
   person("Brian", "Grinstead", role = c("ctb", "cph"), comment = "Spectrum"),
-  person("Lokesh", "Rajendran", role = c("ctb", "cph"), comment = "pretty-checkbox")
+  person("Lokesh", "Rajendran", role = c("ctb", "cph"), comment = "pretty-checkbox"),
+  person("Leon", "Gersen", role = c("ctb", "cph"), comment = "wnumb & noUiSlider")
   )
 Description: Some custom inputs widgets to use in Shiny applications, like a toggle switch to replace checkboxes. And other components to pimp your apps.
 URL: https://github.com/dreamRs/shinyWidgets
@@ -38,7 +39,7 @@ RoxygenNote: 6.0.1
 Suggests: shinydashboard, formatR, viridisLite, RColorBrewer, testthat,
         covr
 NeedsCompilation: no
-Packaged: 2018-01-27 22:50:51 UTC; perri
+Packaged: 2018-03-30 09:34:57 UTC; perri
 Author: Victor Perrier [aut, cre],
   Fanny Meyer [aut],
   Silvio Moreto [ctb, cph] (bootstrap-select),
@@ -61,7 +62,8 @@ Author: Victor Perrier [aut, cre],
   Daniel Eden [ctb, cph] (animate.css),
   Ganapati V S [ctb, cph] (bttn.css),
   Brian Grinstead [ctb, cph] (Spectrum),
-  Lokesh Rajendran [ctb, cph] (pretty-checkbox)
+  Lokesh Rajendran [ctb, cph] (pretty-checkbox),
+  Leon Gersen [ctb, cph] (wnumb & noUiSlider)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2018-01-28 16:03:27 UTC
+Date/Publication: 2018-03-30 12:52:27 UTC

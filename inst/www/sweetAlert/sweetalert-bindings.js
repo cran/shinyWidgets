@@ -1,19 +1,69 @@
 
 // Sweet-Alert Bindings
 
-Shiny.addCustomMessageHandler('sweetalert-sw', function(data) {swal(data)});
+Shiny.addCustomMessageHandler('sweetalert-sw', function(data) {
+  if (data.as_html) {
+    var elsw = document.createElement("span");
+    elsw.innerHTML = data.text;
+    // data.text = "elsw";
+    swal({
+      title: data.title,
+      content: elsw,
+      icon: data.icon,
+      buttons: data.buttons,
+      closeOnClickOutside: data.closeOnClickOutside
+    })
+    .then(function(value){
+      var els = $("#" + data.sw_id);
+      els.each(function (i, el) {
+        window.Shiny.unbindAll(el, true);
+        $(el).remove();
+        return true;
+      });
+    });
+  } else {
+    swal(data);
+  }
+});
 
 
 Shiny.addCustomMessageHandler('sweetalert-sw-confirm', function(data) {
   //var id = data.id;
   //data.id = null;
-  swal(data).then(function(value) {
-    if (value) {
-      Shiny.onInputChange(data.id, true);
-    } else {
-      Shiny.onInputChange(data.id, false);
-    }
-  });
+  Shiny.onInputChange(data.id, null);
+  if (!data.as_html) {
+    swal(data).then(function(value) {
+      if (value) {
+        Shiny.onInputChange(data.id, true);
+      } else {
+        Shiny.onInputChange(data.id, false);
+      }
+    });
+  } else {
+    var elsw = document.createElement("span");
+    elsw.innerHTML = data.text;
+    swal({
+      title: data.title,
+      content: elsw,
+      icon: data.icon,
+      buttons: data.buttons,
+      dangerMode: data.dangerMode,
+      closeOnClickOutside: data.closeOnClickOutside
+    })
+    .then(function(value){
+      if (value) {
+        Shiny.onInputChange(data.id, true);
+      } else {
+        Shiny.onInputChange(data.id, false);
+      }
+      var els = $("#" + data.sw_id);
+      els.each(function (i, el) {
+        window.Shiny.unbindAll(el, true);
+        $(el).remove();
+        return true;
+      });
+    });
+  }
 });
 
 
