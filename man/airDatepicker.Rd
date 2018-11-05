@@ -8,13 +8,13 @@
 \alias{airYearpickerInput}
 \title{Air Date Picker Input}
 \usage{
-airDatepickerInput(inputId, label = NULL, value = NULL, multiple = FALSE,
-  range = FALSE, timepicker = FALSE, separator = " - ",
-  placeholder = NULL, dateFormat = "yyyy-mm-dd", minDate = NULL,
-  maxDate = NULL, disabledDates = NULL, view = c("days", "months",
-  "years"), minView = c("days", "months", "years"),
-  monthsField = c("monthsShort", "months"), clearButton = FALSE,
-  todayButton = FALSE, autoClose = FALSE,
+airDatepickerInput(inputId, label = NULL, value = NULL,
+  multiple = FALSE, range = FALSE, timepicker = FALSE,
+  separator = " - ", placeholder = NULL, dateFormat = "yyyy-mm-dd",
+  minDate = NULL, maxDate = NULL, disabledDates = NULL,
+  view = c("days", "months", "years"), minView = c("days", "months",
+  "years"), monthsField = c("monthsShort", "months"),
+  clearButton = FALSE, todayButton = FALSE, autoClose = FALSE,
   timepickerOpts = timepickerOptions(), position = NULL,
   update_on = c("change", "close"), addon = c("right", "left", "none"),
   language = "en", inline = FALSE, width = NULL)
@@ -33,7 +33,7 @@ airYearpickerInput(inputId, label = NULL, value = NULL, ...)
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{value}{Initial value(s), dates as character string are accepted in \code{yyyy-mm-dd} format,
-or Date/POSIXct object. Can be a single value or severals.}
+or Date/POSIXct object. Can be a single value or several values.}
 
 \item{multiple}{Select multiple dates.}
 
@@ -75,7 +75,8 @@ use \code{'monthsShort'} for abbreviations or \code{'months'} for full names.}
 or when calendar is \code{'close'}d.}
 
 \item{addon}{Display a calendar icon to \code{'right'} or the \code{'left'}
-of the widget, or \code{'none'}.}
+of the widget, or \code{'none'}. This icon act likes an \code{actionButton},
+you can retrieve value server-side with \code{input$<inputId>_button}.}
 
 \item{language}{Language to use, can be one of \code{'cs'}, \code{'da'},
 \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},

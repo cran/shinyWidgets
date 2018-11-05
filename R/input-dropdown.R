@@ -1,7 +1,7 @@
 #' @title Dropdown Button
 #'
 #' @description
-#' Create a dropdown menu with Bootstrap
+#' Create a dropdown menu with Bootstrap where you can put input elements.
 #'
 #' @param ... List of tag to be displayed into the dropdown menu.
 #' @param circle Logical. Use a circle button
@@ -15,7 +15,10 @@
 #' @param up Logical. Display the dropdown menu above.
 #' @param width Width of the dropdown menu content.
 #' @param inputId Optional, id for the button, the button act like an \code{actionButton},
-#' and you can use the id to toggle the dropdown menu server-side.
+#' and you can use the id to toggle the dropdown menu server-side with \code{\link{toggleDropdownButton}}.
+#'
+#'
+#' @details It is possible to know if a dropdown is open or closed server-side with \code{input$<inputId>_state}.
 #'
 #'
 #' @note \code{pickerInput} doesn't work inside \code{dropdownButton} because that's also a
@@ -36,6 +39,7 @@
 #'
 #' ui <- fluidPage(
 #'   dropdownButton(
+#'     inputId = "mydropdown",
 #'     label = "Controls",
 #'     icon = icon("sliders"),
 #'     status = "primary",
@@ -54,7 +58,8 @@
 #'     )
 #'   ),
 #'   tags$div(style = "height: 140px;"), # spacing
-#'   verbatimTextOutput(outputId = "out")
+#'   verbatimTextOutput(outputId = "out"),
+#'   verbatimTextOutput(outputId = "state")
 #' )
 #'
 #' server <- function(input, output, session) {
@@ -64,6 +69,10 @@
 #'       " # n\n", input$n, "\n",
 #'       "# na\n", input$na
 #'     )
+#'   })
+#'
+#'   output$state <- renderPrint({
+#'     cat("Open:", input$mydropdown_state)
 #'   })
 #'
 #' }
@@ -140,12 +149,10 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
 
   dropdownTag <- htmltools::tags$div(
     class = ifelse(up, "dropup", "dropdown"),
-    html_button, id = paste("dropdown", inputId, sep = "-"),
+    class = "btn-dropdown-input",
+    html_button, id = paste0(inputId, "_state"),
     do.call(htmltools::tags$ul, html_ul),
-    tooltipJs,
-    tags$script(sprintf(
-      "dropBtn('#%s', %s);", paste("dropdown", inputId, sep = "-"), "true" #  tolower(easyClose)
-    ))
+    tooltipJs
   )
   attachShinyWidgetsDep(dropdownTag, "dropdown")
 }
@@ -154,7 +161,7 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
 #' @title Tooltip options
 #'
 #' @description
-#' List of options for tooltip for a dropdown menu button
+#' List of options for tooltip for a dropdown menu button.
 #'
 #' @param placement Placement of tooltip : right, top, bottom, left.
 #' @param title Text of the tooltip
@@ -162,7 +169,6 @@ dropdownButton <- function(..., circle = TRUE, status = "default",
 #'
 #'
 #' @export
-
 tooltipOptions <- function(placement = "right", title = "Params", html
                            = FALSE) {
   list(placement = placement, title = title, html = html)
@@ -173,9 +179,10 @@ tooltipOptions <- function(placement = "right", title = "Params", html
 
 #' Toggle a dropdown menu
 #'
-#' Open or close a dropdown menu server-side
+#' Open or close a dropdown menu server-side.
 #'
-#' @param inputId Id for the dropdown to toggle
+#' @param inputId Id for the dropdown to toggle.
+#' @param session Standard shiny \code{session}.
 #'
 #' @export
 #' @importFrom shiny getDefaultReactiveDomain
@@ -233,9 +240,6 @@ tooltipOptions <- function(placement = "right", title = "Params", html
 #'
 #'
 #' }
-toggleDropdownButton <- function(inputId) {
-  session <- shiny::getDefaultReactiveDomain()
-  session$sendCustomMessage(
-    type = "toggle-dropdown-button", list(id = inputId)
-  )
+toggleDropdownButton <- function(inputId, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(paste0(inputId, "_state"), list(id = inputId))
 }

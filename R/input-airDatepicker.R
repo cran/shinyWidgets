@@ -7,7 +7,7 @@
 #' @param inputId The \code{input} slot that will be used to access the value.
 #' @param label Display label for the control, or \code{NULL} for no label.
 #' @param value Initial value(s), dates as character string are accepted in \code{yyyy-mm-dd} format,
-#' or Date/POSIXct object. Can be a single value or severals.
+#' or Date/POSIXct object. Can be a single value or several values.
 #' @param multiple Select multiple dates.
 #' @param range Select a date range.
 #' @param timepicker Add a timepicker below calendar to select time.
@@ -30,7 +30,8 @@
 #' @param update_on When to send selected value to server: on \code{'change'}
 #'  or when calendar is \code{'close'}d.
 #' @param addon Display a calendar icon to \code{'right'} or the \code{'left'}
-#'  of the widget, or \code{'none'}.
+#'  of the widget, or \code{'none'}. This icon act likes an \code{actionButton},
+#'  you can retrieve value server-side with \code{input$<inputId>_button}.
 #' @param language Language to use, can be one of \code{'cs'}, \code{'da'},
 #'  \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
 #'  \code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
@@ -116,6 +117,11 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
                 "pt-BR", "pt", "ro", "sk", "zh"),
     several.ok = TRUE
   )
+  to_ms <- function(x) {
+    if (is.null(x))
+      return(NULL)
+    1000 * as.numeric(as.POSIXct(x, tz = "UTC"))
+  }
   if (!is.null(disabledDates)) {
     disabledDates <- toJSON(x = disabledDates, auto_unbox = FALSE)
   }
@@ -124,10 +130,10 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     class = "sw-air-picker",
     `data-language` = language,
     `data-timepicker` = tolower(timepicker),
-    `data-start-date` = if (!is.null(value)) toJSON(x = value, auto_unbox = FALSE),
+    `data-start-date` = if (!is.null(value)) toJSON(x = to_ms(value), auto_unbox = FALSE),
     `data-range` = tolower(range),
     `data-date-format` = dateFormat,
-    `data-min-date` = minDate, `data-max-date` = maxDate,
+    `data-min-date` = to_ms(minDate), `data-max-date` = to_ms(maxDate),
     `data-multiple-dates` = tolower(multiple),
     `data-multiple-dates-separator` = separator,
     `data-view` = match.arg(view),
@@ -151,22 +157,15 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     tagAir <- do.call(tags$input, c(paramsAir, addArgs))
     tagAir <- tags$div(
       class = "input-group",
-      if (addon == "left") tags$div(class = "input-group-addon", icon("calendar")),
+      if (addon == "left") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar")),
       tagAir,
-      if (addon == "right") tags$div(class = "input-group-addon", icon("calendar"))
+      if (addon == "right") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar"))
     )
   } else {
     tagAir <- do.call(tags$div, paramsAir)
   }
 
-  tagList(
-    singleton(
-      tags$head(
-        tags$link(href = "shinyWidgets/air-datepicker/datepicker.min.css", rel = "stylesheet", type = "text/css"),
-        tags$script(src = "shinyWidgets/air-datepicker/datepicker.min.js"),
-        tags$script(src = "shinyWidgets/air-datepicker/datepicker-bindings.js")
-      )
-    ),
+  tagAir <- tagList(
     singleton(
       tags$head(
         lapply(
@@ -185,6 +184,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
       tagAir
     )
   )
+  attachShinyWidgetsDep(tagAir, "airdatepicker")
 }
 
 
@@ -282,6 +282,7 @@ airYearpickerInput <- function(inputId, label = NULL, value = NULL, ...) {
 #' @param label The label to set for the input object.
 #' @param value The value to set for the input object.
 #' @param clear Logical, clear all previous selected dates.
+#' @param options Options to update, see available ones here: \url{http://t1m0n.name/air-datepicker/docs/}.
 #'
 #' @export
 #'
@@ -293,22 +294,28 @@ airYearpickerInput <- function(inputId, label = NULL, value = NULL, ...) {
 #' demoAirDatepicker("update")
 #'
 #' }
-updateAirDateInput <- function(session, inputId, label = NULL, value = NULL, clear = FALSE) {
+updateAirDateInput <- function(session, inputId, label = NULL, value = NULL, clear = FALSE, options = NULL) {
   stopifnot(is.logical(clear))
   formatDate <- function(x) {
     if (is.null(x))
       return(NULL)
     format(as.Date(x), "%Y-%m-%d")
   }
+  to_ms <- function(x) {
+    if (is.null(x))
+      return(NULL)
+    1000 * as.numeric(as.POSIXct(x, tz = "UTC"))
+  }
   value <- formatDate(value)
   if (!is.null(value)) {
-    value <- as.character(toJSON(x = value, auto_unbox = FALSE))
+    value <- as.character(toJSON(x = to_ms(value), auto_unbox = FALSE))
   }
   message <- dropNulls(list(
-    id = inputId,
+    id = session$ns(inputId),
     label = label,
     value = value,
-    clear = clear
+    clear = clear,
+    options = options
   ))
   session$sendInputMessage(inputId, message)
 }

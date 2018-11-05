@@ -22,7 +22,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "selectPicker",
-          version = "1.12.4",
+          version = "1.13.3",
           src = c(href="shinyWidgets/selectPicker"),
           script = "js/bootstrap-select.min.js",
           stylesheet = "css/bootstrap-select.min.css"
@@ -65,7 +65,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "multi",
-          version = "0.3.0",
+          version = "1.4.0",
           src = c(href="shinyWidgets/multi"),
           script = "multi.min.js",
           stylesheet = c("multi.min.css")
@@ -138,7 +138,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "pretty",
-          version = version,
+          version = "3.0.3",
           src = c(href="shinyWidgets/pretty-checkbox"),
           stylesheet = "pretty-checkbox.min.css"
         )
@@ -152,6 +152,17 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           src = c(href="shinyWidgets/nouislider"),
           script = c("nouislider.min.js", "wNumb.js"),
           stylesheet = "nouislider.min.css"
+        )
+      )
+    } else if (widget == "airdatepicker") {
+      dep <- list(
+        dep,
+        htmltools::htmlDependency(
+          name = "air-datepicker",
+          version = "2.2.3",
+          src = c(href="shinyWidgets/air-datepicker"),
+          script = c("datepicker.min.js", "datepicker-bindings.js"),
+          stylesheet = "datepicker.min.css"
         )
       )
     }

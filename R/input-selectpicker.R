@@ -1,7 +1,7 @@
 #' @title Select picker Input Control
 #'
 #' @description
-#' Create a select picker (\url{https://silviomoreto.github.io/bootstrap-select/})
+#' Create a select picker (\url{https://developer.snapappointments.com/bootstrap-select/})
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
 #' @param label Display a text in the center of the switch.
@@ -11,12 +11,14 @@
 #' If not specified then defaults to the first value for single-select lists
 #'  and no values for multiple select lists.
 #' @param multiple Is selection of multiple items allowed?
-#' @param options Options to customize the select picker,
-#' see \url{https://silviomoreto.github.io/bootstrap-select/options/}.
+#' @param options List of options, see \link{pickerOptions} for all available options.
 #' For limit the number of selections, see example below.
 #' @param choicesOpt Options for choices in the dropdown menu.
 #' @param width The width of the input : 'auto', 'fit', '100px', '75\%'.
 #' @param inline Put the label and the picker on the same line.
+#'
+#' @seealso \link{updatePickerInput} to update value server-side.
+#'
 #' @return A select control that can be added to a UI definition.
 #'
 #'
@@ -30,6 +32,7 @@
 #'
 #'
 #' # Simple example
+#' library("shiny")
 #' ui <- fluidPage(
 #'   pickerInput(inputId = "somevalue", label = "A label", choices = c("a", "b")),
 #'   verbatimTextOutput("value")
@@ -214,7 +217,7 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
   })
   maxOptGroup <- options[["data-max-options-group"]]
   selectProps <- dropNulls(c(list(id = inputId, class = "selectpicker form-control"), options))
-  selectTag <- do.call(tags$select, c(selectProps, pickerOptions(choices, selected, choicesOpt, maxOptGroup)))
+  selectTag <- do.call(tags$select, c(selectProps, pickerSelectOptions(choices, selected, choicesOpt, maxOptGroup)))
 
   if (multiple)
     selectTag$attribs$multiple <- "multiple"
@@ -252,6 +255,8 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
 #'  If not specified then defaults to the first value for single-select lists
 #'  and no values for multiple select lists.
 #' @param choicesOpt Options for choices in the dropdown menu
+#'
+#' @seealso \link{pickerInput}.
 #'
 #' @importFrom utils capture.output
 #' @export
@@ -337,7 +342,7 @@ updatePickerInput <- function (session, inputId, label = NULL, selected = NULL, 
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
   options <- if (!is.null(choices))
-    paste(capture.output(pickerOptions(choices, selected, choicesOpt)), collapse = "\n")
+    paste(capture.output(pickerSelectOptions(choices, selected, choicesOpt)), collapse = "\n")
   message <- dropNulls(list(label = label, options = options, value = selected))
   session$sendInputMessage(inputId, message)
 }
@@ -355,8 +360,7 @@ updatePickerInput <- function (session, inputId, label = NULL, selected = NULL, 
 #' @importFrom htmltools HTML htmlEscape tagList
 #'
 #' @noRd
-pickerOptions <- function (choices, selected = NULL, choicesOpt = NULL, maxOptGroup = NULL)
-{
+pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, maxOptGroup = NULL) {
   if (is.null(choicesOpt))
     choicesOpt <- list()
   l <- sapply(choices, length)
@@ -369,7 +373,7 @@ pickerOptions <- function (choices, selected = NULL, choicesOpt = NULL, maxOptGr
     if (is.list(choice)) {
       optionTag <- list(
         label = htmltools::htmlEscape(label, TRUE),
-        pickerOptions(
+        pickerSelectOptions(
           choice, selected,
           choicesOpt = lapply(
             X = choicesOpt,
