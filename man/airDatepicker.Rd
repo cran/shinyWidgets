@@ -81,7 +81,7 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 \item{language}{Language to use, can be one of \code{'cs'}, \code{'da'},
 \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
 \code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
-\code{'ro'}, \code{'sk'}, \code{'zh'}.}
+\code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}.}
 
 \item{inline}{If \code{TRUE}, datepicker will always be visible.}
 
@@ -115,7 +115,7 @@ An alternative to \code{dateInput} to select single, multiple or date range.
  And two alias to select months or years.
 }
 \note{
-This widget prevents `dateInput` from working, don't use both !
+This widget prevents \code{dateInput} from working, don't use both !
 }
 \examples{
 \dontrun{

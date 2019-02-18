@@ -35,12 +35,12 @@
 #' @param language Language to use, can be one of \code{'cs'}, \code{'da'},
 #'  \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
 #'  \code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
-#'  \code{'ro'}, \code{'sk'}, \code{'zh'}.
+#'  \code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}.
 #' @param inline If \code{TRUE}, datepicker will always be visible.
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.
 #' @param ... Arguments passed to \code{airDatepickerInput}.
 #'
-#' @note This widget prevents `dateInput` from working, don't use both !
+#' @note This widget prevents \code{dateInput} from working, don't use both !
 #'
 #' @return a \code{Date} object or a \code{POSIXct} in UTC timezone.
 #'
@@ -51,7 +51,7 @@
 #'
 #' @export
 #'
-#' @importFrom htmltools tags tagList validateCssUnit
+#' @importFrom htmltools tags tagList validateCssUnit attachDependencies htmlDependency
 #' @importFrom shiny singleton
 #' @importFrom jsonlite toJSON
 #'
@@ -114,7 +114,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
   language <- match.arg(
     arg = language,
     choices = c("cs", "da", "de", "en", "es", "fi", "fr", "hu", "nl", "pl",
-                "pt-BR", "pt", "ro", "sk", "zh"),
+                "pt-BR", "pt", "ro", "ru", "sk", "zh"),
     several.ok = TRUE
   )
   to_ms <- function(x) {
@@ -165,26 +165,25 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     tagAir <- do.call(tags$div, paramsAir)
   }
 
-  tagAir <- tagList(
-    singleton(
-      tags$head(
-        lapply(
-          X = language,
-          FUN = function(x) {
-            tags$script(src = sprintf("shinyWidgets/air-datepicker/i18n/datepicker.%s.js", x))
-          }
-        )
-      )
-    ),
-    tags$div(
+  attachDependencies(
+    x = attachShinyWidgetsDep(tags$div(
       class = "form-group shiny-input-container",
       style = if (!is.null(width))
         paste0("width: ", validateCssUnit(width), ";"),
       if (!is.null(label)) tags$label(label, `for` = inputId),
       tagAir
-    )
+    ), "airdatepicker"),
+    value = htmlDependency(
+      name = "air-datepicker-i18n", version = "2.2.3",
+      src = c(href="shinyWidgets/air-datepicker"),
+      script = unlist(lapply(
+        X = language,
+        FUN = function(x) {
+          sprintf("i18n/datepicker.%s.js", x)
+        }
+      ))
+    ), append = TRUE
   )
-  attachShinyWidgetsDep(tagAir, "airdatepicker")
 }
 
 
@@ -275,7 +274,7 @@ airYearpickerInput <- function(inputId, label = NULL, value = NULL, ...) {
 
 
 
-#' Change the value of a airDate input on the client
+#' Change the value of \code{\link{airDatepickerInput}} on the client
 #'
 #' @param session The \code{session} object passed to function given to \code{shinyServer}.
 #' @param inputId The id of the input object.
