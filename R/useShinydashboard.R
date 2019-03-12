@@ -1,4 +1,3 @@
-
 #' Use 'shinydashboard' in 'shiny'
 #'
 #' Allow to use functions from 'shinydashboard' into a classic 'shiny' app,
@@ -110,6 +109,6 @@ useShinydashboard <- function() {
     sidebar = shinydashboard::dashboardSidebar(),
     body = shinydashboard::dashboardBody()
   ))
-  attachDependencies(tags$div(class = "main-sidebar"), value = deps)
+  attachDependencies(tags$div(class = "main-sidebar", style = "display: none;"), value = deps)
 }
 

@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.4.5
+Version: 0.4.7
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
@@ -28,7 +28,8 @@ Authors@R: c(
   person("Timofey", "Marochkin", role = c("ctb", "cph"), comment = "air-datepicker"),
   person("Tobias", "Ahlin", role = c("ctb", "cph"), comment = "CSS spin")
   )
-Description: Some custom inputs widgets to use in Shiny applications, like a toggle switch to replace checkboxes. And other components to pimp your apps.
+Description: Collection of custom input controls and user interface components for 'Shiny' applications. 
+  Give your applications a unique and colorful style !
 URL: https://github.com/dreamRs/shinyWidgets
 BugReports: https://github.com/dreamRs/shinyWidgets/issues
 Depends: R (>= 3.1.0)
@@ -38,9 +39,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: shinydashboard, viridisLite, RColorBrewer, testthat, covr,
-        shinydashboardPlus
+        shinydashboardPlus, bs4Dash, argonR, argonDash
 NeedsCompilation: no
-Packaged: 2019-02-18 21:38:02 UTC; perri
+Packaged: 2019-03-12 10:27:08 UTC; perri
 Author: Victor Perrier [aut, cre],
   Fanny Meyer [aut],
   David Granjon [aut] (jQuery Knob shiny interface & sliders appearance),
@@ -68,4 +69,4 @@ Author: Victor Perrier [aut, cre],
   Tobias Ahlin [ctb, cph] (CSS spin)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2019-02-18 22:30:08 UTC
+Date/Publication: 2019-03-12 10:50:03 UTC
