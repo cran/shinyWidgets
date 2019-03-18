@@ -1,9 +1,9 @@
-d90d42d82636e5e938bf56f44a217fe5 *DESCRIPTION
+0a7c976e4a4b8b89c84273eff0172011 *DESCRIPTION
 32ece436b78d9eeb83d519cbb3566fdf *LICENSE
-15da94865bd82e13b8dfdca56c0dc621 *NAMESPACE
-76ce2d18e604de9a3e13774255896eea *NEWS.md
+8485d2da0a0f5c123413c47be53df7c1 *NAMESPACE
+50618c817740589de6beeb1904b7287e *NEWS.md
 77894fa3376fbed06df03b5246f0a1a9 *R/actionBttn.R
-2afd46cbe7ede58484a0c54fe3e982d6 *R/addSpinner.R
+59c364b18ccdbc952d3f9fb9d414d64b *R/addSpinner.R
 e7f36e8dc7747fb979f1c8e26ed5c181 *R/attachShinyWidgetsDep.R
 b5cff074f8b7efae92f31adf59799644 *R/chooseSliderSkin.R
 f94a66fc59a56abeda48c6932577124b *R/demos.R
@@ -218,7 +218,7 @@ abbd2a228eb25dd182b86eefa226c519 *inst/www/switchInput/bootstrap-switch-3.3.4/bo
 3577b624e625e88145ea7e0225c822ee *inst/www/vertical-tab-panel/vertical-tab-panel.js
 ab18c8d8dc70c09185803e2043a6013e *man/actionBttn.Rd
 e37b2947d0769b758fc90891bb831b56 *man/actionGroupButtons.Rd
-70fdbce0351859c349efc078e6a0d6d5 *man/addSpinner.Rd
+d6fa659f837b514e4fa3763ffe47aa3c *man/addSpinner.Rd
 4543d65ca65d8531547709be281c94cc *man/airDatepicker.Rd
 7f0a3a7ca9e1657802ece30a9af69a3d *man/animateOptions.Rd
 3c73cf456540ac34324a87e9f2fee83e *man/animations.Rd
@@ -327,7 +327,6 @@ a5fe1a14d10525e7c7dbd5c4784efe68 *tests/testthat/test-knob.R
 47114294faac2bcb2c4df9dcdf1a7c9f *tests/testthat/test-multi.R
 b7c51d5d5b59e42709652239996b5e92 *tests/testthat/test-noUiSlider.R
 47479b7d7845ab367da3ac6aa7c9915b *tests/testthat/test-numericRange.R
-756bb881c06833053e22002f4d048a6a *tests/testthat/test-onLoad.R
 58b2833ca5203fba22850d98dc4256d4 *tests/testthat/test-panel.R
 1a5d799d93255825e7e3030665bde1c0 *tests/testthat/test-radioGroupButtons.R
 cec8feba8065f7ab73227a6cc7844a16 *tests/testthat/test-shinyWidgetsGallery.R
