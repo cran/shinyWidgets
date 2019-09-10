@@ -114,7 +114,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
   language <- match.arg(
     arg = language,
     choices = c("cs", "da", "de", "en", "es", "fi", "fr", "hu", "nl", "pl",
-                "pt-BR", "pt", "ro", "ru", "sk", "zh"),
+                "pt-BR", "pt", "ro", "ru", "sk", "tr", "zh"),
     several.ok = TRUE
   )
   to_ms <- function(x) {
@@ -155,12 +155,14 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
       placeholder = placeholder
     ))
     tagAir <- do.call(tags$input, c(paramsAir, addArgs))
-    tagAir <- tags$div(
-      class = "input-group",
-      if (addon == "left") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar")),
-      tagAir,
-      if (addon == "right") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar"))
-    )
+    if (!identical(addon, "none")) {
+      tagAir <- tags$div(
+        class = "input-group",
+        if (addon == "left") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar")),
+        tagAir,
+        if (addon == "right") tags$div(class = "btn action-button input-group-addon", id = paste0(inputId, "_button"), icon("calendar"))
+      )
+    }
   } else {
     tagAir <- do.call(tags$div, paramsAir)
   }
@@ -295,19 +297,17 @@ airYearpickerInput <- function(inputId, label = NULL, value = NULL, ...) {
 #' }
 updateAirDateInput <- function(session, inputId, label = NULL, value = NULL, clear = FALSE, options = NULL) {
   stopifnot(is.logical(clear))
-  formatDate <- function(x) {
-    if (is.null(x))
-      return(NULL)
-    format(as.Date(x), "%Y-%m-%d")
-  }
   to_ms <- function(x) {
     if (is.null(x))
       return(NULL)
     1000 * as.numeric(as.POSIXct(x, tz = "UTC"))
   }
-  value <- formatDate(value)
   if (!is.null(value)) {
     value <- as.character(toJSON(x = to_ms(value), auto_unbox = FALSE))
+  }
+  if (!is.null(options)) {
+    options$minDate <- to_ms(options$minDate)
+    options$maxDate <- to_ms(options$maxDate)
   }
   message <- dropNulls(list(
     id = session$ns(inputId),

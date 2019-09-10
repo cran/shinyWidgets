@@ -3,6 +3,7 @@
 #' @description Create a progress bar to provide feedback on calculation.
 #'
 #' @param id An id used to update the progress bar.
+#'  If in a Shiny module, it use same logic than inputs : use namespace in UI, not in server.
 #' @param value Value of the progress bar between 0 and 100, if >100 you must provide total.
 #' @param total Used to calculate percentage if value > 100, force an indicator to appear on top right of the progress bar.
 #' @param display_pct logical, display percentage on the progress bar.
@@ -126,7 +127,7 @@ progressBar <- function(id, value, total = NULL, display_pct = FALSE, size = NUL
         class=if(!is.null(status)) paste0("progress-bar-", status),
         class=if(striped) "progress-bar-striped",
         role="progressbar",
-        if (display_pct) paste0(value, unit_mark)
+        if (display_pct) paste0(percent, unit_mark)
       )
     )
   )
@@ -154,6 +155,12 @@ updateProgressBar <- function(session, id, value, total = NULL,
     percent <- scales::rescale(x = value, from = range_value, to = c(0, 100))
   } else {
     percent <- -1
+  }
+  # If we are inside a module, turn the (relative) id (e.g. 'input') into an absolute id (e.g. 'module-input')
+  if (inherits(session, "session_proxy")) {
+    # Keep old code working which externally uses session$ns() to create an absolute id.
+    if (!startsWith(id, session$ns("")))
+      id <- session$ns(id)
   }
   session$sendCustomMessage(
     type = message,

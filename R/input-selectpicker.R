@@ -4,15 +4,15 @@
 #' Create a select picker (\url{https://developer.snapappointments.com/bootstrap-select/})
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
-#' @param label Display a text in the center of the switch.
+#' @param label Display label for the control, or \code{NULL} for no label.
 #' @param choices List of values to select from. If elements of the
 #'  list are named then that name rather than the value is displayed to the user.
-#' @param selected The initially selected value (or multiple values if multiple = TRUE).
+#' @param selected The initially selected value (or multiple values if \code{multiple = TRUE}).
 #' If not specified then defaults to the first value for single-select lists
 #'  and no values for multiple select lists.
 #' @param multiple Is selection of multiple items allowed?
 #' @param options List of options, see \link{pickerOptions} for all available options.
-#' For limit the number of selections, see example below.
+#' To limit the number of selection possible, see example below.
 #' @param choicesOpt Options for choices in the dropdown menu.
 #' @param width The width of the input : 'auto', 'fit', '100px', '75\%'.
 #' @param inline Put the label and the picker on the same line.

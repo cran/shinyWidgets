@@ -23,29 +23,55 @@
 #'
 #' @return A buttons group control that can be added to a UI definition.
 #'
-#'
-#' @examples
-#' \dontrun{
-#' ## Only run examples in interactive R sessions
-#' if (interactive()) {
-#'
-#' ui <- fluidPage(
-#'   radioGroupButtons(inputId = "somevalue", choices = c("A", "B", "C")),
-#'   verbatimTextOutput("value")
-#' )
-#' server <- function(input, output) {
-#'   output$value <- renderText({ input$somevalue })
-#' }
-#' shinyApp(ui, server)
-#' }
-#' }
+#' @seealso \code{\link{updateRadioGroupButtons}}
 #'
 #' @importFrom shiny restoreInput
 #' @importFrom htmltools tags HTML validateCssUnit
 #'
 #' @export
-
-
+#'
+#' @examples
+#' if (interactive()) {
+#'
+#'   ui <- fluidPage(
+#'     tags$h1("radioGroupButtons examples"),
+#'
+#'     radioGroupButtons(
+#'       inputId = "somevalue1",
+#'       label = "Make a choice: ",
+#'       choices = c("A", "B", "C")
+#'     ),
+#'     verbatimTextOutput("value1"),
+#'
+#'     radioGroupButtons(
+#'       inputId = "somevalue2",
+#'       label = "With custom status:",
+#'       choices = names(iris),
+#'       status = "primary"
+#'     ),
+#'     verbatimTextOutput("value2"),
+#'
+#'     radioGroupButtons(
+#'       inputId = "somevalue3",
+#'       label = "With icons:",
+#'       choices = names(mtcars),
+#'       checkIcon = list(
+#'         yes = icon("check-square"),
+#'         no = icon("square-o")
+#'       )
+#'     ),
+#'     verbatimTextOutput("value3")
+#'   )
+#'   server <- function(input, output) {
+#'
+#'     output$value1 <- renderPrint({ input$somevalue1 })
+#'     output$value2 <- renderPrint({ input$somevalue2 })
+#'     output$value3 <- renderPrint({ input$somevalue3 })
+#'
+#'   }
+#'   shinyApp(ui, server)
+#'
+#' }
 radioGroupButtons <- function(
   inputId, label = NULL, choices = NULL, selected = NULL, status = "default", size = "normal",
   direction = "horizontal", justified = FALSE, individual = FALSE, checkIcon = list(),
@@ -82,7 +108,6 @@ radioGroupButtons <- function(
     if (!is.null(label)) htmltools::tags$br(),
     htmltools::tags$div(
       id=inputId, class="radioGroupButtons",
-      style="margin-top: 3px; margin-bottom: 3px; ",
       style=if (justified) "width: 100%;",
       htmltools::tags$div(
         class=divClass, role="group", `aria-label`="...", `data-toggle`="buttons",
@@ -99,7 +124,7 @@ radioGroupButtons <- function(
 generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
   btn_wrapper <- function(...) {
     htmltools::tags$div(
-      class="btn-group",
+      class="btn-group btn-group-toggle",
       class=if (size != "normal") paste0("btn-group-", size),
       role="group",
       ...
