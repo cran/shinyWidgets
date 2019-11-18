@@ -1,4 +1,4 @@
-#' Create a multiselect input control
+#' @title Create a multiselect input control
 #'
 #' @description A user-friendly replacement for select boxes with the multiple attribute
 #'
@@ -21,7 +21,6 @@
 #' @seealso \link{updateMultiInput} to update value server-side.
 #'
 #' @examples
-#' \dontrun{
 #' ## Only run examples in interactive R sessions
 #' if (interactive()) {
 #'
@@ -80,7 +79,6 @@
 #' shinyApp(ui = ui, server = server)
 #'
 #' }
-#' }
 multiInput <- function(inputId, label, choices = NULL, selected = NULL, options = NULL, width = NULL, choiceNames = NULL, choiceValues = NULL) {
   selected <- shiny::restoreInput(id = inputId, default = selected)
   selectTag <- htmltools::tags$select(
@@ -97,10 +95,6 @@ multiInput <- function(inputId, label, choices = NULL, selected = NULL, options 
       type = "application/json", `data-for` = inputId,
       jsonlite::toJSON(options, auto_unbox = TRUE, json_verbatim = TRUE)
     )
-    # htmltools::tags$script(
-    #   sprintf("$('#%s').multi(%s);",
-    #           escape_jquery(inputId), jsonlite::toJSON(options, auto_unbox = TRUE))
-    # )
   )
   attachShinyWidgetsDep(multiTag, "multi")
 }
@@ -160,8 +154,6 @@ makeChoices <- function(choices = NULL, choiceNames = NULL, choiceValues = NULL,
 #' @importFrom utils capture.output
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'
 #' library(shiny)
@@ -215,15 +207,13 @@ makeChoices <- function(choices = NULL, choiceNames = NULL, choiceValues = NULL,
 #' shinyApp(ui, server)
 #'
 #' }
-#'
-#' }
 updateMultiInput <- function (session, inputId, label = NULL, selected = NULL, choices = NULL) {
   choices <- if (!is.null(choices))
     choicesWithNames(choices)
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
   options <- if (!is.null(choices))
-    paste(capture.output(makeChoices(choices, selected = selected)), collapse = "\n")
+    as.character(makeChoices(choices, selected = selected))
   message <- dropNulls(list(label = label, options = options, value = selected))
   session$sendInputMessage(inputId, message)
 }

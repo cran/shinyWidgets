@@ -4,8 +4,14 @@
 \alias{textInputAddon}
 \title{Text with Add-on Input Control}
 \usage{
-textInputAddon(inputId, label, value = "", placeholder = NULL, addon,
-  width = NULL)
+textInputAddon(
+  inputId,
+  label,
+  value = "",
+  placeholder = NULL,
+  addon,
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -27,7 +33,6 @@ A switch control that can be added to a UI definition.
 Create text field with add-on.
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 shinyApp(
@@ -41,7 +46,6 @@ shinyApp(
     })
   }
 )
-}
 }
 
 }

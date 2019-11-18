@@ -23,7 +23,6 @@
 #'
 #'
 #' @examples
-#' \dontrun{
 #' ## Only run examples in interactive R sessions
 #' if (interactive()) {
 #'
@@ -31,177 +30,40 @@
 #' shinyWidgetsGallery()
 #'
 #'
-#' # Simple example
+#' # Basic usage
 #' library("shiny")
+#' library(shinyWidgets)
+#'
 #' ui <- fluidPage(
-#'   pickerInput(inputId = "somevalue", label = "A label", choices = c("a", "b")),
+#'   pickerInput(
+#'     inputId = "somevalue",
+#'     label = "A label",
+#'     choices = c("a", "b")
+#'   ),
 #'   verbatimTextOutput("value")
 #' )
+#'
 #' server <- function(input, output) {
-#'   output$value <- renderPrint({ input$somevalue })
-#' }
-#' shinyApp(ui, server)
-#'
-#'
-#' ### Add actions box for selecting
-#' # deselecting all options
-#'
-#' library("shiny")
-#' library("shinyWidgets")
-#'
-#' ui <- fluidPage(
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p1",
-#'     label = "Select all option",
-#'     choices = rownames(mtcars),
-#'     multiple = TRUE,
-#'     options = list(`actions-box` = TRUE)
-#'   ),
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p2",
-#'     label = "Select all option / custom text",
-#'     choices = rownames(mtcars),
-#'     multiple = TRUE,
-#'     options = list(
-#'       `actions-box` = TRUE,
-#'       `deselect-all-text` = "None...",
-#'       `select-all-text` = "Yeah, all !",
-#'       `none-selected-text` = "zero"
-#'     )
-#'   )
-#' )
-#'
-#' server <- function(input, output, session) {
-#'
+#'   output$value <- renderPrint(input$somevalue)
 #' }
 #'
-#' shinyApp(ui = ui, server = server)
-#'
-#'
-#'
-#' ### Customize the values displayed in the box ----
-#'
-#' library("shiny")
-#' library("shinyWidgets")
-#'
-#' ui <- fluidPage(
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p1",
-#'     label = "Default",
-#'     multiple = TRUE,
-#'     choices = rownames(mtcars),
-#'     selected = rownames(mtcars)[1:5]
-#'   ),
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p1b",
-#'     label = "Default with | separator",
-#'     multiple = TRUE,
-#'     choices = rownames(mtcars),
-#'     selected = rownames(mtcars)[1:5],
-#'     options = list(`multiple-separator` = " | ")
-#'   ),
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p2",
-#'     label = "Static",
-#'     multiple = TRUE,
-#'     choices = rownames(mtcars),
-#'     selected = rownames(mtcars)[1:5],
-#'     options = list(`selected-text-format`= "static",
-#'                    title = "Won't change")
-#'   ),
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p3",
-#'     label = "Count",
-#'     multiple = TRUE,
-#'     choices = rownames(mtcars),
-#'     selected = rownames(mtcars)[1:5],
-#'     options = list(`selected-text-format`= "count")
-#'   ),
-#'   br(),
-#'   pickerInput(
-#'     inputId = "p3",
-#'     label = "Customize count",
-#'     multiple = TRUE,
-#'     choices = rownames(mtcars),
-#'     selected = rownames(mtcars)[1:5],
-#'     options = list(
-#'       `selected-text-format`= "count",
-#'       `count-selected-text` = "{0} models choosed (on a total of {1})"
-#'     )
-#'   )
-#' )
-#'
-#' server <- function(input, output, session) {
-#'
-#' }
-#'
-#' shinyApp(ui = ui, server = server)
-#'
-#'
-#'
-#' ### Limit the number of selections ----
-#'
-#' library(shiny)
-#' library(shinyWidgets)
-#' ui <- fluidPage(
-#'   pickerInput(
-#'     inputId = "groups",
-#'     label = "Select one from each group below:",
-#'     choices = list(
-#'       Group1 = c("1", "2", "3", "4"),
-#'       Group2 = c("A", "B", "C", "D")
-#'     ),
-#'     multiple = TRUE,
-#'     options =  list("max-options-group" = 1)
-#'   ),
-#'   verbatimTextOutput(outputId = "res_grp"),
-#'   pickerInput(
-#'     inputId = "groups_2",
-#'     label = "Select two from each group below:",
-#'     choices = list(
-#'       Group1 = c("1", "2", "3", "4"),
-#'       Group2 = c("A", "B", "C", "D")
-#'     ),
-#'     multiple = TRUE,
-#'     options =  list("max-options-group" = 2)
-#'   ),
-#'   verbatimTextOutput(outputId = "res_grp_2"),
-#'   pickerInput(
-#'     inputId = "classic",
-#'     label = "Select max two option below:",
-#'     choices = c("A", "B", "C", "D"),
-#'     multiple = TRUE,
-#'     options =  list(
-#'       "max-options" = 2,
-#'       "max-options-text" = "No more!"
-#'     )
-#'   ),
-#'   verbatimTextOutput(outputId = "res_classic")
-#' )
-#' server <- function(input, output) {
-#'   output$res_grp <- renderPrint(input$groups)
-#'   output$res_grp_2 <- renderPrint(input$groups_2)
-#'   output$res_classic <- renderPrint(input$classic)
-#' }
 #' shinyApp(ui, server)
 #'
 #' }
-#' }
+#'
+#' @example examples/picker-select-all.R
+#' @example examples/picker-value-display.R
+#' @example examples/picker-limits.R
 #'
 #' @importFrom shiny restoreInput
-#' @importFrom htmltools tags htmlEscape
+#' @importFrom htmltools tags htmlEscape validateCssUnit
+#'  tagAppendAttributes tagAppendChildren tag
 #'
 #' @export
 pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multiple = FALSE,
                         options = list(), choicesOpt = NULL, width = NULL, inline = FALSE) {
   choices <- choicesWithNames(choices)
-  selected <- shiny::restoreInput(id = inputId, default = selected)
+  selected <- restoreInput(id = inputId, default = selected)
   if (!is.null(options) && length(options) > 0)
     names(options) <- paste("data", names(options), sep = "-")
   if (!is.null(width))
@@ -216,8 +78,16 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
     else x
   })
   maxOptGroup <- options[["data-max-options-group"]]
-  selectProps <- dropNulls(c(list(id = inputId, class = "selectpicker form-control"), options))
-  selectTag <- do.call(tags$select, c(selectProps, pickerSelectOptions(choices, selected, choicesOpt, maxOptGroup)))
+
+  selectTag <- tag("select", dropNulls(options))
+  selectTag <- tagAppendAttributes(
+    tag = selectTag,
+    id = inputId,
+    class = "selectpicker form-control"
+  )
+  selectTag <- tagAppendChildren(
+    tag = selectTag, pickerSelectOptions(choices, selected, choicesOpt, maxOptGroup)
+  )
 
   if (multiple)
     selectTag$attribs$multiple <- "multiple"
@@ -225,17 +95,16 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
   labelClass <- "control-label"
   if (inline) {
     divClass <- paste(divClass, "form-horizontal")
-    selectTag <- htmltools::tags$div(class="col-sm-10", selectTag)
+    selectTag <- tags$div(class="col-sm-10", selectTag)
     labelClass <- paste(labelClass, "col-sm-2")
   }
-  pickerTag <- htmltools::tags$div(
+  pickerTag <- tags$div(
     class = divClass,
-    style = if (!is.null(width)) paste0("width: ", htmltools::validateCssUnit(width), ";"),
-    if (!is.null(label)) htmltools::tags$label(class = labelClass, `for` = inputId, label),
-    if (!is.null(label) & !inline) htmltools::tags$br(),
+    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    if (!is.null(label)) tags$label(class = labelClass, `for` = inputId, label),
     selectTag
   )
-  # Dep
+  # Deps
   attachShinyWidgetsDep(pickerTag, "picker")
 }
 
@@ -262,7 +131,6 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' if (interactive()) {
 #'
 #' library("shiny")
@@ -335,15 +203,19 @@ pickerInput <- function(inputId, label = NULL, choices, selected = NULL, multipl
 #' shinyApp(ui = ui, server = server)
 #'
 #' }
-#' }
-updatePickerInput <- function (session, inputId, label = NULL, selected = NULL, choices = NULL, choicesOpt = NULL) {
+updatePickerInput <- function (session, inputId, label = NULL,
+                               selected = NULL, choices = NULL,
+                               choicesOpt = NULL) {
   choices <- if (!is.null(choices))
     choicesWithNames(choices)
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
-  options <- if (!is.null(choices))
+  choices <- if (!is.null(choices))
     paste(capture.output(pickerSelectOptions(choices, selected, choicesOpt)), collapse = "\n")
-  message <- dropNulls(list(label = label, options = options, value = selected))
+  options = NULL
+  if (!is.null(options))
+    names(options) <- paste0("data-", names(options))
+  message <- dropNulls(list(label = label, choices = choices, value = selected, options = options))
   session$sendInputMessage(inputId, message)
 }
 
@@ -357,10 +229,13 @@ updatePickerInput <- function (session, inputId, label = NULL, selected = NULL, 
 #' @param selected selected value if any
 #' @param choicesOpt additional option ofr choices
 #'
-#' @importFrom htmltools HTML htmlEscape tagList
+#' @importFrom htmltools HTML htmlEscape tagList tags
 #'
 #' @noRd
 pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, maxOptGroup = NULL) {
+  if (is.null(choicesOpt) & is.null(maxOptGroup)) {
+    return(selectOptions(choices, selected))
+  }
   if (is.null(choicesOpt))
     choicesOpt <- list()
   l <- sapply(choices, length)
@@ -371,8 +246,9 @@ pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, max
     label <- names(choices)[i]
     choice <- choices[[i]]
     if (is.list(choice)) {
-      optionTag <- list(
-        label = htmltools::htmlEscape(label, TRUE),
+      tags$optgroup(
+        label = htmlEscape(label, TRUE),
+        `data-max-options` = if (!is.null(maxOptGroup)) maxOptGroup[i],
         pickerSelectOptions(
           choice, selected,
           choicesOpt = lapply(
@@ -383,25 +259,43 @@ pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, max
           )
         )
       )
-      if (!is.null(maxOptGroup))
-        optionTag[["data-max-options"]] <- maxOptGroup[i]
-      optionTag <- dropNulls(optionTag)
-      do.call(htmltools::tags$optgroup, optionTag)
     } else {
-      optionTag <- list(
-        value = choice, htmltools::HTML(htmltools::htmlEscape(label)),
+      tags$option(
+        value = choice,
+        HTML(htmlEscape(label)),
         style = choicesOpt$style[i],
         `data-icon` = choicesOpt$icon[i],
         `data-subtext` = choicesOpt$subtext[i],
         `data-content` = choicesOpt$content[i],
+        `data-tokens` = choicesOpt$tokens[i],
         disabled = if (!is.null(choicesOpt$disabled[i]) && choicesOpt$disabled[i]) "disabled",
         selected = if (choice %in% selected) "selected" else NULL
       )
-      # optionTag$attribs <- c(optionTag$attribs, list(if (choice %in% selected) " selected" else ""))
-      optionTag <- dropNulls(optionTag)
-      do.call(htmltools::tags$option, optionTag)
     }
   })
-  return(htmltools::tagList(html))
+  return(tagList(html))
 }
+
+# From shiny/input-select.R, faster alternative if no choice options specific to picker
+selectOptions <- function(choices, selected = NULL) {
+  html <- mapply(choices, names(choices), FUN = function(choice, label) {
+    if (is.list(choice)) {
+      sprintf(
+        '<optgroup label="%s">\n%s\n</optgroup>',
+        htmlEscape(label, TRUE),
+        selectOptions(choice, selected)
+      )
+
+    } else {
+      sprintf(
+        '<option value="%s"%s>%s</option>',
+        htmlEscape(choice, TRUE),
+        if (choice %in% selected) ' selected' else '',
+        htmlEscape(label)
+      )
+    }
+  })
+  HTML(paste(html, collapse = '\n'))
+}
+
 

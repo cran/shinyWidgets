@@ -4,8 +4,14 @@
 \alias{actionGroupButtons}
 \title{Actions Buttons Group Inputs}
 \usage{
-actionGroupButtons(inputIds, labels, status = "default",
-  size = "normal", direction = "horizontal", fullwidth = FALSE)
+actionGroupButtons(
+  inputIds,
+  labels,
+  status = "default",
+  size = "normal",
+  direction = "horizontal",
+  fullwidth = FALSE
+)
 }
 \arguments{
 \item{inputIds}{The \code{input}s slot that will be used to access the value, one for each button.}
@@ -28,8 +34,6 @@ An actions buttons group control that can be added to a UI definition.
 Create a group of actions buttons.
 }
 \examples{
-
-\dontrun{
 if (interactive()) {
   library("shiny")
   library("shinyWidgets")
@@ -58,6 +62,4 @@ if (interactive()) {
 
   shinyApp(ui = ui, server = server)
 }
-}
-
 }

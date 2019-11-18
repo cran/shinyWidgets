@@ -4,8 +4,7 @@
 \alias{animateOptions}
 \title{Animate options}
 \usage{
-animateOptions(enter = "fadeInDown", exit = "fadeOutUp",
-  duration = 1)
+animateOptions(enter = "fadeInDown", exit = "fadeOutUp", duration = 1)
 }
 \arguments{
 \item{enter}{Animation name on appearance}
@@ -21,7 +20,6 @@ a list
 Animate options
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
@@ -31,7 +29,6 @@ dropdown(
  animate = animateOptions(enter = "fadeInDown", exit = "fadeOutUp", duration = 3)
 )
 
-}
 }
 }
 \seealso{

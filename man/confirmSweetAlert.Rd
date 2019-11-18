@@ -4,10 +4,19 @@
 \alias{confirmSweetAlert}
 \title{Launch a confirmation dialog}
 \usage{
-confirmSweetAlert(session, inputId, title = NULL, text = NULL,
-  type = "question", btn_labels = c("Cancel", "Confirm"),
-  btn_colors = NULL, closeOnClickOutside = FALSE,
-  showCloseButton = FALSE, html = FALSE, ...)
+confirmSweetAlert(
+  session,
+  inputId,
+  title = NULL,
+  text = NULL,
+  type = "question",
+  btn_labels = c("Cancel", "Confirm"),
+  btn_colors = NULL,
+  closeOnClickOutside = FALSE,
+  showCloseButton = FALSE,
+  html = FALSE,
+  ...
+)
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to shinyServer.}
@@ -38,9 +47,6 @@ the modal by clicking outside of it, or not.}
 Launch a popup to ask confirmation to the user
 }
 \examples{
-
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -163,8 +169,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

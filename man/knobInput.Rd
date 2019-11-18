@@ -4,13 +4,30 @@
 \alias{knobInput}
 \title{Knob Input}
 \usage{
-knobInput(inputId, label, value, min = 0, max = 100, step = 1,
-  angleOffset = 0, angleArc = 360, cursor = FALSE,
-  thickness = NULL, lineCap = c("default", "round"),
-  displayInput = TRUE, displayPrevious = FALSE,
-  rotation = c("clockwise", "anticlockwise"), fgColor = NULL,
-  inputColor = NULL, bgColor = NULL, readOnly = FALSE, skin = NULL,
-  width = NULL, height = NULL, immediate = TRUE)
+knobInput(
+  inputId,
+  label,
+  value,
+  min = 0,
+  max = 100,
+  step = 1,
+  angleOffset = 0,
+  angleArc = 360,
+  cursor = FALSE,
+  thickness = NULL,
+  lineCap = c("default", "round"),
+  displayInput = TRUE,
+  displayPrevious = FALSE,
+  rotation = c("clockwise", "anticlockwise"),
+  fgColor = NULL,
+  inputColor = NULL,
+  bgColor = NULL,
+  readOnly = FALSE,
+  skin = NULL,
+  width = NULL,
+  height = NULL,
+  immediate = TRUE
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -51,9 +68,9 @@ knobInput(inputId, label, value, min = 0, max = 100, step = 1,
 
 \item{skin}{Change Knob skin, only one option available : 'tron'.}
 
-\item{width}{The width of the input, e.g. \code{400px}, or \code{100\%}.}
-
-\item{height}{The height of the input, e.g. \code{400px}, or \code{100\%}.}
+\item{width, height}{The width and height of the input, e.g. \code{400px}, or \code{100\%}.
+A value a pixel is recommended, otherwise the knob won't be able to initialize itself in some case
+(if hidden at start for example).}
 
 \item{immediate}{If \code{TRUE} (default), server-side value is updated each time value change,
 if \code{FALSE} value is updated when user release the widget.}
@@ -65,8 +82,6 @@ Numeric value server-side.
 Knob Input
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -92,8 +107,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

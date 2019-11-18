@@ -4,8 +4,14 @@
 \alias{updateSearchInput}
 \title{Change the value of a search input on the client}
 \usage{
-updateSearchInput(session, inputId, label = NULL, value = NULL,
-  placeholder = NULL, trigger = FALSE)
+updateSearchInput(
+  session,
+  inputId,
+  label = NULL,
+  value = NULL,
+  placeholder = NULL,
+  trigger = FALSE
+)
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to \code{shinyServer}.}
@@ -27,8 +33,6 @@ Change the value of a search input on the client
 By default, only UI value is updated, use \code{trigger = TRUE} to update both UI and Server value.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -74,8 +78,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
 
 }
 }

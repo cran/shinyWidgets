@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.4.9
+Version: 0.5.0
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = "aut"),
@@ -36,11 +36,11 @@ Imports: shiny (>= 0.14), htmltools, jsonlite, grDevices, scales
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
-Suggests: shinydashboard, viridisLite, RColorBrewer, testthat, covr,
-        shinydashboardPlus, bs4Dash, argonR, argonDash, tablerDash
+RoxygenNote: 7.0.0
+Suggests: shinydashboard, testthat, covr, shinydashboardPlus, bs4Dash,
+        argonR, argonDash, tablerDash, ggplot2, DT
 NeedsCompilation: no
-Packaged: 2019-09-10 16:05:59 UTC; perri
+Packaged: 2019-11-18 13:20:51 UTC; perri
 Author: Victor Perrier [aut, cre],
   Fanny Meyer [aut],
   David Granjon [aut],
@@ -68,4 +68,4 @@ Author: Victor Perrier [aut, cre],
   Tobias Ahlin [ctb, cph] (CSS spin)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2019-09-10 16:40:05 UTC
+Date/Publication: 2019-11-18 13:50:03 UTC

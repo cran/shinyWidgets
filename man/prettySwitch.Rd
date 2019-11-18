@@ -4,9 +4,17 @@
 \alias{prettySwitch}
 \title{Pretty Switch Input}
 \usage{
-prettySwitch(inputId, label, value = FALSE, status = "default",
-  slim = FALSE, fill = FALSE, bigger = FALSE, inline = FALSE,
-  width = NULL)
+prettySwitch(
+  inputId,
+  label,
+  value = FALSE,
+  status = "default",
+  slim = FALSE,
+  fill = FALSE,
+  bigger = FALSE,
+  inline = FALSE,
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -37,8 +45,6 @@ A toggle switch to replace checkbox
 Appearance is better in a browser such as Chrome than in RStudio Viewer
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -87,9 +93,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
-
 
 }
 }

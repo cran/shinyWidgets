@@ -6,12 +6,29 @@
 \alias{updateProgressBar}
 \title{Progress Bars}
 \usage{
-progressBar(id, value, total = NULL, display_pct = FALSE,
-  size = NULL, status = NULL, striped = FALSE, title = NULL,
-  range_value = NULL, unit_mark = "\%")
+progressBar(
+  id,
+  value,
+  total = NULL,
+  display_pct = FALSE,
+  size = NULL,
+  status = NULL,
+  striped = FALSE,
+  title = NULL,
+  range_value = NULL,
+  unit_mark = "\%"
+)
 
-updateProgressBar(session, id, value, total = NULL, title = NULL,
-  status = NULL, range_value = NULL, unit_mark = "\%")
+updateProgressBar(
+  session,
+  id,
+  value,
+  total = NULL,
+  title = NULL,
+  status = NULL,
+  range_value = NULL,
+  unit_mark = "\%"
+)
 }
 \arguments{
 \item{id}{An id used to update the progress bar.
@@ -44,7 +61,6 @@ A progress bar that can be added to a UI definition.
 Create a progress bar to provide feedback on calculation.
 }
 \examples{
-\dontrun{
 if (interactive()) {
 
 library("shiny")
@@ -101,7 +117,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-}
 }
 }
 \seealso{

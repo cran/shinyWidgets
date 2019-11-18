@@ -4,9 +4,20 @@
 \alias{dropdown}
 \title{Dropdown}
 \usage{
-dropdown(..., style = "default", status = "default", size = "md",
-  icon = NULL, label = NULL, tooltip = FALSE, right = FALSE,
-  up = FALSE, width = NULL, animate = FALSE, inputId = NULL)
+dropdown(
+  ...,
+  style = "default",
+  status = "default",
+  size = "md",
+  icon = NULL,
+  label = NULL,
+  tooltip = FALSE,
+  right = FALSE,
+  up = FALSE,
+  width = NULL,
+  animate = FALSE,
+  inputId = NULL
+)
 }
 \arguments{
 \item{...}{List of tag to be displayed into the dropdown menu.}
@@ -44,7 +55,6 @@ This function is similar to \code{dropdownButton} but don't use Bootstrap, so yo
 Moreover you can add animations on the appearance / disappearance of the dropdown with animate.css.
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
@@ -111,7 +121,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-}
 }
 }
 \seealso{

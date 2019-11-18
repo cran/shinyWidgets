@@ -4,9 +4,15 @@
 \alias{updateAwesomeCheckboxGroup}
 \title{Change the value of a \code{\link{awesomeCheckboxGroup}} input on the client}
 \usage{
-updateAwesomeCheckboxGroup(session, inputId, label = NULL,
-  choices = NULL, selected = NULL, inline = FALSE,
-  status = "primary")
+updateAwesomeCheckboxGroup(
+  session,
+  inputId,
+  label = NULL,
+  choices = NULL,
+  selected = NULL,
+  inline = FALSE,
+  status = "primary"
+)
 }
 \arguments{
 \item{session}{The session object passed to function given to shinyServer.}
@@ -27,8 +33,6 @@ updateAwesomeCheckboxGroup(session, inputId, label = NULL,
 Change the value of a \code{\link{awesomeCheckboxGroup}} input on the client
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -71,8 +75,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

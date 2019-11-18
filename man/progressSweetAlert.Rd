@@ -4,9 +4,17 @@
 \alias{progressSweetAlert}
 \title{Progress bar in a sweet alert}
 \usage{
-progressSweetAlert(session, id, value, total = NULL,
-  display_pct = FALSE, size = NULL, status = NULL, striped = FALSE,
-  title = NULL)
+progressSweetAlert(
+  session,
+  id,
+  value,
+  total = NULL,
+  display_pct = FALSE,
+  size = NULL,
+  status = NULL,
+  striped = FALSE,
+  title = NULL
+)
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to shinyServer.}
@@ -31,8 +39,6 @@ progressSweetAlert(session, id, value, total = NULL,
 Progress bar in a sweet alert
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -75,8 +81,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

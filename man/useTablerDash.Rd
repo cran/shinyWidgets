@@ -7,11 +7,12 @@
 useTablerDash()
 }
 \description{
-Allow to use functions from 'tablerDash' into a classic 'shiny' app.
+Allow to use functions from 'tablerDash'
+ (\url{https://github.com/RinteRface/tablerDash})
+ into a classic 'shiny' app.
 }
 \examples{
-\dontrun{
- if (interactive()) {
+if (interactive()) {
   library(shiny)
   library(tablerDash)
   library(shinyWidgets)
@@ -186,6 +187,5 @@ Allow to use functions from 'tablerDash' into a classic 'shiny' app.
 
     }
   )
- }
 }
 }

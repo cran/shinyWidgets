@@ -4,8 +4,14 @@
 \alias{updatePickerInput}
 \title{Change the value of a select picker input on the client}
 \usage{
-updatePickerInput(session, inputId, label = NULL, selected = NULL,
-  choices = NULL, choicesOpt = NULL)
+updatePickerInput(
+  session,
+  inputId,
+  label = NULL,
+  selected = NULL,
+  choices = NULL,
+  choicesOpt = NULL
+)
 }
 \arguments{
 \item{session}{The session object passed to function given to shinyServer.}
@@ -27,7 +33,6 @@ then that name rather than the value is displayed to the user.}
 Change the value of a picker input on the client
 }
 \examples{
-\dontrun{
 if (interactive()) {
 
 library("shiny")
@@ -99,7 +104,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-}
 }
 }
 \seealso{

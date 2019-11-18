@@ -4,9 +4,16 @@
 \alias{updateAwesomeRadio}
 \title{Change the value of a radio input on the client}
 \usage{
-updateAwesomeRadio(session, inputId, label = NULL, choices = NULL,
-  selected = NULL, inline = FALSE, status = "primary",
-  checkbox = FALSE)
+updateAwesomeRadio(
+  session,
+  inputId,
+  label = NULL,
+  choices = NULL,
+  selected = NULL,
+  inline = FALSE,
+  status = "primary",
+  checkbox = FALSE
+)
 }
 \arguments{
 \item{session}{The session object passed to function given to shinyServer.}
@@ -29,8 +36,6 @@ updateAwesomeRadio(session, inputId, label = NULL, choices = NULL,
 Change the value of a radio input on the client
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -73,8 +78,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

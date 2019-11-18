@@ -4,11 +4,25 @@
 \alias{prettyCheckboxGroup}
 \title{Pretty Checkbox Group Input Control}
 \usage{
-prettyCheckboxGroup(inputId, label, choices = NULL, selected = NULL,
-  status = "default", shape = c("square", "curve", "round"),
-  outline = FALSE, fill = FALSE, thick = FALSE, animation = NULL,
-  icon = NULL, plain = FALSE, bigger = FALSE, inline = FALSE,
-  width = NULL, choiceNames = NULL, choiceValues = NULL)
+prettyCheckboxGroup(
+  inputId,
+  label,
+  choices = NULL,
+  selected = NULL,
+  status = "default",
+  shape = c("square", "curve", "round"),
+  outline = FALSE,
+  fill = FALSE,
+  thick = FALSE,
+  animation = NULL,
+  icon = NULL,
+  plain = FALSE,
+  bigger = FALSE,
+  inline = FALSE,
+  width = NULL,
+  choiceNames = NULL,
+  choiceValues = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -61,8 +75,6 @@ server will receive the input as a character vector
 of the selected values.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -123,8 +135,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
 
 }
 }

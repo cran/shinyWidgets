@@ -4,8 +4,13 @@
 \alias{awesomeCheckbox}
 \title{Awesome Checkbox Input Control}
 \usage{
-awesomeCheckbox(inputId, label, value = FALSE, status = "primary",
-  width = NULL)
+awesomeCheckbox(
+  inputId,
+  label,
+  value = FALSE,
+  status = "primary",
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -25,7 +30,6 @@ A checkbox control that can be added to a UI definition.
 Create a Font Awesome Bootstrap checkbox that can be used to specify logical values.
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
@@ -40,7 +44,6 @@ server <- function(input, output) {
   output$value <- renderText({ input$somevalue })
 }
 shinyApp(ui, server)
-}
 }
 
 }

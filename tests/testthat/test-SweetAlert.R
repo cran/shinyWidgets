@@ -25,7 +25,7 @@ test_that("insertUI Sweet Alert", {
   dep_sw <- session$lastInsertUI$content$deps
 
   expect_true(grepl(pattern = "sw-sa-deps", x = tag_sw))
-  expect_length(dep_sw, 2)
+  expect_length(dep_sw, 1)
 })
 
 
@@ -93,10 +93,10 @@ test_that("confirmSweetAlert", {
   sendCA_msg <- session$lastCustomMessage$message
 
   expect_identical(sendCA_msg$id, "MY_CONFIRMATION")
-  expect_length(sendCA_msg, 10)
-  expect_identical(sendCA_msg$title, "TITLE")
-  expect_is(sendCA_msg$text, "character")
-  expect_identical(sendCA_msg$type, "success")
+  expect_length(sendCA_msg, 3)
+  expect_identical(sendCA_msg$swal$title, "TITLE")
+  expect_is(sendCA_msg$swal$text, "character")
+  expect_identical(sendCA_msg$swal$type, "success")
 })
 
 
@@ -129,9 +129,9 @@ test_that("inputSweetAlert", {
   sendIA_msg <- session$lastCustomMessage$message
 
   expect_identical(sendIA_msg$id, "MY_INPUT")
-  expect_length(sendIA_msg, 7)
-  expect_identical(sendIA_msg$title, "TITLE")
-  expect_is(sendIA_msg$text, "json")
+  expect_length(sendIA_msg, 3)
+  expect_identical(sendIA_msg$swal$title, "TITLE")
+  expect_is(sendIA_msg$swal$text, "json")
 })
 
 

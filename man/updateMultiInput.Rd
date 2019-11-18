@@ -4,8 +4,13 @@
 \alias{updateMultiInput}
 \title{Change the value of a multi input on the client}
 \usage{
-updateMultiInput(session, inputId, label = NULL, selected = NULL,
-  choices = NULL)
+updateMultiInput(
+  session,
+  inputId,
+  label = NULL,
+  selected = NULL,
+  choices = NULL
+)
 }
 \arguments{
 \item{session}{The session object passed to function given to shinyServer.}
@@ -25,8 +30,6 @@ Change the value of a multi input on the client
 Thanks to \href{https://github.com/ifellows}{Ian Fellows} for this one !
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -78,8 +81,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
 
 }
 }

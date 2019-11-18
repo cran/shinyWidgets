@@ -4,8 +4,15 @@
 \alias{awesomeCheckboxGroup}
 \title{Awesome Checkbox Group Input Control}
 \usage{
-awesomeCheckboxGroup(inputId, label, choices, selected = NULL,
-  inline = FALSE, status = "primary", width = NULL)
+awesomeCheckboxGroup(
+  inputId,
+  label,
+  choices,
+  selected = NULL,
+  inline = FALSE,
+  status = "primary",
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -29,8 +36,6 @@ A checkbox control that can be added to a UI definition.
 Create a Font Awesome Bootstrap checkbox that can be used to specify logical values.
 }
 \examples{
-
-\dontrun{
 if (interactive()) {
 
 
@@ -65,7 +70,6 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 
-}
 }
 }
 \seealso{

@@ -4,9 +4,17 @@
 \alias{updateSwitchInput}
 \title{Change the value of a switch input on the client}
 \usage{
-updateSwitchInput(session, inputId, value = NULL, label = NULL,
-  onLabel = NULL, offLabel = NULL, onStatus = NULL,
-  offStatus = NULL, disabled = NULL)
+updateSwitchInput(
+  session,
+  inputId,
+  value = NULL,
+  label = NULL,
+  onLabel = NULL,
+  offLabel = NULL,
+  onStatus = NULL,
+  offStatus = NULL,
+  disabled = NULL
+)
 }
 \arguments{
 \item{session}{The session object passed to function given to shinyServer.}
@@ -31,8 +39,6 @@ updateSwitchInput(session, inputId, value = NULL, label = NULL,
 Change the value of a switch input on the client
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
   library("shiny")
   library("shinyWidgets")
@@ -228,8 +234,6 @@ if (interactive()) {
   }
 
   shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

@@ -4,10 +4,21 @@
 \alias{dropdownButton}
 \title{Dropdown Button}
 \usage{
-dropdownButton(..., circle = TRUE, status = "default",
-  size = "default", icon = NULL, label = NULL, tooltip = FALSE,
-  right = FALSE, up = FALSE, width = NULL, margin = "10px",
-  inline = FALSE, inputId = NULL)
+dropdownButton(
+  ...,
+  circle = TRUE,
+  status = "default",
+  size = "default",
+  icon = NULL,
+  label = NULL,
+  tooltip = FALSE,
+  right = FALSE,
+  up = FALSE,
+  width = NULL,
+  margin = "10px",
+  inline = FALSE,
+  inputId = NULL
+)
 }
 \arguments{
 \item{...}{List of tag to be displayed into the dropdown menu.}
@@ -50,7 +61,6 @@ dropdown and you can't nest them. Instead use \code{\link{dropdown}},
 it has similar features but is built differently so it works.
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
@@ -99,6 +109,5 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 
-}
 }
 }

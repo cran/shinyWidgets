@@ -4,9 +4,16 @@
 \alias{multiInput}
 \title{Create a multiselect input control}
 \usage{
-multiInput(inputId, label, choices = NULL, selected = NULL,
-  options = NULL, width = NULL, choiceNames = NULL,
-  choiceValues = NULL)
+multiInput(
+  inputId,
+  label,
+  choices = NULL,
+  selected = NULL,
+  options = NULL,
+  width = NULL,
+  choiceNames = NULL,
+  choiceValues = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -32,7 +39,6 @@ A multiselect control
 A user-friendly replacement for select boxes with the multiple attribute
 }
 \examples{
-\dontrun{
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
@@ -90,7 +96,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-}
 }
 }
 \seealso{

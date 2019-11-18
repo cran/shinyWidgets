@@ -21,10 +21,11 @@
 #' @param bgColor Background color.
 #' @param readOnly Disable knob (\code{TRUE} or \code{FALSE}).
 #' @param skin Change Knob skin, only one option available : 'tron'.
-#' @param width The width of the input, e.g. \code{400px}, or \code{100\%}.
-#' @param height The height of the input, e.g. \code{400px}, or \code{100\%}.
+#' @param width,height The width and height of the input, e.g. \code{400px}, or \code{100\%}.
+#'  A value a pixel is recommended, otherwise the knob won't be able to initialize itself in some case
+#'  (if hidden at start for example).
 #' @param immediate If \code{TRUE} (default), server-side value is updated each time value change,
-#' if \code{FALSE} value is updated when user release the widget.
+#'  if \code{FALSE} value is updated when user release the widget.
 #'
 #' @return Numeric value server-side.
 #' @export
@@ -35,8 +36,6 @@
 #' @importFrom htmltools tags
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'
 #' library("shiny")
@@ -62,8 +61,6 @@
 #' }
 #'
 #' shinyApp(ui = ui, server = server)
-#'
-#' }
 #'
 #' }
 knobInput <- function(inputId, label, value, min = 0, max = 100, step = 1,
@@ -122,8 +119,6 @@ knobInput <- function(inputId, label, value, min = 0, max = 100, step = 1,
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'
 #' library("shiny")
@@ -186,8 +181,6 @@ knobInput <- function(inputId, label, value, min = 0, max = 100, step = 1,
 #' }
 #'
 #' shinyApp(ui = ui, server = server)
-#'
-#' }
 #'
 #' }
 updateKnobInput <- function(session, inputId, label = NULL, value = NULL, options = NULL) {

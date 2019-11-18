@@ -22,7 +22,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "selectPicker",
-          version = "1.13.10",
+          version = "1.13.12",
           src = c(href="shinyWidgets/selectPicker"),
           script = "js/bootstrap-select.min.js",
           stylesheet = "css/bootstrap-select.min.css"
@@ -45,20 +45,9 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         htmltools::htmlDependency(
           name = "bootstrap-switch",
           version = "3.3.4",
-          src = c(href="shinyWidgets/switchInput/bootstrap-switch-3.3.4"),
+          src = c(href="shinyWidgets/bootstrap-switch/bootstrap-switch-3.3.4"),
           script = "bootstrap-switch.min.js",
           stylesheet = "bootstrap-switch.min.css"
-        )
-      )
-    } else if (widget == "sweetalert") {
-      dep <- list(
-        dep,
-        htmltools::htmlDependency(
-          name = "sweetAlert",
-          version = "0.2.0",
-          src = c(href="shinyWidgets/sweetAlert"),
-          script = c("js/sweetalert2.all.min.js", "sweetalert-bindings.js")#,
-          # stylesheet = "css/sweetalert2.min.css"
         )
       )
     } else if (widget == "multi") {
@@ -78,8 +67,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         htmltools::htmlDependency(
           name = "jquery-knob", version = "1.2.13",
           src = c(href = "shinyWidgets/jquery-knob"),
-          script = c("jquery.knob.min.js",
-                     "knob-input-binding.js")
+          script = c("jquery.knob.min.js")
         )
       )
     } else if (widget == "dropdown") {
@@ -162,7 +150,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
           name = "air-datepicker",
           version = "2.2.3",
           src = c(href="shinyWidgets/air-datepicker"),
-          script = c("datepicker.min.js", "datepicker-bindings.js"),
+          script = "datepicker.min.js",
           stylesheet = "datepicker.min.css"
         )
       )

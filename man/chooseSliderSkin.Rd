@@ -4,8 +4,10 @@
 \alias{chooseSliderSkin}
 \title{Theme selector for \code{sliderInput}}
 \usage{
-chooseSliderSkin(skin = c("Shiny", "Flat", "Modern", "Nice", "Simple",
-  "HTML5", "Round", "Square"), color = NULL)
+chooseSliderSkin(
+  skin = c("Shiny", "Flat", "Modern", "Nice", "Simple", "HTML5", "Round", "Square"),
+  color = NULL
+)
 }
 \arguments{
 \item{skin}{The \code{skin} to apply. Choose among 5 different flavors,
@@ -22,8 +24,6 @@ Customize the appearance of the original shiny's \code{sliderInput}
 It is not currently possible to apply multiple themes at the same time.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -78,9 +78,6 @@ server <- function(input, output) {
 }
 
 shinyApp(ui, server)
-
-}
-
 
 }
 }

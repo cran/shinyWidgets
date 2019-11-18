@@ -4,10 +4,22 @@
 \alias{prettyCheckbox}
 \title{Pretty Checkbox Input}
 \usage{
-prettyCheckbox(inputId, label, value = FALSE, status = "default",
-  shape = c("square", "curve", "round"), outline = FALSE,
-  fill = FALSE, thick = FALSE, animation = NULL, icon = NULL,
-  plain = FALSE, bigger = FALSE, inline = FALSE, width = NULL)
+prettyCheckbox(
+  inputId,
+  label,
+  value = FALSE,
+  status = "default",
+  shape = c("square", "curve", "round"),
+  outline = FALSE,
+  fill = FALSE,
+  thick = FALSE,
+  animation = NULL,
+  icon = NULL,
+  plain = FALSE,
+  bigger = FALSE,
+  inline = FALSE,
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -51,8 +63,6 @@ Due to the nature of different checkbox design, certain animations are not appli
 You can find examples on the pretty-checkbox official page : \url{https://lokesh-coder.github.io/pretty-checkbox/}.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library(shiny)
@@ -161,8 +171,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
 
 }
 }

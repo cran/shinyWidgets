@@ -4,8 +4,14 @@
 \alias{wNumbFormat}
 \title{Format numbers in noUiSliderInput}
 \usage{
-wNumbFormat(decimals = NULL, mark = NULL, thousand = NULL,
-  prefix = NULL, suffix = NULL, negative = NULL)
+wNumbFormat(
+  decimals = NULL,
+  mark = NULL,
+  thousand = NULL,
+  prefix = NULL,
+  suffix = NULL,
+  negative = NULL
+)
 }
 \arguments{
 \item{decimals}{The number of decimals to include in
@@ -34,8 +40,6 @@ Format numbers in noUiSliderInput
 Performed via wNumb JavaScript library : \url{https://refreshless.com/wnumb/}.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library( shiny )
@@ -79,8 +83,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-}
 
 }
 }

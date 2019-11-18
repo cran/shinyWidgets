@@ -4,8 +4,7 @@
 \alias{updateKnobInput}
 \title{Change the value of a knob input on the client}
 \usage{
-updateKnobInput(session, inputId, label = NULL, value = NULL,
-  options = NULL)
+updateKnobInput(session, inputId, label = NULL, value = NULL, options = NULL)
 }
 \arguments{
 \item{session}{Standard shiny \code{session}.}
@@ -22,8 +21,6 @@ updateKnobInput(session, inputId, label = NULL, value = NULL,
 Change the value of a knob input on the client
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
 library("shiny")
@@ -86,8 +83,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-}
 
 }
 }

@@ -4,8 +4,16 @@
 \alias{actionBttn}
 \title{Awesome action button}
 \usage{
-actionBttn(inputId, label = NULL, icon = NULL, style = "unite",
-  color = "default", size = "md", block = FALSE, no_outline = TRUE)
+actionBttn(
+  inputId,
+  label = NULL,
+  icon = NULL,
+  style = "unite",
+  color = "default",
+  size = "md",
+  block = FALSE,
+  no_outline = TRUE
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -32,7 +40,6 @@ keyboard/interact using mouse or touch.}
 Like \code{actionButton} but awesome, via \url{https://bttn.surge.sh/}
 }
 \examples{
-\dontrun{
 if (interactive()) {
 
 library(shiny)
@@ -69,7 +76,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-}
 }
 }
 \seealso{
