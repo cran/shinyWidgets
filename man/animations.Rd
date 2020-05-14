@@ -4,9 +4,11 @@
 \name{animations}
 \alias{animations}
 \title{Animation names}
-\format{A list of lists}
+\format{
+A list of lists
+}
 \source{
-\url{https://github.com/daneden/animate.css/blob/master/animate-config.json}
+\url{https://github.com/animate-css/animate.css}
 }
 \usage{
 animations

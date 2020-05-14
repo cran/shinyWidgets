@@ -18,6 +18,7 @@ airDatepickerInput(
   separator = " - ",
   placeholder = NULL,
   dateFormat = "yyyy-mm-dd",
+  firstDay = NULL,
   minDate = NULL,
   maxDate = NULL,
   disabledDates = NULL,
@@ -34,6 +35,7 @@ airDatepickerInput(
   addon = c("right", "left", "none"),
   language = "en",
   inline = FALSE,
+  onlyTimepicker = FALSE,
   width = NULL
 )
 
@@ -71,7 +73,11 @@ If \code{numeric} is passed, then amount of selected dates will be limited by it
 
 \item{placeholder}{A character string giving the user a hint as to what can be entered into the control.}
 
-\item{dateFormat}{Format to use to display date(s), default to \code{"yyyy-mm-dd"}}
+\item{dateFormat}{Format to use to display date(s), default to \code{"yyyy-mm-dd"}.}
+
+\item{firstDay}{Day index from which week will be started. Possible values are from 0 to 6, where
+0 - Sunday and 6 - Saturday. By default value is taken from current localization,
+but if it passed here then it will have higher priority.}
 
 \item{minDate}{The minimum allowed date. Either a Date object, or a string in \code{yyyy-mm-dd} format.}
 
@@ -81,7 +87,7 @@ If \code{numeric} is passed, then amount of selected dates will be limited by it
 
 \item{view}{Starting view, one of \code{'days'} (default), \code{'months'} or \code{'years'}.}
 
-\item{startView}{Date shown in calendar when date picker is openned.}
+\item{startView}{Date shown in calendar when date picker is opened.}
 
 \item{minView}{Minimal view, one of \code{'days'} (default), \code{'months'} or \code{'years'}.}
 
@@ -114,6 +120,8 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 
 \item{inline}{If \code{TRUE}, datepicker will always be visible.}
 
+\item{onlyTimepicker}{Display only the time picker.}
+
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.}
 
 \item{dateTimeSeparator}{Separator between date and time, default to \code{" "}.}
@@ -144,7 +152,7 @@ An alternative to \code{dateInput} to select single, multiple or date range.
  And two alias to select months or years.
 }
 \note{
-This widget prevents \code{dateInput} from working, don't use both !
+Since shinyWidgets 0.5.2 there's no more conflicts with \code{dateInput}.
 }
 \examples{
 if (interactive()) {

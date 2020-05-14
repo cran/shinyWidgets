@@ -184,7 +184,13 @@ $.extend(AirPickerInputBinding, {
         .datepicker()
         .data("datepicker")
         .update(data.options);
+
+      if (data.options.hasOwnProperty("startView")) {
+        var dp = $(el).datepicker().data("datepicker");
+        dp.date = new Date(data.options.startView);
+      }
     }
+
 
     if (data.hasOwnProperty("placeholder")) {
       $("#" + data.id)[0].placeholder = data.placeholder;
@@ -193,7 +199,7 @@ $.extend(AirPickerInputBinding, {
     $(el).trigger("change");
   }
 });
-Shiny.inputBindings.register(AirPickerInputBinding, "shiny.AirPickerInput");
+Shiny.inputBindings.register(AirPickerInputBinding, "shinyWidgets.AirPickerInput");
 
 /*
 function parse_date(date) {

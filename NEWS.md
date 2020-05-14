@@ -1,3 +1,25 @@
+shinyWidgets 0.5.2
+======================
+
+* New function `execute_safely()` to display a message in case of error and don't stop application.
+* `airDatepickerInput()` has two new arguments: 
+  + `onlyTimepicker`: to only display the time picker part of the widget.
+  + `firstDay`: day index from which week will be started
+* `knobInput()` has two new arguments : `pre` and `post` to add prefix/suffix to the value displayed.
+* Updated `awesome*()` dependencies.
+* Sweet alert family:
+    + update dependencies to 9.10.13
+    + New function `show_toast()` to display toast notification.
+    + New functions `show_alert()` and `ask_confirmation()` aliases for `sendSweetAlert()` and `confirmSweetAlert()` with optional session argument.
+
+
+### Bug fixes
+
+* Changes in `dropMenu()` bindings to work with inputs updates.
+* `downloadBttn()` worked only when clicking the label, now you can click the full button [#271](https://github.com/dreamRs/shinyWidgets/issues/271).
+
+
+
 shinyWidgets 0.5.1
 ======================
 

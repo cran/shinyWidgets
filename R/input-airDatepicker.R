@@ -14,12 +14,15 @@
 #' @param timepicker Add a timepicker below calendar to select time.
 #' @param separator Separator between dates when several are selected, default to \code{" - "}.
 #' @param placeholder A character string giving the user a hint as to what can be entered into the control.
-#' @param dateFormat Format to use to display date(s), default to \code{"yyyy-mm-dd"}
+#' @param dateFormat Format to use to display date(s), default to \code{"yyyy-mm-dd"}.
+#' @param firstDay Day index from which week will be started. Possible values are from 0 to 6, where
+#'  0 - Sunday and 6 - Saturday. By default value is taken from current localization,
+#'  but if it passed here then it will have higher priority.
 #' @param minDate The minimum allowed date. Either a Date object, or a string in \code{yyyy-mm-dd} format.
 #' @param maxDate The maximum allowed date. Either a Date object, or a string in \code{yyyy-mm-dd} format.
 #' @param disabledDates A vector of dates to disable, e.g. won't be able to select one of dates passed.
 #' @param view Starting view, one of \code{'days'} (default), \code{'months'} or \code{'years'}.
-#' @param startView Date shown in calendar when date picker is openned.
+#' @param startView Date shown in calendar when date picker is opened.
 #' @param minView Minimal view, one of \code{'days'} (default), \code{'months'} or \code{'years'}.
 #' @param monthsField Names for the months when view is 'months',
 #'  use \code{'monthsShort'} for abbreviations or \code{'months'} for full names.
@@ -40,10 +43,11 @@
 #'  \code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
 #'  \code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}.
 #' @param inline If \code{TRUE}, datepicker will always be visible.
+#' @param onlyTimepicker Display only the time picker.
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.
 #' @param ... Arguments passed to \code{airDatepickerInput}.
 #'
-#' @note This widget prevents \code{dateInput} from working, don't use both !
+#' @note Since shinyWidgets 0.5.2 there's no more conflicts with \code{dateInput}.
 #'
 #' @return a \code{Date} object or a \code{POSIXct} in UTC timezone.
 #'
@@ -55,7 +59,7 @@
 #' @export
 #'
 #' @importFrom htmltools tags tagList validateCssUnit attachDependencies htmlDependency
-#' @importFrom shiny singleton
+#' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
 #' @examples
@@ -97,7 +101,7 @@
 airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = FALSE,
                                range = FALSE, timepicker = FALSE,
                                separator = " - ", placeholder = NULL,
-                               dateFormat = "yyyy-mm-dd",
+                               dateFormat = "yyyy-mm-dd", firstDay = NULL,
                                minDate = NULL, maxDate = NULL,
                                disabledDates = NULL,
                                view = c("days", "months", "years"),
@@ -108,7 +112,9 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
                                timepickerOpts = timepickerOptions(),
                                position = NULL, update_on = c("change", "close"),
                                addon = c("right", "left", "none"),
-                               language = "en", inline = FALSE, width = NULL) {
+                               language = "en", inline = FALSE,
+                               onlyTimepicker = FALSE, width = NULL) {
+  value <- shiny::restoreInput(inputId, value)
   addon <- match.arg(addon)
   language <- match.arg(
     arg = language,
@@ -140,6 +146,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
       # startDate = startDate,
       range = isTRUE(range),
       dateFormat = dateFormat,
+      firstDay = firstDay,
       minDate = minDate,
       maxDate = maxDate,
       multipleDates = multiple,
@@ -149,7 +156,8 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
       clearButton = isTRUE(clearButton),
       todayButton = todayButton,
       monthsField = match.arg(monthsField),
-      position = position
+      position = position,
+      onlyTimepicker = isTRUE(onlyTimepicker)
     )), timepickerOpts)
   ))
 
@@ -213,7 +221,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     value = htmlDependency(
       name = paste0("air-datepicker-i18n-", language),
       version = "2.2.3",
-      src = c(href = "shinyWidgets/air-datepicker"),
+      src = c(href = "shinyWidgets/air-datepicker2"),
       script = sprintf("i18n/datepicker.%s.js", language)
     ), append = TRUE
   )

@@ -22,6 +22,9 @@ knobInput(
   fgColor = NULL,
   inputColor = NULL,
   bgColor = NULL,
+  pre = NULL,
+  post = NULL,
+  fontSize = NULL,
   readOnly = FALSE,
   skin = NULL,
   width = NULL,
@@ -63,6 +66,12 @@ knobInput(
 \item{inputColor}{Input value (number) color.}
 
 \item{bgColor}{Background color.}
+
+\item{pre}{A prefix string to put in front of the value.}
+
+\item{post}{A suffix string to put after the value.}
+
+\item{fontSize}{Font size, must be a valid CSS unit.}
 
 \item{readOnly}{Disable knob (\code{TRUE} or \code{FALSE}).}
 
