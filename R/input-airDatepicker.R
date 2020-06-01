@@ -58,7 +58,7 @@
 #'
 #' @export
 #'
-#' @importFrom htmltools tags tagList validateCssUnit attachDependencies htmlDependency
+#' @importFrom htmltools singleton tags tagList validateCssUnit attachDependencies htmlDependency
 #' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
@@ -98,22 +98,34 @@
 #' shinyApp(ui, server)
 #'
 #' }
-airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = FALSE,
-                               range = FALSE, timepicker = FALSE,
-                               separator = " - ", placeholder = NULL,
-                               dateFormat = "yyyy-mm-dd", firstDay = NULL,
-                               minDate = NULL, maxDate = NULL,
+airDatepickerInput <- function(inputId,
+                               label = NULL,
+                               value = NULL,
+                               multiple = FALSE,
+                               range = FALSE,
+                               timepicker = FALSE,
+                               separator = " - ",
+                               placeholder = NULL,
+                               dateFormat = "yyyy-mm-dd",
+                               firstDay = NULL,
+                               minDate = NULL,
+                               maxDate = NULL,
                                disabledDates = NULL,
                                view = c("days", "months", "years"),
                                startView = NULL,
                                minView = c("days", "months", "years"),
                                monthsField = c("monthsShort", "months"),
-                               clearButton = FALSE, todayButton = FALSE, autoClose = FALSE,
+                               clearButton = FALSE,
+                               todayButton = FALSE,
+                               autoClose = FALSE,
                                timepickerOpts = timepickerOptions(),
-                               position = NULL, update_on = c("change", "close"),
+                               position = NULL,
+                               update_on = c("change", "close"),
                                addon = c("right", "left", "none"),
-                               language = "en", inline = FALSE,
-                               onlyTimepicker = FALSE, width = NULL) {
+                               language = "en",
+                               inline = FALSE,
+                               onlyTimepicker = FALSE,
+                               width = NULL) {
   value <- shiny::restoreInput(inputId, value)
   addon <- match.arg(addon)
   language <- match.arg(
@@ -168,6 +180,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
       type = "text",
       class = " form-control",
       placeholder = placeholder,
+      autocomplete = "off",
       `data-timepicker` = tolower(timepicker)
     )
     if (!identical(addon, "none")) {
@@ -194,6 +207,7 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     tagAir <- tags$div(
       id = inputId,
       class = "sw-air-picker",
+      autocomplete = "off",
       `data-timepicker` = tolower(timepicker)
     )
   }
@@ -202,8 +216,11 @@ airDatepickerInput <- function(inputId, label = NULL, value = NULL, multiple = F
     class = "form-group shiny-input-container",
     style = if (!is.null(width))
       paste0("width: ", validateCssUnit(width), ";"),
-    if (!is.null(label)) tags$label(label, `for` = inputId),
+    if (!is.null(label)) tags$label(label, class = "control-label", `for` = inputId),
     tagAir,
+    singleton(tags$head(
+      tags$style(".airdatepicker {z-index: 1100;}")
+    )),
     tags$script(
       type = "application/json",
       `data-for` = inputId,

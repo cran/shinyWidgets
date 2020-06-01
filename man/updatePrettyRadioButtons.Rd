@@ -35,14 +35,13 @@ parameters like \code{status}, \code{shape}, ... on the radio buttons, you can r
 
 \item{choiceValues}{The choices values to set for the input object.}
 
-\item{prettyOptions}{Arguments passed to \code{\link{prettyRadioButtons}} for styling radio buttons}
+\item{prettyOptions}{Arguments passed to \code{\link{prettyRadioButtons}}
+for styling radio buttons. This can be needed if you update choices.}
 }
 \description{
 Change the value pretty radio buttons on the client
 }
 \examples{
- if (interactive()) {
-
 library(shiny)
 library(shinyWidgets)
 
@@ -53,11 +52,13 @@ ui <- fluidPage(
   fluidRow(
     column(
       width = 6,
-      prettyRadioButtons(inputId = "radio1",
-                          label = "Update my value!",
-                          choices = month.name[1:4],
-                          status = "danger",
-                          icon = icon("remove")),
+      prettyRadioButtons(
+        inputId = "radio1",
+        label = "Update my value!",
+        choices = month.name[1:4],
+        status = "danger",
+        icon = icon("remove")
+      ),
       verbatimTextOutput(outputId = "res1"),
       br(),
       radioButtons(
@@ -67,10 +68,14 @@ ui <- fluidPage(
     ),
     column(
       width = 6,
-      prettyRadioButtons(inputId = "radio2",
-                          label = "Update my choices!", thick = TRUE,
-                          choices = month.name[1:4],
-                          animation = "pulse", status = "info"),
+      prettyRadioButtons(
+        inputId = "radio2",
+        label = "Update my choices!",
+        thick = TRUE,
+        choices = month.name[1:4],
+        animation = "pulse",
+        status = "info"
+      ),
       verbatimTextOutput(outputId = "res2"),
       br(),
       actionButton(inputId = "update2", label = "Update choices !")
@@ -94,7 +99,8 @@ server <- function(input, output, session) {
   output$res2 <- renderPrint(input$radio2)
   observeEvent(input$update2, {
     updatePrettyRadioButtons(
-      session = session, inputId = "radio2",
+      session = session,
+      inputId = "radio2",
       choices = sample(month.name, 4),
       prettyOptions = list(animation = "pulse",
                            status = "info",
@@ -104,7 +110,6 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
-
- }
+if (interactive())
+  shinyApp(ui, server)
 }

@@ -63,8 +63,6 @@ Due to the nature of different checkbox design, certain animations are not appli
 You can find examples on the pretty-checkbox official page : \url{https://lokesh-coder.github.io/pretty-checkbox/}.
 }
 \examples{
-if (interactive()) {
-
 library(shiny)
 library(shinyWidgets)
 
@@ -75,32 +73,51 @@ ui <- fluidPage(
   fluidRow(
     column(
       width = 4,
-      prettyCheckbox(inputId = "checkbox1",
-                   label = "Click me!"),
+      prettyCheckbox(
+        inputId = "checkbox1",
+        label = "Click me!"
+      ),
       verbatimTextOutput(outputId = "res1"),
       br(),
-      prettyCheckbox(inputId = "checkbox4",  label = "Click me!",
-                     outline = TRUE,
-                   plain = TRUE, icon = icon("thumbs-up")),
+      prettyCheckbox(
+        inputId = "checkbox4",
+        label = "Click me!",
+        outline = TRUE,
+        plain = TRUE,
+        icon = icon("thumbs-up")
+      ),
       verbatimTextOutput(outputId = "res4")
     ),
     column(
       width = 4,
-      prettyCheckbox(inputId = "checkbox2",
-                     label = "Click me!", thick = TRUE,
-                     animation = "pulse", status = "info"),
+      prettyCheckbox(
+        inputId = "checkbox2",
+        label = "Click me!",
+        thick = TRUE,
+        animation = "pulse",
+        status = "info"
+      ),
       verbatimTextOutput(outputId = "res2"),
       br(),
-      prettyCheckbox(inputId = "checkbox5",
-                     label = "Click me!", icon = icon("check"),
-                     animation = "tada", status = "default"),
+      prettyCheckbox(
+        inputId = "checkbox5",
+        label = "Click me!",
+        icon = icon("check"),
+        animation = "tada",
+        status = "default"
+      ),
       verbatimTextOutput(outputId = "res5")
     ),
     column(
       width = 4,
-      prettyCheckbox(inputId = "checkbox3",  label = "Click me!",
-                     shape = "round", status = "danger",
-                   fill = TRUE, value = TRUE),
+      prettyCheckbox(
+        inputId = "checkbox3",
+        label = "Click me!",
+        shape = "round",
+        status = "danger",
+        fill = TRUE,
+        value = TRUE
+      ),
       verbatimTextOutput(outputId = "res3")
     )
   )
@@ -117,7 +134,9 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
+
 
 
 
@@ -126,53 +145,65 @@ shinyApp(ui, server)
 ui <- fluidPage(
   tags$h1("Pretty checkbox: inline example"),
   br(),
-  prettyCheckbox(inputId = "checkbox1",
-                 label = "Click me!",
-                 status = "success",
-                 outline = TRUE,
-                 inline = TRUE),
-  prettyCheckbox(inputId = "checkbox2",
-                 label = "Click me!",
-                 thick = TRUE,
-                 shape = "curve",
-                 animation = "pulse",
-                 status = "info",
-                 inline = TRUE),
-  prettyCheckbox(inputId = "checkbox3",
-                 label = "Click me!",
-                 shape = "round",
-                 status = "danger",
-                 value = TRUE,
-                 inline = TRUE),
-  prettyCheckbox(inputId = "checkbox4",
-                 label = "Click me!",
-                 outline = TRUE,
-                 plain = TRUE,
-                 animation = "rotate",
-                 icon = icon("thumbs-up"),
-                 inline = TRUE),
-  prettyCheckbox(inputId = "checkbox5",
-                 label = "Click me!",
-                 icon = icon("check"),
-                 animation = "tada",
-                 status = "primary",
-                 inline = TRUE),
+  prettyCheckbox(
+    inputId = "checkbox1",
+    label = "Click me!",
+    status = "success",
+    outline = TRUE,
+    inline = TRUE
+  ),
+  prettyCheckbox(
+    inputId = "checkbox2",
+    label = "Click me!",
+    thick = TRUE,
+    shape = "curve",
+    animation = "pulse",
+    status = "info",
+    inline = TRUE
+  ),
+  prettyCheckbox(
+    inputId = "checkbox3",
+    label = "Click me!",
+    shape = "round",
+    status = "danger",
+    value = TRUE,
+    inline = TRUE
+  ),
+  prettyCheckbox(
+    inputId = "checkbox4",
+    label = "Click me!",
+    outline = TRUE,
+    plain = TRUE,
+    animation = "rotate",
+    icon = icon("thumbs-up"),
+    inline = TRUE
+  ),
+  prettyCheckbox(
+    inputId = "checkbox5",
+    label = "Click me!",
+    icon = icon("check"),
+    animation = "tada",
+    status = "primary",
+    inline = TRUE
+  ),
   verbatimTextOutput(outputId = "res")
 )
 
 server <- function(input, output, session) {
 
-  output$res <- renderPrint(c(input$checkbox1,
-                              input$checkbox2,
-                              input$checkbox3,
-                              input$checkbox4,
-                              input$checkbox5))
+  output$res <- renderPrint(
+    c(input$checkbox1,
+      input$checkbox2,
+      input$checkbox3,
+      input$checkbox4,
+      input$checkbox5)
+  )
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
 
-}
 }
 \seealso{
 See \code{\link{updatePrettyCheckbox}} to update the value server-side. See \code{\link{prettySwitch}} and

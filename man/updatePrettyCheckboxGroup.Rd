@@ -35,14 +35,13 @@ parameters like \code{status}, \code{shape}, ... on the checkboxes, you can re-s
 
 \item{choiceValues}{The choices values to set for the input object.}
 
-\item{prettyOptions}{Arguments passed to \code{\link{prettyCheckboxGroup}} for styling checkboxes.}
+\item{prettyOptions}{Arguments passed to \code{\link{prettyCheckboxGroup}}
+for styling checkboxes. This can be needed if you update choices.}
 }
 \description{
 Change the value of a pretty checkbox on the client
 }
 \examples{
-if (interactive()) {
-
 library(shiny)
 library(shinyWidgets)
 
@@ -53,11 +52,13 @@ ui <- fluidPage(
   fluidRow(
     column(
       width = 6,
-      prettyCheckboxGroup(inputId = "checkgroup1",
-                          label = "Update my value!",
-                          choices = month.name[1:4],
-                          status = "danger",
-                          icon = icon("remove")),
+      prettyCheckboxGroup(
+        inputId = "checkgroup1",
+        label = "Update my value!",
+        choices = month.name[1:4],
+        status = "danger",
+        icon = icon("remove")
+      ),
       verbatimTextOutput(outputId = "res1"),
       br(),
       checkboxGroupInput(
@@ -67,10 +68,14 @@ ui <- fluidPage(
     ),
     column(
       width = 6,
-      prettyCheckboxGroup(inputId = "checkgroup2",
-                          label = "Update my choices!", thick = TRUE,
-                          choices = month.name[1:4],
-                          animation = "pulse", status = "info"),
+      prettyCheckboxGroup(
+        inputId = "checkgroup2",
+        label = "Update my choices!",
+        thick = TRUE,
+        choices = month.name[1:4],
+        animation = "pulse",
+        status = "info"
+      ),
       verbatimTextOutput(outputId = "res2"),
       br(),
       actionButton(inputId = "update2", label = "Update choices !")
@@ -89,20 +94,26 @@ server <- function(input, output, session) {
     } else {
       selected_ <- input$update1
     }
-    updatePrettyCheckboxGroup(session = session, inputId = "checkgroup1", selected = selected_)
+    updatePrettyCheckboxGroup(
+      session = session,
+      inputId = "checkgroup1",
+      selected = selected_
+    )
   }, ignoreNULL = FALSE)
 
   output$res2 <- renderPrint(input$checkgroup2)
   observeEvent(input$update2, {
     updatePrettyCheckboxGroup(
-      session = session, inputId = "checkgroup2",
-      choices = sample(month.name, 4), prettyOptions = list(animation = "pulse", status = "info")
+      session = session,
+      inputId = "checkgroup2",
+      choices = sample(month.name, 4),
+      prettyOptions = list(animation = "pulse", status = "info")
     )
   }, ignoreInit = TRUE)
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
 
-}
 }

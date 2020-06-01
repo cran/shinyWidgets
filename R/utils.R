@@ -4,6 +4,19 @@ starts_with <- function(x, prefix) {
   substring(x, 1, nchar(prefix)) == prefix
 }
 
+list1 <- function(x) {
+  if (length(x) == 1) {
+    list(x)
+  } else {
+    x
+  }
+}
+
+rescale <- function(x, from, to) {
+  (x - from[1])/diff(from) * diff(to) + to[1]
+}
+
+
 
 # Unexported usefull functions from shiny
 

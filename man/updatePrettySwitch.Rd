@@ -19,8 +19,6 @@ updatePrettySwitch(session, inputId, label = NULL, value = NULL)
 Change the value of a pretty switch on the client
 }
 \examples{
-if (interactive()) {
-
 library(shiny)
 library(shinyWidgets)
 
@@ -31,7 +29,8 @@ ui <- fluidPage(
   prettySwitch(inputId = "switch1", label = "Update me !"),
   verbatimTextOutput(outputId = "res1"),
   radioButtons(
-    inputId = "update", label = "Value to set:",
+    inputId = "update",
+    label = "Value to set:",
     choices = c("FALSE", "TRUE")
   )
 
@@ -42,13 +41,15 @@ server <- function(input, output, session) {
   output$res1 <- renderPrint(input$switch1)
 
   observeEvent(input$update, {
-    updatePrettySwitch(session = session, inputId = "switch1",
-                       value = as.logical(input$update))
+    updatePrettySwitch(
+      session = session,
+      inputId = "switch1",
+      value = as.logical(input$update)
+    )
   })
 
 }
 
-shinyApp(ui, server)
-
-}
+if (interactive())
+  shinyApp(ui, server)
 }

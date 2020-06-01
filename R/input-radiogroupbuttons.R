@@ -19,6 +19,7 @@
 #' @param choiceNames,choiceValues Same as in \code{\link[shiny]{radioButtons}}. List of names and values, respectively, that are displayed to
 #'  the user in the app and correspond to the each choice (for this reason,
 #'  \code{choiceNames} and \code{choiceValues} must have the same length).
+#' @param disabled Initialize buttons in a disabled state (users won't be able to select a value).
 #'
 #'
 #' @return A buttons group control that can be added to a UI definition.
@@ -72,11 +73,20 @@
 #'   shinyApp(ui, server)
 #'
 #' }
-radioGroupButtons <- function(
-  inputId, label = NULL, choices = NULL, selected = NULL, status = "default", size = "normal",
-  direction = "horizontal", justified = FALSE, individual = FALSE, checkIcon = list(),
-  width = NULL, choiceNames = NULL, choiceValues = NULL
-) {
+radioGroupButtons <- function(inputId,
+                              label = NULL,
+                              choices = NULL,
+                              selected = NULL,
+                              status = "default",
+                              size = "normal",
+                              direction = "horizontal",
+                              justified = FALSE,
+                              individual = FALSE,
+                              checkIcon = list(),
+                              width = NULL,
+                              choiceNames = NULL,
+                              choiceValues = NULL,
+                              disabled = FALSE) {
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   selected <- shiny::restoreInput(id = inputId, default = selected)
   if (!is.null(selected) && length(selected) > 1)
@@ -101,18 +111,22 @@ radioGroupButtons <- function(
     divClass <- paste0(divClass, " btn-group-", size)
   }
 
-  radioGroupButtonsTag <- htmltools::tags$div(
-    class="form-group shiny-input-container shiny-input-radiogroup shiny-input-container-inline",
-    style = if(!is.null(width)) paste("width:", htmltools::validateCssUnit(width)),
-    if (!is.null(label)) htmltools::tags$label(class="control-label", `for`=inputId, label),
-    if (!is.null(label)) htmltools::tags$br(),
-    htmltools::tags$div(
-      id=inputId, class="radioGroupButtons",
-      style=if (justified) "width: 100%;",
-      htmltools::tags$div(
-        class=divClass, role="group", `aria-label`="...", `data-toggle`="buttons",
+  radioGroupButtonsTag <- tags$div(
+    class = "form-group shiny-input-container shiny-input-radiogroup shiny-input-container-inline",
+    style = if(!is.null(width)) paste("width:", validateCssUnit(width)),
+    if (!is.null(label)) tags$label(class="control-label", `for` = inputId, label),
+    if (!is.null(label)) tags$br(),
+    tags$div(
+      id = inputId,
+      class = "radioGroupButtons",
+      style = if (justified) "width: 100%;",
+      tags$div(
+        class = divClass,
+        role = "group",
+        `aria-label` = "...",
+        `data-toggle` = "buttons",
         class = "btn-group-container-sw",
-        generateRGB(inputId, args, selected, status, size, checkIcon)
+        generateRGB(inputId, args, selected, status, size, checkIcon, disabled = disabled)
       )
     )
   )
@@ -121,7 +135,7 @@ radioGroupButtons <- function(
 }
 
 
-generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
+generateRGB <- function(inputId, choices, selected, status, size, checkIcon, disabled = FALSE) {
   btn_wrapper <- function(...) {
     htmltools::tags$div(
       class="btn-group btn-group-toggle",
@@ -138,22 +152,27 @@ generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
   mapply(
     FUN = function(name, value) {
       btn_wrapper(
-        htmltools::tags$button(
-          class=paste0("btn radiobtn btn-", status),
-          class=if (value %in% selected) "active",
-          if (displayIcon) htmltools::tags$span(class="radio-btn-icon-yes", checkIcon$yes),
-          if (displayIcon) htmltools::tags$span(class="radio-btn-icon-no", checkIcon$no),
-          htmltools::tags$input(
-            type="radio", autocomplete="off",
-            name=inputId, value=value,
-            checked=if (value %in% selected) "checked"
+        tags$button(
+          class = paste0("btn radiobtn btn-", status),
+          class = if (value %in% selected) "active",
+          if (displayIcon) tags$span(class="radio-btn-icon-yes", checkIcon$yes),
+          if (displayIcon) tags$span(class="radio-btn-icon-no", checkIcon$no),
+          disabled = if (isTRUE(disabled)) "disabled",
+          tags$input(
+            type = "radio",
+            autocomplete = "off",
+            name = inputId,
+            value = value,
+            checked = if (value %in% selected) "checked"
           ),
-          if (is.list(name)) name else htmltools::HTML(name)
+          if (is.list(name)) name else HTML(name)
         )
       )
     },
-    name = choices$choiceNames, value = choices$choiceValues,
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
+    name = choices$choiceNames,
+    value = choices$choiceValues,
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
   )
 }
 
@@ -174,6 +193,9 @@ generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
 #' @param size Size, only used if choices is not NULL.
 #' @param checkIcon Icon, only used if choices is not NULL.
 #' @param choiceNames,choiceValues List of names and values, an alternative to choices.
+#' @param disabled Logical, disable or enable buttons,
+#'  if \code{TRUE} users won't be able to select a value.
+#' @param disabledChoices Vector of specific choices to disable.
 #'
 #' @export
 #'
@@ -239,20 +261,40 @@ generateRGB <- function(inputId, choices, selected, status, size, checkIcon) {
 #' shinyApp(ui = ui, server = server)
 #'
 #' }
-updateRadioGroupButtons <- function(session, inputId, label = NULL, choices = NULL, selected = NULL,
-                                    status = "default", size = "normal",
-                                    checkIcon = list(), choiceNames = NULL, choiceValues = NULL) {
+updateRadioGroupButtons <- function(session,
+                                    inputId,
+                                    label = NULL,
+                                    choices = NULL,
+                                    selected = NULL,
+                                    status = "default",
+                                    size = "normal",
+                                    checkIcon = list(),
+                                    choiceNames = NULL,
+                                    choiceValues = NULL,
+                                    disabled = FALSE,
+                                    disabledChoices = NULL) {
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues, mustExist = FALSE)
   if (is.null(selected) && !is.null(args$choiceValues)) {
     selected <- args$choiceValues[[1]]
-  } else {
-    selected <- as.character(selected)
   }
   options <- if (!is.null(args$choiceValues)) {
-    format(htmltools::tagList(generateRGB(session$ns(inputId), args, selected, status = status, size = size,
-                               checkIcon = checkIcon)))
+    as.character(tagList(
+      generateRGB(
+        session$ns(inputId),
+        args, as.character(selected),
+        status = status,
+        size = size,
+        checkIcon = checkIcon
+      )
+    ))
   }
-  message <- dropNulls(list(selected = selected, options = options, label = label))
+  message <- dropNulls(list(
+    selected = selected,
+    options = options,
+    label = label,
+    disabled = isTRUE(disabled),
+    disabledChoices = list1(disabledChoices)
+  ))
   session$sendInputMessage(inputId, message)
 }
 
