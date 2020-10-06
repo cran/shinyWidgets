@@ -1,3 +1,16 @@
+shinyWidgets 0.5.4
+======================
+
+* New functions: `currencyInput()`, `formatNumericInput()` and `autonumericInput()` to enter numeric value with specified format like a currency, by [@srmatth](https://github.com/srmatth).
+* Ability to update icons in `updateNumericInputIcon()` and `updateTextInputIcon()`.
+* SweetAlert family: upgraded to 9.17.1 and added a polyfill to work in Internet Explorer (see `useSweetAlert()`).
+
+
+### Bug fixes
+
+* Disable `radioGroupButtons()` and `checkboxGroupButtons()` with checkIcon not working properly ([#311](https://github.com/dreamRs/shinyWidgets/issues/311))
+
+
 shinyWidgets 0.5.3
 ======================
 

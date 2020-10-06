@@ -9,16 +9,7 @@
 #' @importFrom shiny icon
 #'
 attachShinyWidgetsDep <- function(tag, widget = NULL) {
-  version <- as.character(packageVersion("shinyWidgets")[[1]])
-  dep <- htmltools::htmlDependency(
-    name = "shinyWidgets",
-    version = version,
-    src = c(href = "shinyWidgets", file = "assets"),
-    package = "shinyWidgets",
-    script = "shinyWidgets-bindings.min.js",
-    stylesheet = "shinyWidgets.css",
-    all_files = FALSE
-  )
+  dep <- html_dependency_shinyWidgets()
   if (!is.null(widget)) {
     if (widget == "picker") {
       dep <- list(
@@ -51,7 +42,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "dropdown-patch",
-          version = version,
+          version = packageVersion("shinyWidgets"),
           src = c(href="shinyWidgets/dropdown"),
           script = "dropdown-click.js"
         )
@@ -61,7 +52,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         dep,
         htmltools::htmlDependency(
           name = "sw-dropdown",
-          version = version,
+          version = packageVersion("shinyWidgets"),
           src = c(href="shinyWidgets/sw-dropdown"),
           script = "sw-dropdown.js",
           stylesheet = "sw-dropdown.css"
@@ -102,6 +93,18 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
   htmltools::attachDependencies(tag, dep, append = TRUE)
 }
 
+
+html_dependency_shinyWidgets <- function() {
+  htmltools::htmlDependency(
+    name = "shinyWidgets",
+    version = packageVersion("shinyWidgets"),
+    src = c(href = "shinyWidgets", file = "assets"),
+    package = "shinyWidgets",
+    script = "shinyWidgets-bindings.min.js",
+    stylesheet = "shinyWidgets.min.css",
+    all_files = FALSE
+  )
+}
 
 
 # Exported ----------------------------------------------------------------
@@ -182,16 +185,39 @@ html_dependency_bsswitch <- function() {
 }
 
 
+#' @param theme SweetAlert theme to use.
+#' @export
+#' @rdname html-dependencies
+html_dependency_sweetalert2 <- function(theme = c("sweetalert2",
+                                                  "minimal",
+                                                  "dark",
+                                                  "bootstrap-4",
+                                                  "material-ui",
+                                                  "bulma",
+                                                  "borderless")) {
+  theme <- match.arg(theme)
+  if (identical(theme, "sweetalert2"))
+    theme <- "default"
+  htmlDependency(
+    name = "sweetalert2",
+    version = "9.17.1",
+    src = c(href="shinyWidgets/sweetalert2", file = "sweetalert2"),
+    script = c("js/sweetalert2.min.js", "sweetalert-bindings.js"),
+    stylesheet = sprintf("css/%s.min.css", theme)
+  )
+}
+
+
 
 # Non exported ------------------------------------------------------------
 
 
 html_dependency_picker <- function() {
   htmlDependency(
-    name = "selectPicker",
-    version = "1.13.12",
+    name = "bootstrap-select",
+    version = "1.13.18",
     package = "shinyWidgets",
-    src = c(href = "shinyWidgets/selectPicker", file = "assets/selectPicker"),
+    src = c(href = "shinyWidgets/bootstrap-select", file = "assets/bootstrap-select"),
     script = "js/bootstrap-select.min.js",
     stylesheet = "css/bootstrap-select.min.css"
   )
@@ -222,7 +248,7 @@ html_dependency_nouislider <- function() {
 html_dependency_spectrum <- function() {
   htmlDependency(
     name = "spectrum",
-    version = "1.8.0",
+    version = "1.8.1",
     package = "shinyWidgets",
     src = c(href = "shinyWidgets/spectrum", file = "assets/spectrum"),
     script = c("spectrum.min.js"),
@@ -261,4 +287,21 @@ html_dependency_multi <- function() {
   )
 }
 
+html_dependency_autonumeric <- function() {
+  htmlDependency(
+    name = "autonumeric",
+    version = "4.6.0",
+    package = "shinyWidgets",
+    src = c(href = "shinyWidgets/autonumeric", file = "assets/autonumeric"),
+    script = "autoNumeric.min.js"
+  )
+}
 
+html_dependency_polyfill_promise <- function() {
+  htmlDependency(
+    name = "promise-polyfill",
+    version = "7.1.0",
+    src = c(href="shinyWidgets/sweetalert2", file = "sweetalert2"),
+    script = "js/promise.min.js"
+  )
+}

@@ -115,12 +115,15 @@ noUiSliderInput <- function(inputId, label = NULL, min, max, value,
   if (is.null(range))
     range <- list(min = min, max = max)
   noUiProps <- dropNulls(list(
-    start = value, step = step,
+    start = value,
+    step = step,
     range = range,
     tooltips = tooltips,
     connect = if (length(connect) == length(value)) c(connect, FALSE) else connect,
-    padding = padding, pips = pips,
-    margin = margin, limit = limit,
+    padding = padding,
+    pips = pips,
+    margin = margin,
+    limit = limit,
     orientation = orientation,
     direction = match.arg(direction),
     behaviour = behaviour,
@@ -165,7 +168,7 @@ noUiSliderInput <- function(inputId, label = NULL, min, max, value,
 #' @param thousand Separator for large numbers. For example: \code{' '}
 #'  would result in a formatted number of 1 000 000.
 #' @param prefix A string to prepend to the number. Use cases
-#'  include prefixing with money symbols such as \code{'$'} or \code{'€'}.
+#'  include prefixing with money symbols such as \code{'$'} or the euro sign.
 #' @param suffix A number to append to a number. For example: \code{',-'}.
 #' @param negative The prefix for negative values. Defaults to \code{'-'}.
 #'
@@ -173,6 +176,8 @@ noUiSliderInput <- function(inputId, label = NULL, min, max, value,
 #'
 #' @return a named list.
 #' @export
+#'
+#' @encoding UTF-8
 #'
 #' @examples
 #' if (interactive()) {
