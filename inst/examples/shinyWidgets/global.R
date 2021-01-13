@@ -1,10 +1,17 @@
 
+#  ------------------------------------------------------------------------
+#
+# Title : shinyWidgets Gallery - global
+#    By : Victor
+#  Date : 2020-12-01
+#
+#  ------------------------------------------------------------------------
 
 
 # shinyWidgets examples ---------------------------------------------------
 
-library("shinydashboard")
-library("shinyWidgets")
+library(shinydashboard) # shinydashboard bs4Dash
+library(shinyWidgets)
 
 if (any(ls(".GlobalEnv") %in% ls("package:shinyWidgets")))
   warning("Some function(s) from GlobalEnv will override those from shinyWidgets")
@@ -53,7 +60,7 @@ if (any(ls(".GlobalEnv") %in% ls("package:shinyWidgets")))
 }
 
 .shinyWidgetGalleryFuns$box_wrapper <- function(title, ..., footer = NULL) {
-  shinydashboard::box(
+  box(
     title = title, status = "danger", width = NULL, footer = footer,
     ...
   )
@@ -121,4 +128,8 @@ if (any(ls(".GlobalEnv") %in% ls("package:shinyWidgets")))
   })
 }
 
+
+# Message for tests
+
+message("Running shinyWidgets gallery...")
 

@@ -178,7 +178,7 @@ html_dependency_bsswitch <- function() {
     name = "bootstrap-switch",
     version = "3.3.4",
     package = "shinyWidgets",
-    src = c(href = "shinyWidgets/bootstrap-switch/", file = "bootstrap-switch"),
+    src = c(href = "shinyWidgets/bootstrap-switch", file = "bootstrap-switch"),
     script = "bootstrap-switch-3.3.4/bootstrap-switch.min.js",
     stylesheet = "bootstrap-switch-3.3.4/bootstrap-switch.min.css"
   )
@@ -303,5 +303,26 @@ html_dependency_polyfill_promise <- function() {
     version = "7.1.0",
     src = c(href="shinyWidgets/sweetalert2", file = "sweetalert2"),
     script = "js/promise.min.js"
+  )
+}
+
+html_dependency_bounty <- function() {
+  htmlDependency(
+    name = "bounty",
+    version = "1.3.0",
+    package = "shinyWidgets",
+    src = c(href = "shinyWidgets/bounty", file = "assets/bounty"),
+    script = c("bounty.js", "bounty-wrapper.js")
+  )
+}
+
+
+html_dependency_stati <- function() {
+  htmlDependency(
+    name = "stati",
+    version = packageVersion("shinyWidgets"),
+    package = "shinyWidgets",
+    src = c(href = "shinyWidgets/stati", file = "assets/stati"),
+    stylesheet = "stati.css"
   )
 }

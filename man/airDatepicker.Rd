@@ -36,7 +36,8 @@ airDatepickerInput(
   language = "en",
   inline = FALSE,
   onlyTimepicker = FALSE,
-  width = NULL
+  width = NULL,
+  toggleSelected = TRUE
 )
 
 timepickerOptions(
@@ -115,7 +116,7 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 
 \item{language}{Language to use, can be one of \code{'cs'}, \code{'da'},
 \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
-\code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
+\code{'hu'}, \code{'it'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \code{'pt'},
 \code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}, \code{'ja'}.}
 
 \item{inline}{If \code{TRUE}, datepicker will always be visible.}
@@ -123,6 +124,8 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 \item{onlyTimepicker}{Display only the time picker.}
 
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.}
+
+\item{toggleSelected}{When \code{TRUE}, in range mode, it's not possible to select the same date as start and end.}
 
 \item{dateTimeSeparator}{Separator between date and time, default to \code{" "}.}
 

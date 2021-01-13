@@ -40,11 +40,12 @@
 #'  you can retrieve value server-side with \code{input$<inputId>_button}.
 #' @param language Language to use, can be one of \code{'cs'}, \code{'da'},
 #'  \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
-#'  \code{'hu'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \\code{'pt'},
+#'  \code{'hu'}, \code{'it'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \code{'pt'},
 #'  \code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}, \code{'ja'}.
 #' @param inline If \code{TRUE}, datepicker will always be visible.
 #' @param onlyTimepicker Display only the time picker.
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.
+#' @param toggleSelected When \code{TRUE}, in range mode, it's not possible to select the same date as start and end.
 #' @param ... Arguments passed to \code{airDatepickerInput}.
 #'
 #' @note Since shinyWidgets 0.5.2 there's no more conflicts with \code{dateInput}.
@@ -125,13 +126,14 @@ airDatepickerInput <- function(inputId,
                                language = "en",
                                inline = FALSE,
                                onlyTimepicker = FALSE,
-                               width = NULL) {
+                               width = NULL,
+                               toggleSelected = TRUE) {
   value <- shiny::restoreInput(inputId, value)
   addon <- match.arg(addon)
   language <- match.arg(
     arg = language,
-    choices = c("cs", "da", "de", "en", "es", "fi", "fr", "hu", "nl", "pl",
-                "pt-BR", "pt", "ro", "ru", "sk", "tr", "zh", "ja"),
+    choices = c("cs", "da", "de", "en", "es", "fi", "fr", "it", "hu", "nl",
+                "pl", "pt-BR", "pt", "ro", "ru", "sk", "tr", "zh", "ja"),
     several.ok = FALSE
   )
 
@@ -169,7 +171,8 @@ airDatepickerInput <- function(inputId,
       todayButton = todayButton,
       monthsField = match.arg(monthsField),
       position = position,
-      onlyTimepicker = isTRUE(onlyTimepicker)
+      onlyTimepicker = isTRUE(onlyTimepicker),
+      toggleSelected = isTRUE(toggleSelected)
     )), timepickerOpts)
   ))
 

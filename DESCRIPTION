@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.5.4
+Version: 0.5.5
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre", "cph")),
   person("Fanny", "Meyer", role = "aut"),
@@ -22,7 +22,7 @@ Imports: shiny (>= 0.14), htmltools, jsonlite, grDevices
 Suggests: shinydashboard, testthat, covr, shinydashboardPlus, bs4Dash,
         argonR, argonDash, tablerDash, ggplot2, DT, scales
 NeedsCompilation: no
-Packaged: 2020-10-06 08:30:09 UTC; perri
+Packaged: 2021-01-13 09:29:10 UTC; perri
 Author: Victor Perrier [aut, cre, cph],
   Fanny Meyer [aut],
   David Granjon [aut],
@@ -32,4 +32,4 @@ Author: Victor Perrier [aut, cre, cph],
   Spencer Matthews [ctb] (autoNumeric methods)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2020-10-06 09:10:03 UTC
+Date/Publication: 2021-01-13 10:00:03 UTC
