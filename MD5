@@ -1,16 +1,16 @@
-ea1341242d79967d1ac2c3efa1282753 *DESCRIPTION
+58288eda2f1c9913b427222b0237a95b *DESCRIPTION
 0de3eb2f9c1a95b4067c8c626f304df8 *NAMESPACE
-df881d88c2c1f2665a51ea4c6cc51747 *NEWS.md
+d77f86f9a713dab19b177ec17bc580b2 *NEWS.md
 13d0e994232560e256177f78a0742fa4 *R/actionBttn.R
 46b7eb55bcef9d9c03785e9da76addf1 *R/addSpinner.R
 0915639d13f4bab68aec8e194819db02 *R/bootstrap-utils.R
-693c34d9b6a052b73794caf316e3b6c5 *R/chooseSliderSkin.R
+9a3a9087b3ec76c34145dff55570718c *R/chooseSliderSkin.R
 2aef655de56f0fa0a9d2b3d0f550d63d *R/demos.R
-1bdca381f1a9ebcad331938d7f84ad81 *R/dependencies.R
+13a94df5cd55003f357331223b3bed30 *R/dependencies.R
 18f7db69dc08c2fd8f56ed5746755c5c *R/drop-menu.R
 c11f34d73586f2f80e7eff7702606e6f *R/execute_safely.R
 3f4cf92a3db5b732be16d9a849f411b8 *R/input-actiongroupbuttons.R
-ba43458a4bbc92159d2d1a25355908da *R/input-airDatepicker.R
+2d81cb4d86d27bd6324df807a36150d0 *R/input-airDatepicker.R
 31b9e45841f22fe5525c9da5309720ac *R/input-autonumeric.R
 5263959c8be178064b74672405f2e150 *R/input-awesomecheckbox.R
 d94e89dc7dc38fab0d93f6499e9baa3b *R/input-awesomeradio.R
@@ -80,7 +80,8 @@ a228f1e3cb59a58dfa6a2dc53cb10295 *inst/assets/air-datepicker/i18n/datepicker.sk.
 0e99eb2a8da852fbde84218b17013a07 *inst/assets/air-datepicker/i18n/datepicker.tr.js
 34ff7af776e02379e0f5062da31acefe *inst/assets/air-datepicker/i18n/datepicker.zh.js
 07f3904f72426c215a69e3f50abf8986 *inst/assets/air-datepicker2/LICENSE.md
-74e7cd9a58fa3e27344200a5a0a66c93 *inst/assets/air-datepicker2/datepicker-bindings.js
+20361ad3d4d386ed4ed3da6c7615de9f *inst/assets/air-datepicker2/airdatepicker-custom.css
+ffa650ddcddfd4dacfad9dc503dabdd8 *inst/assets/air-datepicker2/datepicker-bindings.js
 359aa16d0f271605272f8135160b03ee *inst/assets/air-datepicker2/datepicker.min.css
 0c6e5be0cf733e0c19fe0896bb7237e5 *inst/assets/air-datepicker2/datepicker.min.js
 99ed67653a397979a3599393bd080b49 *inst/assets/air-datepicker2/i18n/datepicker.cs.js
@@ -235,7 +236,7 @@ db7e342107eca3514d93c3b23596d4fd *inst/assets/bootstrap-select/js/i18n/defaults-
 194cd2e83e02c9443a243de33e9b2eaf *inst/assets/bootstrap-select/js/i18n/defaults-zh_TW.js
 080eaf76a80314113f869f70ed235307 *inst/assets/bootstrap-select/js/i18n/defaults-zh_TW.js.map
 3d267f243b2e8d45596bc9282228f77a *inst/assets/bootstrap-select/js/i18n/defaults-zh_TW.min.js
-a1952d341c83a4c1919fdfcc056f348f *inst/assets/bootstrap-select/picker-bindings.js
+429026fc7de51f08f705a200bbf1e421 *inst/assets/bootstrap-select/picker-bindings.js
 9647bda16a76ba80bc23fdf340ecc94f *inst/assets/bootstrap-switch/LICENSE.txt
 154b671265459f192d9327cb85adb55e *inst/assets/bootstrap-switch/bootstrap-switch-3.3.2/bootstrap-switch.min.css
 12ce5d59f687e3c2a8d8395aee0c89b3 *inst/assets/bootstrap-switch/bootstrap-switch-3.3.2/bootstrap-switch.min.js
@@ -260,6 +261,9 @@ b62ace599de5ea976be09d94d810ca9d *inst/assets/favButton/fav-button-16.js
 66aab20e31600bf3ac6680119779c563 *inst/assets/favButton/fav-icons.css
 45598562077bdc84281b5330ff4d283e *inst/assets/favButton/heart.png
 360a3639cacc752ff1337c506962ee91 *inst/assets/favButton/mo.min.js
+323ebd1f653afb3867385c9297ad82e3 *inst/assets/ion-rangeslider/custom-skin.js
+2b4160a5466fe5914370b6795e7a8b77 *inst/assets/ion-rangeslider/ion.rangeSlider.min.css
+56825fbc8503ad011c82df0ae1750cd3 *inst/assets/ion-rangeslider/jquery.initialize.min.js
 d834fc887cc5961979672121187dbd6f *inst/assets/jquery-knob/jquery.knob.min.js
 b32c57811a9ea207ec69fd56511889bb *inst/assets/jquery-knob/knob-bindings.js
 cc54cb11b6d805ee2f084e19a5fbac66 *inst/assets/material-switch/material-switch.css
@@ -279,7 +283,7 @@ adc2625c6935166550eaa4915d5c4a5d *inst/assets/numeric/numeric-icon-bindings.js
 60e283066a62646e53a76d1d6491b296 *inst/assets/pretty-checkbox/pretty-checkbox.min.css
 98103a288cb167a7ed970f205d7bb710 *inst/assets/progress-bars/progress-bars-bindings.js
 cb52807460e362e4b993eaa15687d75b *inst/assets/search-input/search-bindings.js
-d6f3a1dc6ae2af22599bec681c39a95b *inst/assets/shinyWidgets-bindings.min.js
+164c3d6ed1b20bfeb0f65bd31502267d *inst/assets/shinyWidgets-bindings.min.js
 2d16b6e0ead431f4b9e8b6260bd58ee6 *inst/assets/shinyWidgets.css
 68414a1768913dc3c2cc29b2c73015e7 *inst/assets/shinyWidgets.min.css
 e0b1dbc3d69a154463f3a08ad8a0532c *inst/assets/sliderText/sliderTextInput-bindings.js
@@ -325,7 +329,7 @@ ce0e89079ee39fb18ce8205ac9a6c259 *inst/assets/tippy/themes/light-border.css
 4d120ef12c8c3e2c28d7c589b90118e1 *inst/assets/tippy/themes/light.css
 11cff729dc9bf9a11825a5d2fa015631 *inst/assets/tippy/themes/material.css
 3025bcd56b7ab19d7e095d09ba4c7c29 *inst/assets/tippy/themes/translucent.css
-6434d0f42fb01392bee063c07497e247 *inst/assets/tools.R
+dc4306f92cf6825b734928f978070fbd *inst/assets/tools.R
 0ec199169abc5e5c57f38a8257c544fc *inst/assets/uglify.R
 a2c0d7ab3e5e061ee86b7f531d2a8bd8 *inst/assets/vertical-tab-panel/vertical-tab-panel-bindings.js
 2fb1fe90d31369ccdb57754334d7fe46 *inst/assets/vertical-tab-panel/vertical-tab-panel.css
@@ -370,7 +374,7 @@ dc29f2f8405e6307b9c3725df190748a *inst/examples/shinyWidgets/ui.R
 256cf76735fcd6f161a607a358c9c77d *man/actionBttn.Rd
 6d513d5593e2e1f5d405084a458867d6 *man/actionGroupButtons.Rd
 ed57e1e4231849dc969104732701b7c5 *man/addSpinner.Rd
-a68b446657210457fd56fdef5528331d *man/airDatepicker.Rd
+dd058ae18dd3590370f2663cc47472fa *man/airDatepicker.Rd
 57748fd1a9556d3dcc884ccc19de9fb3 *man/animateOptions.Rd
 3394b41d75f89258f2683cf2bc9ef6a7 *man/animations.Rd
 22b66e0bbf90fd888dbfe8561b4dc867 *man/appendVerticalTab.Rd
@@ -457,7 +461,7 @@ c451229e604d12edd1d8b1b3c3f0a427 *man/updateAwesomeCheckboxGroup.Rd
 bf72f12370c9c1689a03f01026d012ab *man/updateMaterialSwitch.Rd
 3d34f52d8a8142293f19a3ae58f5a1c2 *man/updateMultiInput.Rd
 341e929a7bd0aeb9b9573cc97f1e2279 *man/updateNoUiSliderInput.Rd
-e8c469d957ab53313f106887aaa4a7b5 *man/updateNumericInputIcon.Rd
+280097ff3a4286d35b461d313c2f2960 *man/updateNumericInputIcon.Rd
 963b8c771922405c4dbfac6386deac04 *man/updateNumericRangeInput.Rd
 422e9e16f5cb614a29d87b29103f61f0 *man/updatePickerInput.Rd
 250b6be216441ff50f86d6336da415b1 *man/updatePrettyCheckbox.Rd
@@ -470,7 +474,7 @@ daa9104161da66bacc0dd524ed6f8d48 *man/updateSearchInput.Rd
 d9dede89dfc37a7037c5a63464878f1c *man/updateSliderTextInput.Rd
 a02bee413d0fa2e4bacbc60c55fc6f0b *man/updateSpectrumInput.Rd
 f1e119df93f2163c18b317c373dd58e7 *man/updateSwitchInput.Rd
-0e6379f0adfe3553e62fd7cee586a1da *man/updateTextInputIcon.Rd
+643bb72630f04058beb7f87fcdfa94d1 *man/updateTextInputIcon.Rd
 cb10a27c806b6ccd00f619dd02aad443 *man/updateVerticalTabsetPanel.Rd
 ecdf1736dcca799e2f71a787789a4af0 *man/useArgonDash.Rd
 c4086f9ba2b3a6c6ecce8ae84e857e0a *man/useBs4Dash.Rd
