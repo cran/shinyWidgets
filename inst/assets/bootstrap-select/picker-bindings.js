@@ -33,13 +33,22 @@ $.extend(pickerInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-/*
     if (data.hasOwnProperty("options")) {
-      //this.picker.selectpicker('destroy');
-      $(el).attr(data.options);
-      this.picker.selectpicker("render");
+      var callback = $(el).data("callback");
+      $(el).selectpicker("destroy");
+      if (data.clearOptions) {
+        var shinyInputBinding = $(el).data("shinyInputBinding");
+        $(el).removeData();
+        $(el).data("callback", callback);
+        $(el).data("shinyInputBinding", shinyInputBinding);
+      }
+      $(el).data(data.options);
+      $(el).selectpicker();
+      $(el).on("changed.bs.select.pickerInput", function(event) {
+        callback();
+      });
     }
-*/
+
     // This will replace all the choices
     if (data.hasOwnProperty("choices")) {
       // Clear existing choices and add each new one
@@ -58,20 +67,26 @@ $.extend(pickerInputBinding, {
         .find('label[for="' + Shiny.$escape(el.id) + '"]')
         .text(data.label);
 
-    //$(el).selectpicker('refresh');
+    $(el).selectpicker("refresh");
     $(el).trigger("change");
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("changed.bs.select", function(event) {
-      //$(el).selectpicker('refresh');
+    $(el).data("callback", callback);
+    $(el).on("changed.bs.select.pickerInput", function(event) {
       callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
-    $(el).off(".pickerInputBinding");
+    $(el).off(".pickerInput");
   },
   initialize: function initialize(el) {
     $(el).selectpicker();
+    $(el).on("shown.bs.select", function(e) {
+      Shiny.setInputValue(el.id + "_open", true);
+    });
+    $(el).on("hidden.bs.select", function(e) {
+      Shiny.setInputValue(el.id + "_open", false);
+    });
     // TEMPORARY FIX FOR SHINY V1.6.0
     $(document).off("focusout.dropdown.data-api");
   }

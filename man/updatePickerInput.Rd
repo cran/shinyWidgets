@@ -10,7 +10,9 @@ updatePickerInput(
   label = NULL,
   selected = NULL,
   choices = NULL,
-  choicesOpt = NULL
+  choicesOpt = NULL,
+  options = NULL,
+  clearOptions = FALSE
 )
 }
 \arguments{
@@ -26,7 +28,11 @@ To reset selected value, in case of multiple picker, use \code{character(0)}.}
 \item{choices}{List of values to select from. If elements of the list are named
 then that name rather than the value is displayed to the user.}
 
-\item{choicesOpt}{Options for choices in the dropdown menu}
+\item{choicesOpt}{Options for choices in the dropdown menu.}
+
+\item{options}{Options for the picker via \code{\link{pickerOptions}}.}
+
+\item{clearOptions}{Clear previous options, otherwise the ones set previously are still active.}
 }
 \description{
 Change the value of a picker input on the client

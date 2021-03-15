@@ -1,3 +1,4 @@
+
 #' @title Select Picker Input Control
 #'
 #' @description An alternative to \code{selectInput} with plenty of options to customize it.
@@ -14,7 +15,7 @@
 #' To limit the number of selection possible, see example below.
 #' @param choicesOpt Options for choices in the dropdown menu.
 #' @param width The width of the input : 'auto', 'fit', '100px', '75\%'.
-#' @param inline Put the label and the picker on the same line.
+#' @param inline Display picker inline, to have label and menu on same line use \code{width = "fit"}.
 #'
 #' @seealso \link{updatePickerInput} to update value server-side.
 #'
@@ -101,20 +102,21 @@ pickerInput <- function(inputId,
 
   if (multiple)
     selectTag$attribs$multiple <- "multiple"
-  divClass <- "form-group shiny-input-container"
-  labelClass <- "control-label"
-  if (inline) {
-    divClass <- paste(divClass, "form-horizontal")
-    selectTag <- tags$div(class="col-sm-10", selectTag)
-    labelClass <- paste(labelClass, "col-sm-2")
-  }
+
   pickerTag <- tags$div(
-    class = divClass,
+    class = "form-group shiny-input-container",
+    class = if (isTRUE(inline)) "shiny-input-container-inline",
     style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
-    if (!is.null(label)) tags$label(class = labelClass, `for` = inputId, label),
+    style = if (isTRUE(inline)) "display: inline-block;",
+    tags$label(
+      class = "control-label",
+      `for` = inputId,
+      label,
+      class = if (is.null(label)) "shiny-label-null",
+      style = if (isTRUE(inline)) "display: inline-block;",
+    ),
     selectTag
   )
-  # Deps
   attachShinyWidgetsDep(pickerTag, "picker")
 }
 
@@ -132,7 +134,9 @@ pickerInput <- function(inputId,
 #' then that name rather than the value is displayed to the user.
 #' @param selected The new selected value (or multiple values if \code{multiple = TRUE}).
 #'  To reset selected value, in case of multiple picker, use \code{character(0)}.
-#' @param choicesOpt Options for choices in the dropdown menu
+#' @param choicesOpt Options for choices in the dropdown menu.
+#' @param options Options for the picker via \code{\link{pickerOptions}}.
+#' @param clearOptions Clear previous options, otherwise the ones set previously are still active.
 #'
 #' @seealso \link{pickerInput}.
 #'
@@ -211,19 +215,27 @@ pickerInput <- function(inputId,
 #' shinyApp(ui = ui, server = server)
 #'
 #' }
-updatePickerInput <- function (session, inputId, label = NULL,
-                               selected = NULL, choices = NULL,
-                               choicesOpt = NULL) {
+updatePickerInput <- function (session,
+                               inputId,
+                               label = NULL,
+                               selected = NULL,
+                               choices = NULL,
+                               choicesOpt = NULL,
+                               options = NULL,
+                               clearOptions = FALSE) {
   choices <- if (!is.null(choices))
     choicesWithNames(choices)
   if (!is.null(selected))
     selected <- validateSelected(selected, choices, inputId)
   choices <- if (!is.null(choices))
     as.character(pickerSelectOptions(choices, selected, choicesOpt))
-  options = NULL
-  if (!is.null(options))
-    names(options) <- paste0("data-", names(options))
-  message <- dropNulls(list(label = label, choices = choices, value = selected, options = options))
+  message <- dropNulls(list(
+    label = label,
+    choices = choices,
+    value = selected,
+    options = options,
+    clearOptions = isTRUE(clearOptions)
+  ))
   session$sendInputMessage(inputId, message)
 }
 
