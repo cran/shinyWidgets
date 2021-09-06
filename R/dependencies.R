@@ -9,38 +9,38 @@
 #' @importFrom htmltools htmlDependency attachDependencies findDependencies
 #' @importFrom shiny icon
 #'
-attachShinyWidgetsDep <- function(tag, widget = NULL) {
-  dep <- html_dependency_shinyWidgets()
+attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
+  dependencies <- html_dependency_shinyWidgets()
   if (!is.null(widget)) {
     if (widget == "picker") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_picker()
       )
     } else if (widget == "awesome") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_awesome(),
         htmltools::findDependencies(shiny::icon("rebel"))[[1]]
       )
     } else if (widget == "bsswitch") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_bsswitch()
       )
     } else if (widget == "multi") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_multi()
       )
     } else if (widget == "jquery-knob") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_knob()
       )
     } else if (widget == "dropdown") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         htmltools::htmlDependency(
           name = "dropdown-patch",
           version = packageVersion("shinyWidgets"),
@@ -49,8 +49,8 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         )
       )
     } else if (widget == "sw-dropdown") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         htmltools::htmlDependency(
           name = "sw-dropdown",
           version = packageVersion("shinyWidgets"),
@@ -60,38 +60,45 @@ attachShinyWidgetsDep <- function(tag, widget = NULL) {
         )
       )
     } else if (widget == "animate") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_animate()
       )
     } else if (widget == "bttn") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_bttn()
       )
     } else if (widget == "spectrum") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_spectrum()
       )
     } else if (widget == "pretty") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_pretty()
       )
     } else if (widget == "nouislider") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_nouislider()
       )
     } else if (widget == "airdatepicker") {
-      dep <- list(
-        dep,
+      dependencies <- list(
+        dependencies,
         html_dependency_airdatepicker()
       )
     }
+    dependencies <- c(dependencies, extra_deps)
+  } else {
+    dependencies <- c(list(dependencies), extra_deps)
   }
-  htmltools::attachDependencies(tag, dep, append = TRUE)
+  htmltools::attachDependencies(
+    x = tag,
+    value = dependencies,
+    append = TRUE
+  )
 }
 
 
@@ -138,7 +145,7 @@ html_dependency_awesome <- function() {
 }
 
 #' @importFrom sass sass_file
-#' @importFrom bslib bs_dependency
+#' @importFrom bslib bs_dependency is_bs_theme theme_version
 awesomeDependencyCSS <- function(theme) {
   if (!bslib::is_bs_theme(theme)) {
     return(htmlDependency(
@@ -153,9 +160,19 @@ awesomeDependencyCSS <- function(theme) {
       all_files = FALSE
     ))
   }
-
-  sass_input <- list(
-    list(
+  if (identical(bslib::theme_version(theme), "3")) {
+    sass_vars <- list(
+      "fa-var-check" = "\"\\f00c\"",
+      "input-bg-disabled" = "$gray",
+      "brand-primary" = "$brand-primary",
+      "brand-info" = "$brand-info",
+      "brand-success" = "$brand-success",
+      "brand-warning" = "$brand-warning",
+      "brand-danger" = "$brand-danger",
+      "awesome-label-inline-margin-left" = "10px"
+    )
+  } else {
+    sass_vars <- list(
       "fa-var-check" = "\"\\f00c\"",
       "input-bg-disabled" = "$gray-300",
       "brand-primary" = "$primary",
@@ -164,10 +181,10 @@ awesomeDependencyCSS <- function(theme) {
       "brand-warning" = "$warning",
       "brand-danger" = "$danger",
       "awesome-label-inline-margin-left" = "10px"
-    ),
-    # sass::sass_file(
-    #   system.file(package = "shinyWidgets", "assets/awesome-bootstrap-checkbox/_variables.scss")
-    # ),
+    )
+  }
+  sass_input <- list(
+    sass_vars,
     sass::sass_file(
       system.file(package = "shinyWidgets", "assets/awesome-bootstrap-checkbox/_mixins.scss")
     ),
@@ -207,7 +224,7 @@ html_dependency_pretty <- function() {
 }
 
 #' @importFrom sass sass_file
-#' @importFrom bslib bs_dependency
+#' @importFrom bslib bs_dependency is_bs_theme theme_version
 prettyDependencyCSS <- function(theme) {
   if (!bslib::is_bs_theme(theme)) {
     return(htmlDependency(
@@ -219,14 +236,25 @@ prettyDependencyCSS <- function(theme) {
     ))
   }
 
-  sass_input <- list(
-    list(
+  if (identical(bslib::theme_version(theme), "3")) {
+    sass_vars <- list(
+      "pretty--color-primary" = "$brand-primary",
+      "pretty--color-info" = "$brand-info",
+      "pretty--color-success" = "$brand-success",
+      "pretty--color-warning" = "$brand-warning",
+      "pretty--color-danger" = "$brand-danger"
+    )
+  } else {
+    sass_vars <- list(
       "pretty--color-primary" = "$primary",
       "pretty--color-info" = "$info",
       "pretty--color-success" = "$success",
       "pretty--color-warning" = "$warning",
       "pretty--color-danger" = "$danger"
-    ),
+    )
+  }
+  sass_input <- list(
+    sass_vars,
     sass::sass_file(
       system.file(package = "shinyWidgets", "assets/pretty-checkbox/pretty-checkbox.scss")
     )
@@ -271,7 +299,7 @@ html_dependency_sweetalert2 <- function(theme = c("sweetalert2",
     theme <- "default"
   htmlDependency(
     name = "sweetalert2",
-    version = "9.17.1",
+    version = "11.1.4",
     src = c(href="shinyWidgets/sweetalert2", file = "assets/sweetalert2"),
     script = c("js/sweetalert2.min.js", "sweetalert-bindings.js"),
     stylesheet = sprintf("css/%s.min.css", theme)

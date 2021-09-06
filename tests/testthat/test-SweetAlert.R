@@ -55,7 +55,7 @@ test_that("sendSweetAlert", {
 
   sendSA_msg <- session$lastCustomMessage$message
 
-  expect_length(sendSA_msg, 2)
+  expect_length(sendSA_msg, 3)
   expect_identical(sendSA_msg$config$title, "TITLE")
   expect_is(sendSA_msg$config$text, "character")
   expect_identical(sendSA_msg$config$icon, "success")
@@ -92,7 +92,7 @@ test_that("confirmSweetAlert", {
   sendCA_msg <- session$lastCustomMessage$message
 
   expect_identical(sendCA_msg$id, "MY_CONFIRMATION")
-  expect_length(sendCA_msg, 3)
+  expect_length(sendCA_msg, 4)
   expect_identical(sendCA_msg$swal$title, "TITLE")
   expect_is(sendCA_msg$swal$text, "character")
   expect_identical(sendCA_msg$swal$icon, "success")
@@ -128,7 +128,7 @@ test_that("inputSweetAlert", {
   sendIA_msg <- session$lastCustomMessage$message
 
   expect_identical(sendIA_msg$id, "MY_INPUT")
-  expect_length(sendIA_msg, 3)
+  expect_length(sendIA_msg, 4)
   expect_identical(sendIA_msg$swal$title, "TITLE")
   expect_is(sendIA_msg$swal$text, "json")
 })

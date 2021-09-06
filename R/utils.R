@@ -1,4 +1,8 @@
 
+`%||%` <- function(x, y) {
+  if (!is.null(x)) x else y
+}
+
 starts_with <- function(x, prefix) {
   # grepl(pattern = sprintf("^%s", prefix), x = x, fixed = TRUE)
   substring(x, 1, nchar(prefix)) == prefix
@@ -96,27 +100,7 @@ validateSelected <- function (selected, choices, inputId) {
 }
 
 
-`%AND%` <- function(x, y) {
-  if (!is.null(x) && !anyNA(x))
-    if (!is.null(y) && !anyNA(y))
-      return(y)
-  return(NULL)
-}
-
-
-`%||%` <- function(x, y) {
-  if (!is.null(x)) x else y
-}
-
-escape_jquery <- function(string) {
-  gsub(x = string, pattern = "(\\W)", replacement = "\\\\\\\\\\1")
-}
-
-
-
-
-firstChoice <- function(choices)
-{
+firstChoice <- function(choices) {
   if (length(choices) == 0L)
     return()
   choice <- choices[[1]]
@@ -183,9 +167,7 @@ validateIcon <- function(icon) {
   }
 }
 
-controlLabel <- function(controlName, label) {
-  label %AND% htmltools::tags$label(class = "control-label", `for` = controlName, label)
-}
+
 
 formatNoSci <- function(x) {
   if (is.null(x)) return(NULL)

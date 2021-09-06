@@ -1,3 +1,17 @@
+shinyWidgets 0.6.1
+======================
+
+* Add transparent border to `setSliderColor()`, thanks to [@shannonpileggi](https://github.com/shannonpileggi) ([#396](https://github.com/dreamRs/shinyWidgets/pull/396))
+* Add commas in value and total of `progressBar()`, thanks to [@swsoyee](https://github.com/swsoyee) ([#388](https://github.com/dreamRs/shinyWidgets/pull/388))
+* Add position absolute to `awesomeCheckboxGroup()`, thanks to [@MayaGans](https://github.com/MayaGans) ([#390](https://github.com/dreamRs/shinyWidgets/pull/390))
+* `autonumericInput()`: distinguish between no input and input=0, see [#384](https://github.com/dreamRs/shinyWidgets/issues/384)
+* Update of `disabledDates` argument's behavior in `updateAirDateInput()`, see [#379](https://github.com/dreamRs/shinyWidgets/issues/379)
+* Updated [sweetalert2](https://sweetalert2.github.io/) dependencies to 11.1.4
+* `inputSweetAlert()`: added email and url types.
+* `inputSweetAlert()`: allow javascript code, for example to use argument `inputValidator` with a function.
+
+
+
 shinyWidgets 0.6.0
 ======================
 
