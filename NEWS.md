@@ -1,3 +1,11 @@
+shinyWidgets 0.6.2
+======================
+
+* `numericRangeInput()`: added `min`, `max`, `step` arguments.
+* `shinyWidgetsGallery()`: switch to Font-Awesome 5 icon names (to accomodate with Shiny 1.7.0).
+
+
+
 shinyWidgets 0.6.1
 ======================
 
