@@ -5,7 +5,7 @@
 \title{Progress bar in a sweet alert}
 \usage{
 progressSweetAlert(
-  session,
+  session = getDefaultReactiveDomain(),
   id,
   value,
   total = NULL,
@@ -13,7 +13,8 @@ progressSweetAlert(
   size = NULL,
   status = NULL,
   striped = FALSE,
-  title = NULL
+  title = NULL,
+  ...
 )
 }
 \arguments{
@@ -27,13 +28,15 @@ progressSweetAlert(
 
 \item{display_pct}{logical, display percentage on the progress bar.}
 
-\item{size}{Size, `NULL` by default or a value in 'xxs', 'xs', 'sm', only work with package `shinydashboard`.}
+\item{size}{Size, \code{NULL} by default or a value in 'xxs', 'xs', 'sm', only work with package \code{shinydashboard}.}
 
 \item{status}{Color, must be a valid Bootstrap status : primary, info, success, warning, danger.}
 
 \item{striped}{logical, add a striped effect.}
 
 \item{title}{character, optional title.}
+
+\item{...}{Arguments passed to \code{\link[=sendSweetAlert]{sendSweetAlert()}}}
 }
 \description{
 Progress bar in a sweet alert
@@ -83,4 +86,7 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 }
+}
+\seealso{
+\code{\link[=progressBar]{progressBar()}}
 }

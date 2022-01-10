@@ -8,9 +8,9 @@
 #'  `inputId` (obligatory, must be variable name), `label`, `placeholder`.
 #' @param label Character, global label on top of all labels.
 #' @param btn_label Character, reset button label.
-#' @param inline If \code{TRUE} (the default), `selectizeInput`s are horizontally positioned, otherwise vertically.
+#' @param inline If `TRUE` (the default), `selectizeInput`s are horizontally positioned, otherwise vertically.
 #'
-#' @return a \code{reactive} function containing data filtered.
+#' @return a [shiny::reactive()] function containing data filtered.
 #' @export
 #'
 #' @name selectizeGroup-module
@@ -41,13 +41,14 @@ selectizeGroupUI <- function(id, params, label = NULL, btn_label = "Reset filter
               id = ns(paste0("container-", input$inputId)),
               selectizeInput(
                 inputId = ns(input$inputId),
-                label = input$title,
+                label = input$label %||% input$title,
                 choices = input$choices,
                 selected = input$selected,
                 multiple = ifelse(is.null(input$multiple), TRUE, input$multiple),
                 width = "100%",
                 options = list(
-                  placeholder = input$placeholder, plugins = list("remove_button"),
+                  placeholder = input$placeholder,
+                  plugins = list("remove_button"),
                   onInitialize = I('function() { this.setValue(""); }')
                 )
               )
@@ -59,7 +60,7 @@ selectizeGroupUI <- function(id, params, label = NULL, btn_label = "Reset filter
       actionLink(
         inputId = ns("reset_all"),
         label = btn_label,
-        icon = icon("remove"),
+        icon = icon("times"),
         style = "float: right;"
       )
     )
@@ -70,16 +71,20 @@ selectizeGroupUI <- function(id, params, label = NULL, btn_label = "Reset filter
         X = seq_along(params),
         FUN = function(x) {
           input <- params[[x]]
-          tagSelect <- selectizeInput(
-            inputId = ns(input$inputId),
-            label = input$title,
-            choices = input$choices,
-            selected = input$selected,
-            multiple = ifelse(is.null(input$multiple), TRUE, input$multiple),
-            width = "100%",
-            options = list(
-              placeholder = input$placeholder, plugins = list("remove_button"),
-              onInitialize = I('function() { this.setValue(""); }')
+          tagSelect <- tags$div(
+            id = ns(paste0("container-", input$inputId)),
+            selectizeInput(
+              inputId = ns(input$inputId),
+              label = input$label %||% input$title,
+              choices = input$choices,
+              selected = input$selected,
+              multiple = ifelse(is.null(input$multiple), TRUE, input$multiple),
+              width = "100%",
+              options = list(
+                placeholder = input$placeholder,
+                plugins = list("remove_button"),
+                onInitialize = I('function() { this.setValue(""); }')
+              )
             )
           )
           return(tagSelect)
@@ -88,7 +93,7 @@ selectizeGroupUI <- function(id, params, label = NULL, btn_label = "Reset filter
       actionLink(
         inputId = ns("reset_all"),
         label = btn_label,
-        icon = icon("remove"),
+        icon = icon("times"),
         style = "float: right;"
       )
     )
@@ -110,18 +115,19 @@ selectizeGroupUI <- function(id, params, label = NULL, btn_label = "Reset filter
 }
 
 
-#' @param input,output,session standards \code{shiny} server arguments.
-#' @param data Either a \code{data.frame} or a \code{reactive}
+#' @param input,output,session standards `shiny` server arguments.
+#' @param data Either a [data.frame()] or a [shiny::reactive()]
 #'  function returning a \code{data.frame} (do not use parentheses).
 #' @param vars character, columns to use to create filters,
 #'  must correspond to variables listed in \code{params}. Can be a
 #'  \code{reactive} function, but values must be included in the initial ones (in \code{params}).
+#' @param inline If \code{TRUE} (the default), `selectizeInput`s are horizontally positioned, otherwise vertically.
 #'
 #' @export
 #'
 #' @rdname selectizeGroup-module
-#' @importFrom shiny updateSelectizeInput observeEvent reactiveValues reactive is.reactive
-selectizeGroupServer <- function(input, output, session, data, vars) { # nocov start
+#' @importFrom shiny updateSelectizeInput observeEvent reactiveValues reactive is.reactive isolate
+selectizeGroupServer <- function(input, output, session, data, vars, inline = TRUE) { # nocov start
 
   # Namespace
   ns <- session$ns
@@ -146,7 +152,7 @@ selectizeGroupServer <- function(input, output, session, data, vars) { # nocov s
     for (var in names(rv$data)) {
       if (var %in% rv$vars) {
         toggleDisplayServer(
-          session = session, id = ns(paste0("container-", var)), display = "table-cell"
+          session = session, id = ns(paste0("container-", var)), display = ifelse(inline, "table-cell", "block")
         )
       } else {
         toggleDisplayServer(
@@ -165,6 +171,7 @@ selectizeGroupServer <- function(input, output, session, data, vars) { # nocov s
           session = session,
           inputId = x,
           choices = vals,
+          selected = isolate(input[[x]]),
           server = TRUE
         )
       }

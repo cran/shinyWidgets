@@ -1,79 +1,21 @@
 
 #' @title Buttons Group checkbox Input Control
 #'
-#' @description
-#' Create buttons grouped that act like checkboxes.
+#' @description Create buttons grouped that act like checkboxes.
 #'
-#' @param inputId The \code{input} slot that will be used to access the value.
-#' @param label Input label.
-#' @param choices List of values to select from (if elements of the list are named
-#'  then that name rather than the value is displayed to the user)
-#' @param selected The initially selected value.
-#' @param status Add a class to the buttons, you can use Bootstrap status like 'info', 'primary', 'danger', 'warning' or 'success'.
-#'  Or use an arbitrary strings to add a custom class, e.g. : with \code{status = 'myClass'}, buttons will have class \code{btn-myClass}.
-#' @param size Size of the buttons ('xs', 'sm', 'normal', 'lg')
-#' @param direction Horizontal or vertical.
-#' @param justified If TRUE, fill the width of the parent div.
-#' @param individual If TRUE, buttons are separated.
-#' @param checkIcon A list, if no empty must contain at least one element named 'yes'
-#' corresponding to an icon to display if the button is checked.
-#' @param width The width of the input, e.g. '400px', or '100\%'.
-#' @param choiceNames,choiceValues Same as in \code{\link[shiny]{checkboxGroupInput}}. List of names and values, respectively, that are displayed to
-#'  the user in the app and correspond to the each choice (for this reason,
-#'  \code{choiceNames} and \code{choiceValues} must have the same length).
-#' @param disabled Initialize buttons in a disabled state (users won't be able to select a value).
+#' @inheritParams shiny::checkboxGroupInput
+#' @inheritParams radioGroupButtons
 #'
 #' @return A buttons group control that can be added to a UI definition.
 #'
-#' @seealso \code{\link{updateCheckboxGroupButtons}}
+#' @seealso [updateCheckboxGroupButtons()]
 #'
-#' @importFrom shiny restoreInput
-#' @importFrom htmltools tags HTML validateCssUnit
+#' @importFrom shiny restoreInput getCurrentTheme
+#' @importFrom htmltools tags HTML validateCssUnit css tagFunction
 #'
 #' @export
 #'
-#' @examples
-#' if (interactive()) {
-#'
-#'   ui <- fluidPage(
-#'     tags$h1("checkboxGroupButtons examples"),
-#'
-#'     checkboxGroupButtons(
-#'       inputId = "somevalue1",
-#'       label = "Make a choice: ",
-#'       choices = c("A", "B", "C")
-#'     ),
-#'     verbatimTextOutput("value1"),
-#'
-#'     checkboxGroupButtons(
-#'       inputId = "somevalue2",
-#'       label = "With custom status:",
-#'       choices = names(iris),
-#'       status = "primary"
-#'     ),
-#'     verbatimTextOutput("value2"),
-#'
-#'     checkboxGroupButtons(
-#'       inputId = "somevalue3",
-#'       label = "With icons:",
-#'       choices = names(mtcars),
-#'       checkIcon = list(
-#'         yes = icon("check-square"),
-#'         no = icon("square-o")
-#'       )
-#'     ),
-#'     verbatimTextOutput("value3")
-#'   )
-#'   server <- function(input, output) {
-#'
-#'     output$value1 <- renderPrint({ input$somevalue1 })
-#'     output$value2 <- renderPrint({ input$somevalue2 })
-#'     output$value3 <- renderPrint({ input$somevalue3 })
-#'
-#'   }
-#'   shinyApp(ui, server)
-#'
-#' }
+#' @example examples/checkboxGroupButtons.R
 checkboxGroupButtons <- function(inputId,
                                  label = NULL,
                                  choices = NULL,
@@ -94,12 +36,12 @@ checkboxGroupButtons <- function(inputId,
   direction <- match.arg(arg = direction, choices = c("horizontal", "vertical"))
 
   divClass <- if (individual) "" else "btn-group"
-  if (!individual & direction == "vertical") {
+  if (!isTRUE(individual) & direction == "vertical") {
     divClass <- paste0(divClass, "-vertical")
   }
-  if (justified) {
+  if (isTRUE(justified)) {
     if (direction != "vertical") {
-      divClass <- paste(divClass, "btn-group-justified")
+      divClass <- paste(divClass, "btn-group-justified d-flex")
     } else {
       divClass <- paste(divClass, "btn-block")
     }
@@ -109,7 +51,7 @@ checkboxGroupButtons <- function(inputId,
   }
   checkboxGroupButtonsTag <- tags$div(
     class = "form-group shiny-input-container shiny-input-checkboxgroup shiny-input-container-inline",
-    style = if(!is.null(width)) paste("width:", validateCssUnit(width)),
+    style = css(width = validateCssUnit(width)),
     tags$label(
       id = paste0(inputId, "-label"),
       class = "control-label",
@@ -120,7 +62,7 @@ checkboxGroupButtons <- function(inputId,
     if (!is.null(label)) tags$br(),
     tags$div(
       id = inputId,
-      class = "checkboxGroupButtons",
+      class = "checkbox-group-buttons",
       style = if (justified) "width: 100%;",
       tags$div(
         class = divClass,
@@ -128,7 +70,22 @@ checkboxGroupButtons <- function(inputId,
         `aria-labelledby` = paste0(inputId, "-label"),
         `data-toggle` = "buttons",
         class = "btn-group-container-sw",
-        generateCBGB(inputId, args, selected, status, size, checkIcon, disabled = disabled)
+        style = if (direction == "vertical") css(width = validateCssUnit(width)),
+        htmltools::tagFunction(function() {
+          markup_buttons_checkbox(
+            shiny::getCurrentTheme(),
+            list(
+              inputId = inputId,
+              choices = args,
+              selected = selected,
+              status = status,
+              size = size,
+              checkIcon = checkIcon,
+              disabled = disabled,
+              justified = justified
+            )
+          )
+        })
       )
     )
   )
@@ -137,13 +94,24 @@ checkboxGroupButtons <- function(inputId,
 
 
 
+#' @importFrom bslib is_bs_theme theme_version
+markup_buttons_checkbox <- function(theme, args) {
+  if (!bslib::is_bs_theme(theme)) {
+    return(do.call(markup_buttons_checkbox_bs3, args))
+  }
+  if (bslib::theme_version(theme) %in% c("5")) {
+    return(do.call(markup_buttons_checkbox_bs5, args))
+  }
+  do.call(markup_buttons_checkbox_bs3, args)
+}
 
 
-generateCBGB <- function(inputId, choices, selected, status, size, checkIcon, disabled = FALSE) {
+markup_buttons_checkbox_bs3 <- function(inputId, choices, selected, status, size, checkIcon, disabled = FALSE, justified = FALSE) {
   btn_wrapper <- function(...) {
     htmltools::tags$div(
       class = "btn-group btn-group-toggle",
-      class = if (size != "normal") paste0("btn-group-", size),
+      class = if (!identical(size, "normal")) paste0("btn-group-", size),
+      class = if (isTRUE(justified)) "w-100",
       role = "group",
       ...
     )
@@ -154,10 +122,10 @@ generateCBGB <- function(inputId, choices, selected, status, size, checkIcon, di
     displayIcon <- FALSE
   }
   mapply(
-    FUN = function(name, value) {
+    FUN = function(name, value, statusElement) {
       btn_wrapper(
         tags$button(
-          class = paste0("btn checkbtn btn-", status),
+          class = paste0("btn checkbtn btn-", statusElement),
           class = if (value %in% selected) "active",
           if (displayIcon) tags$span(class="check-btn-icon-yes", checkIcon$yes),
           if (displayIcon) tags$span(class="check-btn-icon-no", checkIcon$no),
@@ -176,6 +144,47 @@ generateCBGB <- function(inputId, choices, selected, status, size, checkIcon, di
     },
     name = choices$choiceNames,
     value = choices$choiceValues,
+    statusElement = rep(status, length.out = length(choices$choiceNames)),
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
+  )
+}
+
+
+markup_buttons_checkbox_bs5 <- function(inputId, choices, selected, status, size, checkIcon, disabled = FALSE, justified = FALSE) {
+  if (!is.null(checkIcon) && !is.null(checkIcon$yes)) {
+    displayIcon <- TRUE
+  } else {
+    displayIcon <- FALSE
+  }
+  mapply(
+    FUN = function(name, value, statusElement) {
+      if (identical(statusElement, "default"))
+        statusElement <- "outline-primary"
+      tagList(
+        tags$input(
+          type = "checkbox",
+          autocomplete = "off",
+          id = paste0(inputId, which(choices$choiceValues == value)),
+          name = inputId,
+          value = value,
+          class = "btn-check",
+          checked = if (value %in% selected) "checked"
+        ),
+        tags$label(
+          class = paste0("btn checkbtn btn-", statusElement),
+          disabled = if (isTRUE(disabled)) "disabled",
+          class = if (isTRUE(disabled)) "disabled",
+          `for` = paste0(inputId, which(choices$choiceValues == value)),
+          if (displayIcon) tags$span(class = "check-btn-icon-yes", checkIcon$yes),
+          if (displayIcon) tags$span(class = "check-btn-icon-no", checkIcon$no),
+          if (is.list(name)) name else HTML(name)
+        )
+      )
+    },
+    name = choices$choiceNames,
+    value = choices$choiceValues,
+    statusElement = rep(status, length.out = length(choices$choiceNames)),
     SIMPLIFY = FALSE,
     USE.NAMES = FALSE
   )
@@ -183,137 +192,30 @@ generateCBGB <- function(inputId, choices, selected, status, size, checkIcon, di
 
 
 
-
 #' @title Change the value of a checkboxes group buttons input on the client
 #'
-#' @description
-#' Change the value of a radio group buttons input on the client
+#' @description Change the value of a checkbox group buttons input on the client
 #'
-#' @param session The session object passed to function given to shinyServer.
-#' @param inputId	The id of the input object.
-#' @param selected The values selected.
-#' @param label The label to set.
-#' @param choices The new choices for the input.
-#' @param status Status, only used if choices is not NULL.
-#' @param size Size, only used if choices is not NULL.
-#' @param checkIcon Icon, only used if choices is not NULL.
-#' @param choiceNames,choiceValues List of names and values, an alternative to choices.
-#' @param disabled Logical, disable or enable buttons,
-#'  if \code{TRUE} users won't be able to select a value.
-#' @param disabledChoices Vector of specific choices to disable.
+#' @inheritParams shiny::updateCheckboxGroupInput
+#' @inheritParams checkboxGroupButtons
+#' @inheritParams updateRadioGroupButtons
 #'
 #' @export
 #'
-#' @importFrom htmltools tagList
+#' @seealso [checkboxGroupButtons()]
 #'
-#' @seealso \code{\link{checkboxGroupButtons}}
+#' @importFrom htmltools tagList doRenderTags
+#' @importFrom shiny getDefaultReactiveDomain
 #'
-#' @examples
-#' if (interactive()) {
-#'
-#' library(shiny)
-#' library(shinyWidgets)
-#'
-#' # Example 1 ----
-#'
-#' ui <- fluidPage(
-#'
-#'   radioButtons(inputId = "up", label = "Update button :", choices = c("All", "None")),
-#'
-#'   checkboxGroupButtons(
-#'     inputId = "btn", label = "Power :",
-#'     choices = c("Nuclear", "Hydro", "Solar", "Wind"),
-#'     selected = "Hydro"
-#'   ),
-#'
-#'   verbatimTextOutput(outputId = "res")
-#'
-#' )
-#'
-#' server <- function(input,output, session){
-#'
-#'   observeEvent(input$up, {
-#'     if (input$up == "All"){
-#'       updateCheckboxGroupButtons(session, "btn", selected = c("Nuclear", "Hydro", "Solar", "Wind"))
-#'     } else {
-#'       updateCheckboxGroupButtons(session, "btn", selected = character(0))
-#'     }
-#'   }, ignoreInit = TRUE)
-#'
-#'   output$res <- renderPrint({
-#'     input$btn
-#'   })
-#' }
-#'
-#' shinyApp(ui = ui, server = server)
-#'
-#'
-#' # Example 2 ----
-#'
-#' library("shiny")
-#' library("shinyWidgets")
-#'
-#' ui <- fluidPage(
-#'   checkboxGroupButtons(
-#'     inputId = "somevalue",
-#'     choices = c("A", "B", "C"),
-#'     label = "My label"
-#'   ),
-#'
-#'   verbatimTextOutput(outputId = "res"),
-#'
-#'   actionButton(inputId = "updatechoices", label = "Random choices"),
-#'   pickerInput(
-#'     inputId = "updateselected", label = "Update selected:",
-#'     choices = c("A", "B", "C"), multiple = TRUE
-#'   ),
-#'   textInput(inputId = "updatelabel", label = "Update label")
-#' )
-#'
-#' server <- function(input, output, session) {
-#'
-#'   output$res <- renderPrint({
-#'     input$somevalue
-#'   })
-#'
-#'   observeEvent(input$updatechoices, {
-#'     newchoices <- sample(letters, sample(2:6))
-#'     updateCheckboxGroupButtons(
-#'       session = session, inputId = "somevalue",
-#'       choices = newchoices
-#'     )
-#'     updatePickerInput(
-#'       session = session, inputId = "updateselected",
-#'       choices = newchoices
-#'     )
-#'   })
-#'
-#'   observeEvent(input$updateselected, {
-#'     updateCheckboxGroupButtons(
-#'       session = session, inputId = "somevalue",
-#'       selected = input$updateselected
-#'     )
-#'   }, ignoreNULL = TRUE, ignoreInit = TRUE)
-#'
-#'   observeEvent(input$updatelabel, {
-#'     updateCheckboxGroupButtons(
-#'       session = session, inputId = "somevalue",
-#'       label = input$updatelabel
-#'     )
-#'   }, ignoreInit = TRUE)
-#'
-#' }
-#'
-#' shinyApp(ui = ui, server = server)
-#'
-#' }
-updateCheckboxGroupButtons <- function(session,
+#' @example examples/update-checkbox-buttons.R
+updateCheckboxGroupButtons <- function(session = getDefaultReactiveDomain(),
                                        inputId,
                                        label = NULL,
                                        choices = NULL,
                                        selected = NULL,
                                        status = "default",
                                        size = "normal",
+                                       justified = FALSE,
                                        checkIcon = list(),
                                        choiceNames = NULL,
                                        choiceValues = NULL,
@@ -324,14 +226,19 @@ updateCheckboxGroupButtons <- function(session,
     selected <- as.character(selected)
   if (!is.null(disabledChoices))
     disabledChoices <- as.character(disabledChoices)
-  options <- if (!is.null(args$choiceNames)) {
-    as.character(tagList(generateCBGB(
-      session$ns(inputId),
-      args, selected,
-      status = status,
-      size = size,
-      checkIcon = checkIcon
-    )))
+  options <- if (!is.null(args$choiceValues)) {
+    doRenderTags(markup_buttons_checkbox(
+      session$getCurrentTheme(),
+      list(
+        inputId = session$ns(inputId),
+        choices = args,
+        selected = selected,
+        status = status,
+        size = size,
+        checkIcon = checkIcon,
+        justified = justified
+      )
+    ))
   }
   message <- dropNulls(list(
     selected = selected,

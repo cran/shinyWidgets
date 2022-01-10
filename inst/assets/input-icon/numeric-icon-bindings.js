@@ -20,28 +20,30 @@ function addError(element) {
     .parent()
     .parent()
     .addClass("has-error");
+  $(element).addClass("is-invalid");
 }
 function removeError(element) {
   $(element)
     .parent()
     .parent()
-    .removeClass("has-error");
+    .removeClass("has-error is-invalid");
+  $(element).removeClass("is-invalid");
 }
 function showHelp(element) {
   $(element)
     .parent()
     .parent()
     .find(".help-block")
-    .removeClass("hidden")
-    .addClass("show");
+    .removeClass("hidden d-none")
+    .addClass("show d-block");
 }
 function hideHelp(element) {
   $(element)
     .parent()
     .parent()
     .find(".help-block")
-    .removeClass("show")
-    .addClass("hidden");
+    .removeClass("show d-block")
+    .addClass("hidden d-none");
 }
 var numericInputIconBinding = new Shiny.InputBinding();
 $.extend(numericInputIconBinding, {
@@ -112,10 +114,10 @@ $.extend(numericInputIconBinding, {
     if (data.hasOwnProperty("step")) el.step = data.step;
     updateLabel(data.label, this._getLabelNode(el));
     if (data.hasOwnProperty("left")) {
-      $(el).prev(".input-group-addon").replaceWith(data.left);
+      $(el).prev(".sw-input-icon").replaceWith(data.left);
     }
     if (data.hasOwnProperty("right")) {
-      $(el).next(".input-group-addon").replaceWith(data.right);
+      $(el).next(".sw-input-icon").replaceWith(data.right);
     }
     $(el).trigger("change");
   },

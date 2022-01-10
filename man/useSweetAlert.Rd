@@ -17,8 +17,8 @@ useSweetAlert(
 }
 \description{
 This function isn't necessary for \code{sendSweetAlert}, \code{confirmSweetAlert},
- \code{inputSweetAlert} (except if you want to use a theme other than the default one),
- but is still needed for \code{progressSweetAlert}.
+\code{inputSweetAlert} (except if you want to use a theme other than the default one),
+but is still needed for \code{progressSweetAlert}.
 }
 \examples{
 if (interactive()) {
@@ -92,6 +92,6 @@ if (interactive()) {
 }
 }
 \seealso{
-\code{\link{sendSweetAlert}}, \code{\link{confirmSweetAlert}},
- \code{\link{inputSweetAlert}}, \code{\link{closeSweetAlert}}.
+\code{\link[=sendSweetAlert]{sendSweetAlert()}}, \code{\link[=confirmSweetAlert]{confirmSweetAlert()}},
+\code{\link[=inputSweetAlert]{inputSweetAlert()}}, \code{\link[=closeSweetAlert]{closeSweetAlert()}}.
 }

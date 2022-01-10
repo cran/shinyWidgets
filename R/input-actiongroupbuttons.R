@@ -26,7 +26,7 @@
 #'     br(),
 #'     actionGroupButtons(
 #'       inputIds = c("btn1", "btn2", "btn3"),
-#'       labels = list("Action 1", "Action 2", tags$span(icon("gear"), "Action 3")),
+#'       labels = list("Action 1", "Action 2", tags$span(icon("cog"), "Action 3")),
 #'       status = "primary"
 #'     ),
 #'     verbatimTextOutput(outputId = "res1"),
@@ -61,6 +61,7 @@ actionGroupButtons <- function(inputIds,
     arg = direction,
     choices = c("horizontal", "vertical")
   )
+  status <- rep(status, length.out = length(labels))
   tags$div(
     class = "btn-group",
     class = if (direction == "vertical") "btn-group-vertical",
@@ -78,7 +79,7 @@ actionGroupButtons <- function(inputIds,
             tags$button(
               id = inputIds[i],
               type = "button",`data-val` = value,
-              class = paste0("btn action-button btn-", status),
+              class = paste0("btn action-button btn-", status[i]),
               labels[i]
             )
           )
@@ -86,7 +87,7 @@ actionGroupButtons <- function(inputIds,
           tags$button(
             id = inputIds[i],
             type = "button",`data-val` = value,
-            class = paste0("btn action-button btn-", status),
+            class = paste0("btn action-button btn-", status[i]),
             labels[i]
           )
         }

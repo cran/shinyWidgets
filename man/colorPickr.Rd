@@ -25,7 +25,12 @@ colorPickr(
   width = NULL
 )
 
-updateColorPickr(session, inputId, value = NULL, action = NULL)
+updateColorPickr(
+  session = getDefaultReactiveDomain(),
+  inputId,
+  value = NULL,
+  action = NULL
+)
 }
 \arguments{
 \item{inputId}{The id of the input object.}
@@ -79,7 +84,7 @@ A widget to pick color with different themes and options.
 }
 \note{
 Widget based on JS library pickr by \href{https://github.com/Simonwep}{Simonwep}.
- See online documentation for more information: \url{https://github.com/Simonwep/pickr}.
+See online documentation for more information: \url{https://github.com/Simonwep/pickr}.
 }
 \examples{
 
