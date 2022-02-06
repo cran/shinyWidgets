@@ -1,3 +1,12 @@
+shinyWidgets 0.6.4
+======================
+
+### Bug fixes
+* Revert `bootstrap-switch-js` to 3.3.4 to fix bug when `value = TRUE`.
+* Fixed a bug in `colorSelectorInput()` causing not returning an input value.
+
+
+
 shinyWidgets 0.6.3
 ======================
 
@@ -8,6 +17,7 @@ shinyWidgets 0.6.3
     + `numericInputIcon()`
 * `checkboxGroupButtons()`/`radioGroupButtons()`: `status` argument now accept a vector, thanks to [@jassler](https://github.com/jassler) ([#440](https://github.com/dreamRs/shinyWidgets/pull/440))
 * `downloadBttn()` now has a `icon` argument.
+* `switchInput()` is now themable with {bslib}, thanks to [@AshesITR](https://github.com/AshesITR) ([#454](https://github.com/dreamRs/shinyWidgets/pull/454))
 
 ### Bug fixes
 * `updateNumericRangeInput()` failed to correctly update `label` ([#441](https://github.com/dreamRs/shinyWidgets/issues/441))
