@@ -1,6 +1,6 @@
 # shinyWidgets
 
-> Extend widgets available in shiny
+> Extend widgets available in [shiny](https://github.com/rstudio/shiny)
 
 <!-- badges: start -->
 [![version](http://www.r-pkg.org/badges/version/shinyWidgets)](https://CRAN.R-project.org/package=shinyWidgets)
@@ -20,17 +20,27 @@ You can replace classical checkboxes with switch button, add colors to radio but
 Each widget has an `update` method to change the value of an input from the server.
 
 
-Installation :
-```r
-# From CRAN
-install.packages("shinyWidgets")
 
-# From Github
-# install.packages("devtools")
-devtools::install_github("dreamRs/shinyWidgets")
+## Installation
+
+Install from [CRAN](https://CRAN.R-project.org/package=shinyWidgets) with:
+
+```r
+install.packages("shinyWidgets")
 ```
 
-Demo :
+Or install the development version from [GitHub](https://github.com/dreamRs/shinyWidgets) with:
+
+```r
+# install.packages("remotes")
+remotes::install_github("dreamRs/shinyWidgets")
+```
+
+
+## Demo
+
+A gallery application is included in the package. Once installed, use the following command to launch it:
+
 ```r
 shinyWidgets::shinyWidgetsGallery()
 ```
@@ -39,24 +49,10 @@ A live version is available here : http://shinyapps.dreamrs.fr/shinyWidgets
 
 
 
-## Widgets available :
-
-
-  - [Bootstrap switch](#bootstrap-switch)
-  - [Material switch](#material-switch)
-  - [Pretty Checkbox](#pretty-checkbox)
-  - [Sweet Alert](#sweet-alert)
-  - [Slider Text](#slider-text)
-  - [Knob Input](#knob-input)
-  - [Select picker](#select-picker)
-  - [Checkboxes and radio buttons](#checkbox-and-radio-buttons)
-  - [Search bar](#search-bar)
-  - [Dropdown button](#dropdown-button)
-
-
 ### Bootstrap switch
 
-Turn checkboxes into toggle switches : <br>
+Turn checkboxes into toggle switches : 
+
 ![switchInput](man/figures/switchInput.png)
 
 ```r
@@ -67,7 +63,8 @@ switchInput(inputId = "id", value = TRUE)
 
 ### Material switch
 
-Turn checkboxes into toggle switches (again) : <br>
+Turn checkboxes into toggle switches :
+
 ![materialSwitch](man/figures/materialSwitch.png)
 
 ```r
@@ -103,25 +100,25 @@ prettyCheckbox(
   shape = "round", outline = TRUE, status = "info"
 ),
 
-...
+# ...
 
 ```
 
 
 ### Sweet Alert
 
-Displays a message to the user :
+Show an alert message to the user to provide some feedback, via [sweetalert2](https://sweetalert2.github.io/) library:
 
-![sendSweetAlert](man/figures/sendSweetAlert.gif)
+![sendSweetAlert](man/figures/show_alert.png)
 
-See examples in `?sendSweetAlert`.
+See examples in `?show_alert`.
 
 
 Request confirmation from the user :
 
-![confirmSweetAlert](man/figures/confirmSweetAlert.gif)
+![confirmSweetAlert](man/figures/ask_confirmation.png)
 
-See examples in `?confirmSweetAlert`.
+See examples in `?ask_confirmation`.
 
 
 
@@ -143,27 +140,10 @@ sliderTextInput(
 ```
 
 
-### Knob Input
-
-A [jQuery](https://github.com/aterrien/jQuery-Knob) based knob, similar to sliderInput or sliderTextInput: <br>
-![knobInput](man/figures/knob.gif)
-
-```r
-knobInput(
-  inputId = "myKnob",
-  label = "jQuery knob example:",
-  value = 0,
-  min = -100,
-  displayPrevious = TRUE, 
-  lineCap = "round",
-  fgColor = "#428BCA",
-  inputColor = "#428BCA"
-)
-```
-
 ### Select picker
 
-Dropdown menu with a lot of options : <br>
+Dropdown menu with a lot of options : 
+
 ![pickerInput](man/figures/pickerInput.png)
 
 ```r
@@ -184,7 +164,8 @@ pickerInput(
 
 ### Checkbox and radio buttons
 
-Turn buttons into checkbox or radio : <br>
+Turn buttons into checkbox or radio : 
+
 ![checkboxGroupButtons](man/figures/checkboxGroupButtons.png)
 
 ```r
@@ -198,9 +179,10 @@ checkboxGroupButtons(
 
 
 
-### Search bar
+### Search input
 
-A text input only triggered by hitting 'Enter' or clicking search button : <br>
+A text input only triggered by hitting 'Enter' or clicking search button : 
+
 ![search_input](man/figures/search_input.png)
 
 ```r
@@ -233,6 +215,5 @@ dropdownButton(
 )
 ```
 
-
-And others !
+See also `?dropMenu()`
 
