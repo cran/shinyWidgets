@@ -1,10 +1,17 @@
+shinyWidgets 0.7.2
+======================
+
+* Updated [air-datepicker](https://github.com/t1m0n/air-datepicker) library to latest version (3.2.0), updating bindings to use [dayjs](https://github.com/iamkun/dayjs/) to manipulate date.
+* `updateNoUiSliderInput()`: new argument `label =` to update the widget's label.
+
+
+
 shinyWidgets 0.7.1
 ======================
 
 * Updated virtual-select-plugin to 1.0.30
 * `pickerInput` bindings: fixed update method when using Bootstrap 5.
 * `virtualSelectInput` state (opened or closed) is now available with `input$<inputId>_open`.
-
 
 
 

@@ -109,7 +109,7 @@ airDatepickerInput <- function(inputId,
                                timepicker = FALSE,
                                separator = " - ",
                                placeholder = NULL,
-                               dateFormat = "yyyy-mm-dd",
+                               dateFormat = "yyyy-MM-dd",
                                firstDay = NULL,
                                minDate = NULL,
                                maxDate = NULL,
@@ -140,6 +140,8 @@ airDatepickerInput <- function(inputId,
     several.ok = FALSE
   )
 
+  version <- getOption("air-datepicker", default = 3)
+
   list1 <- function(x) {
     if (is.null(x))
       return(x)
@@ -157,9 +159,10 @@ airDatepickerInput <- function(inputId,
     startView = startView,
     value = list1(value),
     todayButtonAsDate = inherits(todayButton, c("Date", "POSIXt")),
+    language = toupper(language),
     options = c(dropNulls(list(
       autoClose = isTRUE(autoClose),
-      language = language,
+      language = if (version < 3) language,
       timepicker = isTRUE(timepicker),
       # startDate = startDate,
       range = isTRUE(range),
@@ -197,7 +200,7 @@ airDatepickerInput <- function(inputId,
           tags$div(
             class = "btn action-button input-group-addon",
             id = paste0(inputId, "_button"),
-            icon("calendar")
+            icon("calendar-days")
           )
         },
         tagAir,
@@ -205,7 +208,7 @@ airDatepickerInput <- function(inputId,
           tags$div(
             class = "btn action-button input-group-addon",
             id = paste0(inputId, "_button"),
-            icon("calendar")
+            icon("calendar-days")
           )
         }
       )
@@ -237,15 +240,19 @@ airDatepickerInput <- function(inputId,
     )
   )
 
-  attachDependencies(
-    x = attachShinyWidgetsDep(tagAir, "airdatepicker"),
-    value = htmlDependency(
-      name = paste0("air-datepicker-i18n-", language),
-      version = "2.2.3",
-      src = c(href = "shinyWidgets/air-datepicker2"),
-      script = sprintf("i18n/datepicker.%s.js", language)
-    ), append = TRUE
-  )
+  if (version < 3) {
+    attachDependencies(
+      x = attachShinyWidgetsDep(tagAir, "airdatepicker"),
+      value = htmlDependency(
+        name = paste0("air-datepicker-i18n-", language),
+        version = "2.2.3",
+        src = c(href = "shinyWidgets/air-datepicker2"),
+        script = sprintf("i18n/datepicker.%s.js", language)
+      ), append = TRUE
+    )
+  } else {
+    attachShinyWidgetsDep(tagAir, "airdatepicker")
+  }
 }
 
 
