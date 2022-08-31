@@ -1,7 +1,8 @@
 
 #' @title Air Date Picker Input
 #'
-#' @description An alternative to [shiny::dateInput()] to select single, multiple or date range.
+#' @description An alternative to [shiny::dateInput()] to select single, multiple or date range
+#'  based on [Air Datepicker library](https://air-datepicker.com/).
 #'  And two alias to select months or years.
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
@@ -14,7 +15,8 @@
 #' @param timepicker Add a timepicker below calendar to select time.
 #' @param separator Separator between dates when several are selected, default to \code{" - "}.
 #' @param placeholder A character string giving the user a hint as to what can be entered into the control.
-#' @param dateFormat Format to use to display date(s), default to \code{"yyyy-mm-dd"}.
+#' @param dateFormat Format to use to display date(s), default to \code{"yyyy-MM-dd"},
+#'  see [online documentation](https://air-datepicker.com/docs?scrollTo=dateFormat) for possible values.
 #' @param firstDay Day index from which week will be started. Possible values are from 0 to 6, where
 #'  0 - Sunday and 6 - Saturday. By default value is taken from current localization,
 #'  but if it passed here then it will have higher priority.
@@ -39,10 +41,8 @@
 #' @param addon Display a calendar icon to \code{'right'} or the \code{'left'}
 #'  of the widget, or \code{'none'}. This icon act likes an \code{actionButton},
 #'  you can retrieve value server-side with \code{input$<inputId>_button}.
-#' @param language Language to use, can be one of \code{'cs'}, \code{'da'},
-#'  \code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
-#'  \code{'hu'}, \code{'it'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \code{'pt'},
-#'  \code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}, \code{'ja'}.
+# paste(sprintf("`%s`", tools::file_path_sans_ext(list.files("node_modules/air-datepicker/locale/", pattern = "\\.js"))), collapse = ", ")
+#' @param language Language to use, can be one of `ar`, `cs`, `da`, `de`, `en`, `es`, `fi`, `fr`, `hu`, `it`, `nl`, `pl`, `pt-BR`, `pt`, `ro`, `ru`, `si`, `sk`, `sv`, `th`, `tr`, `uk`, `zh`.
 #' @param inline If \code{TRUE}, datepicker will always be visible.
 #' @param onlyTimepicker Display only the time picker.
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.
@@ -133,10 +133,12 @@ airDatepickerInput <- function(inputId,
                                toggleSelected = TRUE) {
   value <- shiny::restoreInput(inputId, value)
   addon <- match.arg(addon)
+  # dput(tools::file_path_sans_ext(list.files("node_modules/air-datepicker/locale/", pattern = "\\.js")))
   language <- match.arg(
     arg = language,
-    choices = c("cs", "da", "de", "en", "es", "fi", "fr", "it", "hu", "nl",
-                "pl", "pt-BR", "pt", "ro", "ru", "sk", "tr", "zh", "ja"),
+    choices = c("ar", "cs", "da", "de", "en", "es", "fi", "fr", "hu", "it",
+                "nl", "pl", "pt-BR", "pt", "ro", "ru", "si", "sk", "sv", "th",
+                "tr", "uk", "zh"),
     several.ok = FALSE
   )
 
@@ -152,6 +154,15 @@ airDatepickerInput <- function(inputId,
     }
   }
 
+  buttons <- character(0)
+  if (clearButton)
+    buttons <- c(buttons, "clear")
+  if (todayButton)
+    buttons <- c(buttons, "today")
+  if (length(buttons) < 1)
+    buttons <- FALSE
+
+
   airParams <- dropNulls(list(
     updateOn = match.arg(update_on),
     disabledDates = list1(disabledDates),
@@ -164,7 +175,7 @@ airDatepickerInput <- function(inputId,
       autoClose = isTRUE(autoClose),
       language = if (version < 3) language,
       timepicker = isTRUE(timepicker),
-      # startDate = startDate,
+      startDate = startView,
       range = isTRUE(range),
       dateFormat = dateFormat,
       firstDay = firstDay,
@@ -175,7 +186,8 @@ airDatepickerInput <- function(inputId,
       view = match.arg(view),
       minView = match.arg(minView),
       clearButton = isTRUE(clearButton),
-      todayButton = todayButton,
+      todayButton = isTRUE(todayButton),
+      buttons = buttons,
       monthsField = match.arg(monthsField),
       position = position,
       onlyTimepicker = isTRUE(onlyTimepicker),

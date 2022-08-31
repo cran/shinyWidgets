@@ -1,8 +1,31 @@
+shinyWidgets 0.7.3
+======================
+
+* Updated [air-datepicker](https://github.com/t1m0n/air-datepicker) to 3.2.1 with language support for italian and arabic.
+* Fixed `airDatepickerInput()` z-index and buttons.
+* `dropdown()`: added `block` & `no_outline` arguments.
+* `actionBttn()`: added ability to pass arguments to tag container.
+* `autonumericInput()`: remove custom CSS styles
+
+
+### Bug fixes
+
+* `pickerInput`'s custom input to know if the menu is open or closed wasn't working anymore after using `updatePickerInput` [#522](https://github.com/dreamRs/shinyWidgets/issues/522)
+
+
+
+
 shinyWidgets 0.7.2
 ======================
 
 * Updated [air-datepicker](https://github.com/t1m0n/air-datepicker) library to latest version (3.2.0), updating bindings to use [dayjs](https://github.com/iamkun/dayjs/) to manipulate date.
 * `updateNoUiSliderInput()`: new argument `label =` to update the widget's label.
+
+## Breaking changes
+
+* `airDatepickerInput()`: argument `dateFormat` has a new notation, default value changed from `yyyy-mm-dd` to `yyyy-MM-dd`. See https://air-datepicker.com/docs?scrollTo=dateFormat for potential alues.
+
+
 
 
 

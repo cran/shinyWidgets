@@ -75,7 +75,8 @@ If \code{numeric} is passed, then amount of selected dates will be limited by it
 
 \item{placeholder}{A character string giving the user a hint as to what can be entered into the control.}
 
-\item{dateFormat}{Format to use to display date(s), default to \code{"yyyy-mm-dd"}.}
+\item{dateFormat}{Format to use to display date(s), default to \code{"yyyy-MM-dd"},
+see \href{https://air-datepicker.com/docs?scrollTo=dateFormat}{online documentation} for possible values.}
 
 \item{firstDay}{Day index from which week will be started. Possible values are from 0 to 6, where
 0 - Sunday and 6 - Saturday. By default value is taken from current localization,
@@ -117,10 +118,7 @@ or when calendar is \code{'close'}d.}
 of the widget, or \code{'none'}. This icon act likes an \code{actionButton},
 you can retrieve value server-side with \code{input$<inputId>_button}.}
 
-\item{language}{Language to use, can be one of \code{'cs'}, \code{'da'},
-\code{'de'}, \code{'en'}, \code{'es'}, \code{'fi'}, \code{'fr'},
-\code{'hu'}, \code{'it'}, \code{'nl'}, \code{'pl'}, \code{'pt-BR'}, \code{'pt'},
-\code{'ro'}, \code{'ru'}, \code{'sk'}, \code{'zh'}, \code{'ja'}.}
+\item{language}{Language to use, can be one of \code{ar}, \code{cs}, \code{da}, \code{de}, \code{en}, \code{es}, \code{fi}, \code{fr}, \code{hu}, \code{it}, \code{nl}, \code{pl}, \code{pt-BR}, \code{pt}, \code{ro}, \code{ru}, \code{si}, \code{sk}, \code{sv}, \code{th}, \code{tr}, \code{uk}, \code{zh}.}
 
 \item{inline}{If \code{TRUE}, datepicker will always be visible.}
 
@@ -154,7 +152,8 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 a \code{Date} object or a \code{POSIXct} in UTC timezone.
 }
 \description{
-An alternative to \code{\link[shiny:dateInput]{shiny::dateInput()}} to select single, multiple or date range.
+An alternative to \code{\link[shiny:dateInput]{shiny::dateInput()}} to select single, multiple or date range
+based on \href{https://air-datepicker.com/}{Air Datepicker library}.
 And two alias to select months or years.
 }
 \note{
