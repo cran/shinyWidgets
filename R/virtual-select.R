@@ -89,6 +89,7 @@ prepare_choices <- function(.data,
 #' @param disabled Disable entire dropdown.
 #' @param ... Other arguments passed to JavaScript method, see
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
+#' @param stateInput Activate or deactivate the input to know if the menu is opened or not, see details.
 #' @param html Allow usage of HTML in choices.
 #' @param inline Display inline with label or not.
 #'
@@ -125,12 +126,14 @@ virtualSelectInput <- function(inputId,
                                disableOptionGroupCheckbox = !multiple,
                                disabled = FALSE,
                                ...,
+                               stateInput = TRUE,
                                html = FALSE,
                                inline = FALSE,
                                width = NULL) {
   selected <- restoreInput(id = inputId, default = selected)
   choices <- process_choices(choices)
   data <- list(
+    stateInput = stateInput,
     options = toJSON(choices, auto_unbox = FALSE, json_verbatim = TRUE),
     config = dropNulls(list(
       multiple = multiple,
@@ -187,6 +190,7 @@ virtualSelectInput <- function(inputId,
 #' @inheritParams virtualSelectInput
 #' @inheritParams shiny::updateSelectInput
 #' @param disable Disable (`TRUE`) or enable (`FALSE`) the select menu.
+#' @param disabledChoices List of disabled option's values.
 #'
 #' @return No value.
 #' @export
@@ -200,6 +204,7 @@ updateVirtualSelect <- function(inputId,
                                 choices = NULL,
                                 selected = NULL,
                                 disable = NULL,
+                                disabledChoices = NULL,
                                 session = shiny::getDefaultReactiveDomain()) {
   if (!is.null(label))
     label <- doRenderTags(label)
@@ -211,7 +216,8 @@ updateVirtualSelect <- function(inputId,
     label = label,
     options = choices,
     value = selected,
-    disable = disable
+    disable = disable,
+    disabledChoices = list1(disabledChoices)
   ))
   session$sendInputMessage(inputId, message)
 }

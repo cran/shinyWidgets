@@ -304,7 +304,8 @@ bsswitchDependencyCSS <- function(theme) {
       "info" = "$brand-info",
       "success" = "$brand-success",
       "warning" = "$brand-warning",
-      "danger" = "$brand-danger"
+      "danger" = "$brand-danger",
+      "secondary" = "$gray-base"
     )
   } else {
     sass_vars <- list()
@@ -401,11 +402,9 @@ html_dependency_airdatepicker <- function() {
 html_dependency_nouislider <- function() {
   htmlDependency(
     name = "nouislider",
-    version = "11.0.3",
-    package = "shinyWidgets",
-    src = c(href = "shinyWidgets/nouislider", file = "assets/nouislider"),
-    script = c("nouislider.min.js", "wNumb.js"),
-    stylesheet = "nouislider.min.css"
+    version = "15.6.1",
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "nouislider.js"
   )
 }
 
@@ -443,11 +442,9 @@ html_dependency_knob <- function() {
 html_dependency_multi <- function() {
   htmlDependency(
     name = "multi",
-    version = "1.4.0",
-    package = "shinyWidgets",
-    src = c(href = "shinyWidgets/multi", file = "assets/multi"),
-    script = "multi.min.js",
-    stylesheet = c("multi.min.css")
+    version = "0.5.3",
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "multi.js"
   )
 }
 
@@ -455,9 +452,8 @@ html_dependency_autonumeric <- function() {
   htmlDependency(
     name = "autonumeric",
     version = "4.6.0",
-    package = "shinyWidgets",
-    src = c(href = "shinyWidgets/autonumeric", file = "assets/autonumeric"),
-    script = "autoNumeric.min.js"
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "autonumeric.js"
   )
 }
 
