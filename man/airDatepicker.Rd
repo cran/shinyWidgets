@@ -22,6 +22,7 @@ airDatepickerInput(
   minDate = NULL,
   maxDate = NULL,
   disabledDates = NULL,
+  disabledDaysOfWeek = NULL,
   highlightedDates = NULL,
   view = c("days", "months", "years"),
   startView = NULL,
@@ -33,12 +34,15 @@ airDatepickerInput(
   timepickerOpts = timepickerOptions(),
   position = NULL,
   update_on = c("change", "close"),
+  onlyTimepicker = FALSE,
+  toggleSelected = TRUE,
   addon = c("right", "left", "none"),
+  addonAttributes = list(class = "btn-outline-secondary"),
   language = "en",
   inline = FALSE,
-  onlyTimepicker = FALSE,
-  width = NULL,
-  toggleSelected = TRUE
+  readonly = FALSE,
+  onkeydown = NULL,
+  width = NULL
 )
 
 timepickerOptions(
@@ -75,7 +79,7 @@ If \code{numeric} is passed, then amount of selected dates will be limited by it
 
 \item{placeholder}{A character string giving the user a hint as to what can be entered into the control.}
 
-\item{dateFormat}{Format to use to display date(s), default to \code{"yyyy-MM-dd"},
+\item{dateFormat}{Format to use to display date(s), default to \code{yyyy-MM-dd},
 see \href{https://air-datepicker.com/docs?scrollTo=dateFormat}{online documentation} for possible values.}
 
 \item{firstDay}{Day index from which week will be started. Possible values are from 0 to 6, where
@@ -87,6 +91,8 @@ but if it passed here then it will have higher priority.}
 \item{maxDate}{The maximum allowed date. Either a Date object, or a string in \code{yyyy-mm-dd} format.}
 
 \item{disabledDates}{A vector of dates to disable, e.g. won't be able to select one of dates passed.}
+
+\item{disabledDaysOfWeek}{Day(s) of week to disable, numbers from 0 (Sunday) to 6 (Saturday).}
 
 \item{highlightedDates}{A vector of dates to highlight.}
 
@@ -106,7 +112,7 @@ if a \code{Date} is used, it will set view to the given date and select it..}
 
 \item{autoClose}{If \code{TRUE}, then after date selection, datepicker will be closed.}
 
-\item{timepickerOpts}{Options for timepicker, see \link{timepickerOptions}.}
+\item{timepickerOpts}{Options for timepicker, see \code{\link[=timepickerOptions]{timepickerOptions()}}.}
 
 \item{position}{Where calendar should appear, a two word string like
 \code{'bottom left'} (default), or \code{'top right'}, \code{'left top'}.}
@@ -114,9 +120,15 @@ if a \code{Date} is used, it will set view to the given date and select it..}
 \item{update_on}{When to send selected value to server: on \code{'change'}
 or when calendar is \code{'close'}d.}
 
+\item{onlyTimepicker}{Display only the time picker.}
+
+\item{toggleSelected}{When \code{TRUE}, in range mode, it's not possible to select the same date as start and end.}
+
 \item{addon}{Display a calendar icon to \code{'right'} or the \code{'left'}
-of the widget, or \code{'none'}. This icon act likes an \code{actionButton},
-you can retrieve value server-side with \code{input$<inputId>_button}.}
+of the widget, or \code{'none'}. This icon act like an \code{\link[shiny:actionButton]{shiny::actionButton()}},
+you can retrieve value server-side with \verb{input$<inputId>_button}.}
+
+\item{addonAttributes}{A \code{list()} of additional attributes to use for the addon tag, like \code{class} for example.}
 
 \item{language}{Language to use, can be one of
 \code{ar}, \code{cs}, \code{da}, \code{de}, \code{en}, \code{es}, \code{fi}, \code{fr}, \code{hu}, \code{it}, \code{ja}, \code{ko}, \code{nl},
@@ -124,17 +136,25 @@ you can retrieve value server-side with \code{input$<inputId>_button}.}
 
 \item{inline}{If \code{TRUE}, datepicker will always be visible.}
 
-\item{onlyTimepicker}{Display only the time picker.}
+\item{readonly}{If \code{TRUE}, datepicker will be readonly and the input field won't be editable.}
 
-\item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.}
+\item{onkeydown}{Attribute passed to the input field.}
 
-\item{toggleSelected}{When \code{TRUE}, in range mode, it's not possible to select the same date as start and end.}
+\item{width}{The width of the input, e.g. \code{'400px'}, or \verb{100\%}.}
 
 \item{dateTimeSeparator}{Separator between date and time, default to \code{" "}.}
 
-\item{timeFormat}{Desirable time format. You can use \code{h} (hours), \code{hh}
-(hours with leading zero), \code{i} (minutes), \code{ii} (minutes with leading zero),
-\code{aa} (day period - 'am' or 'pm'), \code{AA} (day period capitalized)}
+\item{timeFormat}{Desirable time format. You can use:
+\itemize{
+\item \code{h} — hours in 12-hour mode
+\item \code{hh} — hours in 12-hour mode with leading zero
+\item \code{H} — hours in 24-hour mode
+\item \code{HH} — hours in 24-hour mode with leading zero
+\item \code{m} — minutes
+\item \code{mm} — minutes with leading zero
+\item \code{aa} — day period lower case
+\item \code{AA} — day period upper case
+}}
 
 \item{minHours}{Minimal hours value, must be between 0 and 23. You will not be able to choose value lower than this.}
 

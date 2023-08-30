@@ -338,15 +338,23 @@ html_dependency_sweetalert2 <- function(theme = c("sweetalert2",
                                                   "bulma",
                                                   "borderless")) {
   theme <- match.arg(theme)
-  if (identical(theme, "sweetalert2"))
-    theme <- "default"
-  htmlDependency(
-    name = "sweetalert2",
-    version = "11.1.4",
-    src = c(href="shinyWidgets/sweetalert2", file = "assets/sweetalert2"),
-    script = c("js/sweetalert2.min.js", "sweetalert-bindings.js"),
-    stylesheet = sprintf("css/%s.min.css", theme)
-  )
+  if (getOption("shinyWidgets.sweetalert2-11.4.8", default = FALSE) == TRUE) {
+    htmlDependency(
+      name = "sweetalert2",
+      version = "11.4.8",
+      src = c(href="shinyWidgets/sweetalert2-11.4.8", file = "assets/sweetalert2-11.4.8"),
+      script = c("js/sweetalert2.min.js", "sweetalert-bindings.js"),
+      stylesheet = sprintf("css/%s.min.css", theme)
+    )
+  } else {
+    htmlDependency(
+      name = "sweetalert2",
+      version = "11.7.27",
+      src = c(href="shinyWidgets/sweetalert2", file = "assets/sweetalert2"),
+      script = c("js/sweetalert2.min.js", "sweetalert-bindings.js"),
+      stylesheet = sprintf("css/%s.min.css", theme)
+    )
+  }
 }
 
 
@@ -379,24 +387,12 @@ html_dependency_picker <- function() {
 }
 
 html_dependency_airdatepicker <- function() {
-  version <- getOption("air-datepicker", default = 3)
-  if (version < 3) {
-    htmlDependency(
-      name = "air-datepicker",
-      version = "2.2.3",
-      package = "shinyWidgets",
-      src = c(href = "shinyWidgets/air-datepicker2", file = "assets/air-datepicker2"),
-      script = c("datepicker.min.js", "datepicker-bindings.js"),
-      stylesheet = c("datepicker.min.css", "airdatepicker-custom.css")
-    )
-  } else {
-    htmlDependency(
-      name = "air-datepicker",
-      version = "3.2.0",
-      src = c(file = system.file("packer", package = "shinyWidgets")),
-      script = "air-datepicker.js"
-    )
-  }
+  htmlDependency(
+    name = "air-datepicker",
+    version = "3.2.0",
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "air-datepicker.js"
+  )
 }
 
 html_dependency_nouislider <- function() {
@@ -440,11 +436,19 @@ html_dependency_knob <- function() {
 }
 
 html_dependency_multi <- function() {
+  # htmlDependency(
+  #   name = "multi",
+  #   version = "0.5.0",
+  #   src = c(file = system.file("packer", package = "shinyWidgets")),
+  #   script = "multi.js"
+  # )
   htmlDependency(
     name = "multi",
-    version = "0.5.3",
-    src = c(file = system.file("packer", package = "shinyWidgets")),
-    script = "multi.js"
+    version = "0.5.0",
+    package = "shinyWidgets",
+    src = c(href = "shinyWidgets/multi", file = "assets/multi"),
+    script = "multi.min.js",
+    stylesheet = c("multi.min.css")
   )
 }
 
@@ -480,18 +484,47 @@ html_dependency_stati <- function() {
 
 
 html_dependency_pickr <- function() {
+  # htmlDependency(
+  #   name = "pickr",
+  #   version = "1.6.0",
+  #   src = list(href = "shinyWidgets/pickr-1.6.0", file = "assets/pickr-1.6.0"),
+  #   package = "shinyWidgets",
+  #   script = "js/pickr.min.js",
+  #   stylesheet = c(
+  #     "css/classic.min.css",
+  #     "css/monolith.min.css",
+  #     "css/nano.min.css"
+  #   ),
+  #   head = "<style>.pickr-color.disabled{cursor:not-allowed;}</style>",
+  #   all_files = FALSE
+  # )
   htmlDependency(
-    name = "pickr",
+    name = "colorpickr",
     version = "1.6.0",
-    src = list(href = "shinyWidgets/pickr-1.6.0", file = "assets/pickr-1.6.0"),
-    package = "shinyWidgets",
-    script = "js/pickr.min.js",
-    stylesheet = c(
-      "css/classic.min.css",
-      "css/monolith.min.css",
-      "css/nano.min.css"
-    ),
-    head = "<style>.pickr-color.disabled{cursor:not-allowed;}</style>",
-    all_files = FALSE
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "colorpickr.js"
   )
 }
+
+
+
+html_dependency_buttons_group <- function() {
+  htmlDependency(
+    name = "sw-buttons-group",
+    version = packageVersion("shinyWidgets"),
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "buttons-group.js"
+  )
+}
+
+
+
+html_dependency_input_icons <- function() {
+  htmlDependency(
+    name = "sw-input-icons",
+    version = packageVersion("shinyWidgets"),
+    src = c(file = system.file("packer", package = "shinyWidgets")),
+    script = "input-icons.js"
+  )
+}
+

@@ -11,7 +11,10 @@
 #' @param choiceValues List of values corresponding to \code{choiceNames}.
 #' @param options List of options passed to multi (\code{enable_search = FALSE} for disabling the search bar for example).
 #'
-#' @return A multiselect control
+#' @return A multiselect control that can be added to the UI of a shiny app.
+#'
+#' @references Fabian Lindfors, "A user-friendly replacement for select boxes with multiple attribute enabled",
+#'  \url{https://github.com/fabianlindfors/multi.js}.
 #'
 #' @importFrom jsonlite toJSON
 #' @importFrom htmltools validateCssUnit tags
@@ -90,25 +93,24 @@ multiInput <- function(inputId,
   selected <- shiny::restoreInput(id = inputId, default = selected)
   selectTag <- tags$select(
     id = inputId, multiple = "multiple", class= "form-control multijs",
-    makeChoices(choices = choices, choiceNames = choiceNames,
-                choiceValues = choiceValues, selected = selected)
+    makeChoices(
+      choices = choices,
+      choiceNames = choiceNames,
+      choiceValues = choiceValues,
+      selected = selected
+    )
   )
   tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width)) paste("width:", validateCssUnit(width)),
-    tags$label(
-      id = paste0(inputId, "-label"),
-      class = "control-label",
-      class = if (is.null(label)) "shiny-label-null",
-      `for` = inputId,
-      label
-    ),
+    style = css(width = validateCssUnit(width)),
+    label_input(inputId, label),
     selectTag,
     tags$script(
       type = "application/json",
       `data-for` = inputId,
       jsonlite::toJSON(options, auto_unbox = TRUE, json_verbatim = TRUE)
     ),
+    html_dependency_shinyWidgets(),
     html_dependency_multi()
   )
 }

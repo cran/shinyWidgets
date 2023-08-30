@@ -1,3 +1,32 @@
+shinyWidgets 0.8.0
+======================
+
+* `shinyWidgetsGallery()` new look for the gallery and two new tabs (for `airDatepickerInput()` and `virtualSelectInput()`).
+* `airDatepickerInput()` : added arguments :
+    - `disabledDaysOfWeek` to disable day(s) of the week.
+    - `readonly` to prevent edit in the input field.
+    - `onkeydown` to add onkeydown attribute on the input field.
+* `materialSwitch()` : click on the label now toggle the switch [#582](https://github.com/dreamRs/shinyWidgets/issues/582).
+* `pickerInput()` : added argument `stateInput` to activate or deactivate the special input value `input$<inputId>_open` allowing to know if the menu is opened or not.
+* `updateColorPickr()` : added argument `swatches` to update swatches from server.
+* Updated virtual-select-plugin to 1.0.39 (fix [#601](https://github.com/dreamRs/shinyWidgets/issues/601)).
+* Updated sweetalert2 to v11.7.27.
+* Updated air-datepicker to 3.3.5.
+
+
+### Bug fixes
+
+* `verticalTabsetPanel()` does not render output content when using Bootstrap 5 [#570](https://github.com/dreamRs/shinyWidgets/issues/570).
+* `virtualSelectInput` : fixed crash with choices=list() [#571](https://github.com/dreamRs/shinyWidgets/issues/571).
+
+
+### Deprecated functions
+
+* `useShinydashboard()`, `useShinydashboardPlus()`, `useTablerDash()`, `useArgonDash()`, `useBs4Dash()`, `setShadow()`, `setSliderColor()` are deprecated and will be removed in a future release.
+* `selectizeGroupUI/selectizeGroupServer` module is deprecated, use equivalent [Select Group Input Module](https://dreamrs.github.io/datamods/reference/select-group.html) in package [datamods](https://github.com/dreamRs/datamods/)
+
+
+
 shinyWidgets 0.7.6
 ======================
 

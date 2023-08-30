@@ -1,23 +1,32 @@
 
 #' @title Select Picker Input Control
 #'
-#' @description An alternative to \code{selectInput} with plenty of options to customize it.
+#' @description An alternative to [shiny::selectInput()] with plenty of options to customize it.
 #'
-#' @param inputId The \code{input} slot that will be used to access the value.
-#' @param label Display label for the control, or \code{NULL} for no label.
+#' @param inputId The `input` slot that will be used to access the value.
+#' @param label Display label for the control, or `NULL` for no label.
 #' @param choices List of values to select from. If elements of the
 #'  list are named then that name rather than the value is displayed to the user.
-#' @param selected The initially selected value (or multiple values if \code{multiple = TRUE}).
+#' @param selected The initially selected value (or multiple values if `multiple = TRUE`).
 #' If not specified then defaults to the first value for single-select lists
 #'  and no values for multiple select lists.
 #' @param multiple Is selection of multiple items allowed?
 #' @param options List of options, see \link{pickerOptions} for all available options.
 #' To limit the number of selection possible, see example below.
-#' @param choicesOpt Options for choices in the dropdown menu.
+#' @param choicesOpt A `list()` of options for individual choices in the dropdown menu,
+#'  each element of the `list` should the same length as `choices`. You can use the following options :
+#'    * `disabled`: logical vector indicating if the choice can be selected or not.
+#'    * `style`: CSS styles applied to the choice tag
+#'    * `class`: CSS class added to the choice tag
+#'    * `icon`: vector of icon names to display before choices (to use `icon("arrow-right")`, you have to use `fa-arrow-right` and `pickerOptions(iconBase = "fas")`)
+#'    * `subtext` add a text after the choice
+#'    * `content`: replace entire choice with custom content (like raw HTML)
+#'    * `tokens`: add tokens associated with choices used in search results.
 #' @param width The width of the input : 'auto', 'fit', '100px', '75%'.
-#' @param inline Display picker inline, to have label and menu on same line use \code{width = "fit"}.
+#' @param inline Display picker inline, to have label and menu on same line use `width = "fit"`.
+#' @param stateInput Activate or deactivate the special input value `input$<inputId>_open` to know if the menu is opened or not, see details.
 #'
-#' @seealso \link{updatePickerInput} to update value server-side.
+#' @seealso [updatePickerInput] to update value server-side. [virtualSelectInput()] for an alternative.
 #'
 #' @return A select control that can be added to a UI definition.
 #'
@@ -75,7 +84,8 @@ pickerInput <- function(inputId,
                         options = list(),
                         choicesOpt = NULL,
                         width = NULL,
-                        inline = FALSE) {
+                        inline = FALSE,
+                        stateInput = TRUE) {
   choices <- choicesWithNames(choices)
   selected <- restoreInput(id = inputId, default = selected)
   if (!is.null(options) && length(options) > 0)
@@ -93,6 +103,8 @@ pickerInput <- function(inputId,
   })
   maxOptGroup <- options[["data-max-options-group"]]
 
+  options[["data-state-input"]] <- ifelse(isTRUE(stateInput), "true", "false")
+
   selectTag <- tag("select", dropNulls(options))
   selectTag <- tagAppendAttributes(
     tag = selectTag,
@@ -109,13 +121,10 @@ pickerInput <- function(inputId,
   pickerTag <- tags$div(
     class = "form-group shiny-input-container",
     class = if (isTRUE(inline)) "shiny-input-container-inline",
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     style = if (isTRUE(inline)) "display: inline-block;",
-    tags$label(
-      class = "control-label",
-      `for` = inputId,
-      label,
-      class = if (is.null(label)) "shiny-label-null",
+    tagAppendAttributes(
+      label_input(inputId, label),
       style = if (isTRUE(inline)) "display: inline-block;",
     ),
     selectTag
@@ -287,6 +296,7 @@ pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, max
         value = choice,
         HTML(htmlEscape(label)),
         style = choicesOpt$style[i],
+        class = choicesOpt$class[i],
         `data-icon` = choicesOpt$icon[i],
         `data-subtext` = choicesOpt$subtext[i],
         `data-content` = choicesOpt$content[i],

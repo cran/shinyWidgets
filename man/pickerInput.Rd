@@ -13,7 +13,8 @@ pickerInput(
   options = list(),
   choicesOpt = NULL,
   width = NULL,
-  inline = FALSE
+  inline = FALSE,
+  stateInput = TRUE
 )
 }
 \arguments{
@@ -33,17 +34,29 @@ and no values for multiple select lists.}
 \item{options}{List of options, see \link{pickerOptions} for all available options.
 To limit the number of selection possible, see example below.}
 
-\item{choicesOpt}{Options for choices in the dropdown menu.}
+\item{choicesOpt}{A \code{list()} of options for individual choices in the dropdown menu,
+each element of the \code{list} should the same length as \code{choices}. You can use the following options :
+\itemize{
+\item \code{disabled}: logical vector indicating if the choice can be selected or not.
+\item \code{style}: CSS styles applied to the choice tag
+\item \code{class}: CSS class added to the choice tag
+\item \code{icon}: vector of icon names to display before choices (to use \code{icon("arrow-right")}, you have to use \code{fa-arrow-right} and \code{pickerOptions(iconBase = "fas")})
+\item \code{subtext} add a text after the choice
+\item \code{content}: replace entire choice with custom content (like raw HTML)
+\item \code{tokens}: add tokens associated with choices used in search results.
+}}
 
 \item{width}{The width of the input : 'auto', 'fit', '100px', '75\%'.}
 
 \item{inline}{Display picker inline, to have label and menu on same line use \code{width = "fit"}.}
+
+\item{stateInput}{Activate or deactivate the special input value \verb{input$<inputId>_open} to know if the menu is opened or not, see details.}
 }
 \value{
 A select control that can be added to a UI definition.
 }
 \description{
-An alternative to \code{selectInput} with plenty of options to customize it.
+An alternative to \code{\link[shiny:selectInput]{shiny::selectInput()}} with plenty of options to customize it.
 }
 \note{
 State of the picker (open or close) is accessible server-side through the input value:
@@ -251,5 +264,5 @@ searching, and much more. Now with Bootstrap 4 support".
 \url{https://github.com/snapappointments/bootstrap-select/}
 }
 \seealso{
-\link{updatePickerInput} to update value server-side.
+\link{updatePickerInput} to update value server-side. \code{\link[=virtualSelectInput]{virtualSelectInput()}} for an alternative.
 }

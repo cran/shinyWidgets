@@ -140,14 +140,8 @@ sliderTextInput <- function (inputId,
   })
   sliderTag <- tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width))
-      paste0("width: ", validateCssUnit(width), ";"),
-    tags$label(
-      class = "control-label",
-      class = if (is.null(label)) "shiny-label-null",
-      `for` = inputId,
-      label
-    ),
+    style = css(width = validateCssUnit(width)),
+    label_input(inputId, label),
     do.call(htmltools::tags$input, sliderProps)
   )
   if (identical(animate, TRUE))

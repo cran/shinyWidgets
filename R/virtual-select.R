@@ -155,24 +155,27 @@ virtualSelectInput <- function(inputId,
   data <- toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
   if (isTRUE(html))
     data <- HTML(data)
+
+  if (!inline) {
+    div_css <- css(
+      width = "100%",
+      maxWidth = "none",
+      display = "block"
+    )
+  } else {
+    div_css <- css(
+      display = "inline-block"
+    )
+  }
   tags$div(
     class = "form-group shiny-input-container",
+    class = if (isTRUE(inline)) "shiny-input-container-inline",
     style = css(width = validateCssUnit(width)),
-    tags$label(
-      label,
-      class = "control-label",
-      class = if (is.null(label)) "shiny-label-null",
-      id = paste0(inputId, "-label"),
-      `for` = inputId
-    ),
+    label_input(inputId, label),
     tags$div(
       id = inputId,
       class = "virtual-select",
-      style = css(
-        width = "100%",
-        maxWidth = "none",
-        display = if (!inline) "block"
-      ),
+      style = div_css,
       tags$script(
         type = "application/json",
         `data-for` = inputId,
@@ -185,7 +188,11 @@ virtualSelectInput <- function(inputId,
 
 
 
-#' Update virtual select from server
+#' @title Update virtual select from server
+#'
+#' @description
+#' Update a [virtualSelectInput()] from the server.
+#'
 #'
 #' @inheritParams virtualSelectInput
 #' @inheritParams shiny::updateSelectInput
@@ -193,6 +200,9 @@ virtualSelectInput <- function(inputId,
 #' @param disabledChoices List of disabled option's values.
 #'
 #' @return No value.
+#'
+#' @seealso [virtualSelectInput()] for creating a widget in the UI.
+#'
 #' @export
 #'
 #' @importFrom shiny getDefaultReactiveDomain

@@ -26,12 +26,10 @@ textInputIcon <- function(inputId,
                           size = NULL,
                           width = NULL) {
   value <- shiny::restoreInput(id = inputId, default = value)
-  tag <- tags$div(
+  tags$div(
     class = "form-group shiny-input-container",
-    if (!is.null(label)) {
-      tags$label(label, class = "control-label", `for` = inputId)
-    },
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    label_input(inputId, label),
+    style = css(width = validateCssUnit(width)),
     tags$div(
       class = "input-group",
       class = validate_size(size),
@@ -44,9 +42,9 @@ textInputIcon <- function(inputId,
         placeholder = placeholder
       ),
       markup_input_group(icon, "right", theme_func = shiny::getCurrentTheme),
-    )
+    ),
+    html_dependency_input_icons()
   )
-  attachShinyWidgetsDep(tag)
 }
 
 #' @title Change the value of a text input icon on the client
@@ -157,11 +155,9 @@ numericInputIcon <- function(inputId,
                              help_text = NULL,
                              width = NULL) {
   value <- shiny::restoreInput(id = inputId, default = value)
-  tag <- tags$div(
+  tags$div(
     class = "form-group shiny-input-container",
-    if (!is.null(label)) {
-      tags$label(label, class = "control-label", `for` = inputId)
-    },
+    label_input(inputId, label),
     style = css(width = validateCssUnit(width)),
     tags$div(
       class = "input-group",
@@ -178,9 +174,9 @@ numericInputIcon <- function(inputId,
       ),
       markup_input_group(icon, "right", theme_func = shiny::getCurrentTheme)
     ),
-    tags$span(class = "help-block invalid-feedback hidden d-none", help_text)
+    tags$span(class = "help-block invalid-feedback hidden d-none", help_text),
+    html_dependency_input_icons()
   )
-  attachShinyWidgetsDep(tag)
 }
 
 

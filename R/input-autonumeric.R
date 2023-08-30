@@ -43,7 +43,8 @@
 #' [this section](https://github.com/autoNumeric/autoNumeric/#predefined-common-options)
 #' of the AutoNumeric Github Page.
 #'
-#' @references Bonneau, Alexandre. 2018. "AutoNumeric.js javascript Package". http://autonumeric.org
+#' @references Bonneau, Alexandre. 2018. "AutoNumeric.js javascript Package".
+#'  \url{http://autonumeric.org}.
 #'
 #' @return a currency input widget that can be added to the UI of a shiny app.
 #' @export
@@ -92,7 +93,7 @@ currencyInput <- function(inputId, label, value, format = "euro",
   value <- shiny::restoreInput(inputId, value)
   tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     if (!is.null(label)) tags$label(`for` = inputId, label),
     tags$input(
       type = "text",
@@ -496,8 +497,8 @@ autonumericInput <- function(inputId, label, value,
   )
   tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
-    if (!is.null(label)) tags$label(`for` = inputId, label),
+    style = css(width = validateCssUnit(width)),
+    label_input(inputId, label),
     tags$input(
       type = "text",
       style = paste0("text-align: ", align, ";", style),

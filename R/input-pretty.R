@@ -43,7 +43,7 @@ prettySwitch <- function(inputId,
     message("slim = TRUE & fill = TRUE don't work well together.")
   switchTag <- tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width))  paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     class = if (inline) "shiny-input-container-inline",
     style = if (inline) "display: inline-block; margin-right: 10px;",
     tags$div(
@@ -140,14 +140,8 @@ prettyToggle <- function(inputId,
   status_off <- match.arg(status_off, c("default", "primary",
                                         "success", "info", "danger", "warning"))
   shape <- match.arg(shape)
-  if(!is.null(icon_on)) {
-    icon_on <- validateIcon(icon_on)
-    icon_on$attribs$class <- paste("icon", icon_on$attribs$class)
-  }
-  if(!is.null(icon_off)) {
-    icon_off <- validateIcon(icon_off)
-    icon_off$attribs$class <- paste("icon", icon_off$attribs$class)
-  }
+  icon_on <- tag_add_class_icon(icon_on)
+  icon_off <- tag_add_class_icon(icon_off)
   if (!is.null(animation))
     animation <- match.arg(animation, c("smooth", "jelly", "tada",
                                         "rotate", "pulse"))
@@ -156,7 +150,7 @@ prettyToggle <- function(inputId,
     inputTag$attribs$checked <- "checked"
   toggleTag <- tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width))  paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     class = if (inline) "shiny-input-container-inline",
     style = if (inline) "display: inline-block; margin-right: 10px;",
     tags$div(
@@ -263,10 +257,8 @@ prettyCheckbox <- function(inputId,
   status <- match.arg(status, c("default", "primary", "success",
                                 "info", "danger", "warning"))
   shape <- match.arg(shape)
-  if(!is.null(icon)) {
-    icon <- validateIcon(icon)
-    icon$attribs$class <- paste("icon", icon$attribs$class)
-  }
+  icon <- tag_add_class_icon(icon)
+
   if (!is.null(animation))
     animation <- match.arg(animation, c("smooth", "jelly", "tada",
                                         "rotate", "pulse"))
@@ -275,7 +267,7 @@ prettyCheckbox <- function(inputId,
     inputTag$attribs$checked <- "checked"
   checkTag <- tags$div(
     class = "form-group shiny-input-container",
-    style = if (!is.null(width))  paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     class = if (inline) "shiny-input-container-inline",
     style = if (inline) "display: inline-block; margin-right: 10px;",
     tags$div(
@@ -412,14 +404,9 @@ prettyCheckboxGroup <- function(inputId,
     divClass <- paste(divClass, "shiny-input-container-inline")
   checkgroupTag <- tags$div(
     id = inputId,
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     class = divClass,
-    tags$label(
-      class = "control-label",
-      `for` = inputId,
-      class = if (is.null(label)) "shiny-label-null",
-      label
-    ),
+    label_input(inputId, label),
     options
   )
   attachShinyWidgetsDep(checkgroupTag, "pretty")
@@ -440,10 +427,7 @@ generatePretty <- function(inputId,
                            icon = NULL,
                            plain = FALSE,
                            bigger = FALSE) {
-  if(!is.null(icon)) {
-    icon <- validateIcon(icon)
-    icon$attribs$class <- paste("icon", icon$attribs$class)
-  }
+  icon <- tag_add_class_icon(icon)
   options <- mapply(choiceValues, choiceNames, FUN = function(value,
                                                               name) {
     inputTag <- tags$input(type = type, name = inputId, value = value)
@@ -676,14 +660,9 @@ prettyRadioButtons <- function(inputId,
     divClass <- paste(divClass, "shiny-input-container-inline")
   radioTag <- htmltools::tags$div(
     id = inputId,
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    style = css(width = validateCssUnit(width)),
     class = divClass,
-    tags$label(
-      class = "control-label",
-      `for` = inputId,
-      class = if (is.null(label)) "shiny-label-null",
-      label
-    ),
+    label_input(inputId, label),
     options
   )
   attachShinyWidgetsDep(radioTag, "pretty")

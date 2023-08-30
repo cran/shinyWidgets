@@ -137,14 +137,10 @@ awesomeRadio <- function(inputId,
     id = inputId,
     class = "form-group shiny-input-radiogroup awesome-bootstrap-radio shiny-input-container",
     class = if (inline) "shiny-input-container-inline",
-    style = if (!is.null(width))
-      paste0("width: ", validateCssUnit(width), ";"),
-    tags$label(
-      class = "control-label",
-      `for` = inputId,
-      label,
-      style = "margin-bottom: 5px;",
-      class = if (is.null(label)) "shiny-label-null"
+    style = css(width = validateCssUnit(width)),
+    tagAppendAttributes(
+      label_input(inputId, label),
+      style = "margin-bottom: 5px;"
     ),
     if (!is.null(label) & !inline) tags$div(style = "height: 7px;"),
     generateAwesomeRadio(inputId, choices, selected, inline, status, checkbox)

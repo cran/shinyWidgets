@@ -33,7 +33,7 @@ dropNullsOrNA <- function(x) {
   x[!vapply(x, nullOrNA, FUN.VALUE = logical(1))]
 }
 nullOrNA <- function(x) {
-  is.null(x) || is.na(x)
+  is.null(x) || (length(x) == 1 && is.na(x))
 }
 
 dropNullsOrEmpty <- function(x) {
@@ -56,7 +56,7 @@ choicesWithNames <- function(choices) {
       if (is.list(val))
         listify(val)
       else if (length(val) == 1 && is.null(names(val)))
-        val
+        as.character(val)
       else makeNamed(as.list(val))
     })
     makeNamed(res)
@@ -163,18 +163,12 @@ normalizeChoicesArgs <- function(choices, choiceNames, choiceValues, mustExist =
   return(list(choiceNames = as.list(choiceNames), choiceValues = as.list(as.character(choiceValues))))
 }
 
-validateIcon <- function(icon) {
-  if (is.null(icon) || identical(icon, character(0))) {
-    return(icon)
-  }
-  else if (inherits(icon, "shiny.tag") && icon$name == "i") {
-    return(icon)
-  }
-  else {
-    stop("Invalid icon. Use Shiny's 'icon()' function to generate a valid icon")
-  }
-}
 
+tag_add_class_icon <- function(x) {
+  if (!inherits(x, "shiny.tag"))
+    return(x)
+  htmltools::tagAppendAttributes(x, class ="icon")
+}
 
 
 formatNoSci <- function(x) {
@@ -189,3 +183,12 @@ sanitize <- function(x) {
   paste0("id", x)
 }
 
+label_input <- function(inputId, label) {
+  tags$label(
+    label,
+    class = "control-label",
+    class = if (is.null(label)) "shiny-label-null",
+    id = paste0(inputId, "-label"),
+    `for` = inputId
+  )
+}

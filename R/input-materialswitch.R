@@ -43,28 +43,48 @@
 #' @importFrom htmltools tags validateCssUnit
 #'
 #' @export
-materialSwitch <- function(inputId, label = NULL, value = FALSE, status = "default", right = FALSE, inline = FALSE, width = NULL) {
+materialSwitch <- function(inputId,
+                           label = NULL,
+                           value = FALSE,
+                           status = "default",
+                           right = FALSE,
+                           inline = FALSE,
+                           width = NULL) {
   value <- restoreInput(id = inputId, default = value)
   status <- match.arg(arg = status, choices = c("default", "primary", "success", "info", "warning", "danger"))
   inputTag <- tags$input(id = inputId, type = "checkbox")
   if (!is.null(value) && value)
     inputTag$attribs$checked <- "checked"
-  msTag <- tags$div(class = "form-group shiny-input-container", style = if (!is.null(width))
-    paste0("width: ", validateCssUnit(width), ";"),
+  msTag <- tags$div(
+    class = "form-group shiny-input-container",
+    style = css(width = validateCssUnit(width)),
     class = if (inline) "shiny-input-container-inline",
     style = if (inline) "display: inline-block; margin-right: 10px;",
     # if (right) tags$span(label),
     # class = "material-switch",
     tags$div(
       class = "material-switch",
-      if (!is.null(label) & !right) tags$span(label, style = "padding-right: 10px;"),
+      if (!is.null(label) & !right) {
+        tags$label(
+          `for` = inputId,
+          label,
+          style = "padding-right: 10px;"
+        )
+      },
       inputTag,
       tags$label(
+        class = "switch",
         `for` = inputId,
         class = paste0("label-", status),
         class = paste0("bg-", status)
       ),
-      if (!is.null(label) & right) tags$span(label, style = "padding-left: 5px;")
+      if (!is.null(label) & right) {
+        tags$label(
+          `for` = inputId,
+          label,
+          style = "padding-left: 5px;"
+        )
+      }
     )
   )
   # Dep
