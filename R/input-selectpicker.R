@@ -25,6 +25,7 @@
 #' @param width The width of the input : 'auto', 'fit', '100px', '75%'.
 #' @param inline Display picker inline, to have label and menu on same line use `width = "fit"`.
 #' @param stateInput Activate or deactivate the special input value `input$<inputId>_open` to know if the menu is opened or not, see details.
+#' @param autocomplete Sets the initial state of the autocomplete property.
 #'
 #' @seealso [updatePickerInput] to update value server-side. [virtualSelectInput()] for an alternative.
 #'
@@ -85,7 +86,8 @@ pickerInput <- function(inputId,
                         choicesOpt = NULL,
                         width = NULL,
                         inline = FALSE,
-                        stateInput = TRUE) {
+                        stateInput = TRUE,
+                        autocomplete = FALSE) {
   choices <- choicesWithNames(choices)
   selected <- restoreInput(id = inputId, default = selected)
   if (!is.null(options) && length(options) > 0)
@@ -109,10 +111,12 @@ pickerInput <- function(inputId,
   selectTag <- tagAppendAttributes(
     tag = selectTag,
     id = inputId,
-    class = "selectpicker form-control"
+    class = "selectpicker form-control",
+    autocomplete = if (autocomplete) "on" else "off"
   )
   selectTag <- tagAppendChildren(
-    tag = selectTag, pickerSelectOptions(choices, selected, choicesOpt, maxOptGroup)
+    tag = selectTag,
+    pickerSelectOptions(choices, selected, choicesOpt, maxOptGroup)
   )
 
   if (multiple)
@@ -144,13 +148,13 @@ pickerInput <- function(inputId,
 #' @param label Display a text in the center of the switch.
 #' @param choices List of values to select from. If elements of the list are named
 #' then that name rather than the value is displayed to the user.
-#' @param selected The new selected value (or multiple values if \code{multiple = TRUE}).
-#'  To reset selected value, in case of multiple picker, use \code{character(0)}.
+#' @param selected The new selected value (or multiple values if `multiple = TRUE`).
+#'  To reset selected value, in case of multiple picker, use `character(0)`.
 #' @param choicesOpt Options for choices in the dropdown menu.
-#' @param options Options for the picker via \code{\link{pickerOptions}}.
+#' @param options Options for the picker via [pickerOptions()].
 #' @param clearOptions Clear previous options, otherwise the ones set previously are still active.
 #'
-#' @seealso \link{pickerInput}.
+#' @seealso [pickerInput()].
 #'
 #' @export
 #'
@@ -227,7 +231,7 @@ pickerInput <- function(inputId,
 #' shinyApp(ui = ui, server = server)
 #'
 #' }
-updatePickerInput <- function (session,
+updatePickerInput <- function (session = getDefaultReactiveDomain(),
                                inputId,
                                label = NULL,
                                selected = NULL,
@@ -274,38 +278,42 @@ pickerSelectOptions <- function(choices, selected = NULL, choicesOpt = NULL, max
   if (!is.null(maxOptGroup))
     maxOptGroup <- rep_len(x = maxOptGroup, length.out = sum(l))
   m <- matrix(data = c(c(1, cumsum(l)[-length(l)] + 1), cumsum(l)), ncol = 2)
-  html <- lapply(seq_along(choices), FUN = function(i) {
-    label <- names(choices)[i]
-    choice <- choices[[i]]
-    if (is.list(choice)) {
-      tags$optgroup(
-        label = htmlEscape(label, TRUE),
-        `data-max-options` = if (!is.null(maxOptGroup)) maxOptGroup[i],
-        pickerSelectOptions(
-          choice, selected,
-          choicesOpt = lapply(
-            X = choicesOpt,
-            FUN = function(j) {
-              j[m[i, 1]:m[i, 2]]
-            }
+  html <- lapply(
+    X = seq_along(choices),
+    FUN = function(i) {
+      label <- names(choices)[i]
+      choice <- choices[[i]]
+      if (is.list(choice)) {
+        tags$optgroup(
+          label = htmlEscape(label, TRUE),
+          `data-max-options` = if (!is.null(maxOptGroup)) maxOptGroup[i],
+          pickerSelectOptions(
+            choice, selected,
+            choicesOpt = lapply(
+              X = choicesOpt,
+              FUN = function(j) {
+                j[m[i, 1]:m[i, 2]]
+              }
+            )
           )
         )
-      )
-    } else {
-      tags$option(
-        value = choice,
-        HTML(htmlEscape(label)),
-        style = choicesOpt$style[i],
-        class = choicesOpt$class[i],
-        `data-icon` = choicesOpt$icon[i],
-        `data-subtext` = choicesOpt$subtext[i],
-        `data-content` = choicesOpt$content[i],
-        `data-tokens` = choicesOpt$tokens[i],
-        disabled = if (!is.null(choicesOpt$disabled[i]) && choicesOpt$disabled[i]) "disabled",
-        selected = if (choice %in% selected) "selected" else NULL
-      )
+      } else {
+        ii <- m[i, 1]
+        tags$option(
+          value = choice,
+          HTML(htmlEscape(label)),
+          style = choicesOpt$style[ii],
+          class = choicesOpt$class[ii],
+          `data-icon` = choicesOpt$icon[ii],
+          `data-subtext` = choicesOpt$subtext[ii],
+          `data-content` = choicesOpt$content[ii],
+          `data-tokens` = choicesOpt$tokens[ii],
+          disabled = if (!is.null(choicesOpt$disabled[ii]) && choicesOpt$disabled[ii]) "disabled",
+          selected = if (choice %in% selected) "selected" else NULL
+        )
+      }
     }
-  })
+  )
   return(tagList(html))
 }
 

@@ -1,3 +1,17 @@
+shinyWidgets 0.8.1
+======================
+
+* `searchInput()` : added `btnClass` argument to set class of search and reset buttons.
+* Addition of autocomplete parameter for `pickerInput()` and `multiInput()`, [#652](https://github.com/dreamRs/shinyWidgets/pull/652) by [@MichalLauer](https://github.com/MichalLauer).
+
+### Bug fixes
+
+* `pickerInput()` : fix choicesOpts with grouped choices [#650](https://github.com/dreamRs/shinyWidgets/issues/650)
+* `updateProgressBar()` : accept HTML in title [#651](https://github.com/dreamRs/shinyWidgets/issues/651)
+* don't use system.file for packer htmldependencies
+* `searchInput()` : remove inline CSS and `!important` use [#637](https://github.com/dreamRs/shinyWidgets/issues/637)
+
+
 shinyWidgets 0.8.0
 ======================
 
