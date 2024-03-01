@@ -24,11 +24,11 @@ updateAwesomeRadio(
 
 \item{choices}{List of values to select from (if elements of the list are named then that name rather than the value is displayed to the user)}
 
-\item{selected}{The initially selected value}
+\item{selected}{The initially selected value.}
 
 \item{inline}{If TRUE, render the choices inline (i.e. horizontally)}
 
-\item{status}{Color of the buttons}
+\item{status}{Color of the buttons, to update status you need to provide \code{choices}.}
 
 \item{checkbox}{Checkbox style}
 }
@@ -36,15 +36,13 @@ updateAwesomeRadio(
 Change the value of a radio input on the client
 }
 \examples{
-if (interactive()) {
-
-library("shiny")
-library("shinyWidgets")
+library(shiny)
+library(shinyWidgets)
 
 
 ui <- fluidPage(
   awesomeRadio(
-    inputId = "somevalue",
+    inputId = "radio",
     choices = c("A", "B", "C"),
     label = "My label"
   ),
@@ -52,7 +50,12 @@ ui <- fluidPage(
   verbatimTextOutput(outputId = "res"),
 
   actionButton(inputId = "updatechoices", label = "Random choices"),
-  textInput(inputId = "updatelabel", label = "Update label")
+  textInput(inputId = "updatelabel", label = "Update label"),
+  selectInput(
+    inputId = "updatestatus",
+    label = "Status",
+    choices = c("primary", "danger", "warning", "success", "info")
+  )
 )
 
 server <- function(input, output, session) {
@@ -63,24 +66,32 @@ server <- function(input, output, session) {
 
   observeEvent(input$updatechoices, {
     updateAwesomeRadio(
-      session = session, inputId = "somevalue",
-      choices = sample(letters, sample(2:6))
+      inputId = "radio",
+      choices = sample(letters, sample(2:6, 1))
     )
   })
 
   observeEvent(input$updatelabel, {
     updateAwesomeRadio(
-      session = session, inputId = "somevalue",
+      inputId = "radio",
       label = input$updatelabel
+    )
+  }, ignoreInit = TRUE)
+
+  # To update status you need to provide coices too
+  observeEvent(input$updatestatus, {
+    updateAwesomeRadio(
+      inputId = "radio",
+      choices = c("A", "B", "C"),
+      status = input$updatestatus
     )
   }, ignoreInit = TRUE)
 
 }
 
-shinyApp(ui = ui, server = server)
-
-}
+if (interactive())
+  shinyApp(ui = ui, server = server)
 }
 \seealso{
-\code{\link{awesomeRadio}}
+\code{\link[=awesomeRadio]{awesomeRadio()}}
 }
