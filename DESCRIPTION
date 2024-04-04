@@ -1,6 +1,6 @@
 Package: shinyWidgets
 Title: Custom Inputs Widgets for Shiny
-Version: 0.8.3
+Version: 0.8.4
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre", "cph")),
   person("Fanny", "Meyer", role = "aut"),
@@ -25,7 +25,7 @@ Imports: anytime, bslib, sass, shiny (>= 1.6.0), htmltools (>= 0.5.1),
 Suggests: testthat, covr, ggplot2, DT, scales, shinydashboard,
         shinydashboardPlus
 NeedsCompilation: no
-Packaged: 2024-03-21 10:40:52 UTC; perri
+Packaged: 2024-04-04 16:50:28 UTC; victor
 Author: Victor Perrier [aut, cre, cph],
   Fanny Meyer [aut],
   David Granjon [aut],
@@ -37,4 +37,4 @@ Author: Victor Perrier [aut, cre, cph],
     in LICENSE.md)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2024-03-21 12:00:02 UTC
+Date/Publication: 2024-04-04 17:40:02 UTC
