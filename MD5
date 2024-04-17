@@ -1,7 +1,7 @@
-58ac546e9cc56dd58fa6f4b69e907201 *DESCRIPTION
-d4a1857678c36805221e868b42023dfa *NAMESPACE
-98b6e78abdf7938b10ed26e92d9f2900 *NEWS.md
-6379ed3d5c3138274bb6b906c59cd87f *R/WinBox.R
+b062f489a013317b9d05f3b4ce85b161 *DESCRIPTION
+d50f1c3b2f400a9b0b04ac01b00cd793 *NAMESPACE
+b9d8e2979b14f913ec7b3f2a593a158c *NEWS.md
+21318fe42a7b7e7338bbb3a83b39da33 *R/WinBox.R
 4876cd1553157e33391ce9aa9d41b6d1 *R/actionBttn.R
 46b7eb55bcef9d9c03785e9da76addf1 *R/addSpinner.R
 8f5622edb83733d803e18c23db3fc439 *R/bootstrap-utils.R
@@ -25,7 +25,7 @@ da8cfdbf5fb78a5beca9b16c5b08e789 *R/input-icon.R
 d9b45cef1bb9210cdc43d799f5e3078a *R/input-knob.R
 af55d1c12c9437f883c0ef880942a385 *R/input-materialswitch.R
 11b7c781feb596e9830422af2160a058 *R/input-multi.R
-756631484fe831f248531143c8d778fd *R/input-noUiSlider.R
+acda6c1594f5d965c67b94bceaed7514 *R/input-noUiSlider.R
 2fd856518a1be5bb6976fcfb8154cd4b *R/input-numericRange.R
 a072e37b07bf2d91ba4ca0f4b000221f *R/input-pretty.R
 b9882bddad84853e08e7016954b52db4 *R/input-radiogroupbuttons.R
@@ -383,6 +383,7 @@ ce0e89079ee39fb18ce8205ac9a6c259 *inst/assets/tippy/themes/light-border.css
 85f906c881c66716efdb12b3087587e2 *inst/assets/vertical-tab-panel/vertical-tab-panel-bindings.js
 2fb1fe90d31369ccdb57754334d7fe46 *inst/assets/vertical-tab-panel/vertical-tab-panel.css
 e1e4ec23a45e1537805d1dce5b75bc50 *inst/assets/vertical-tab-panel/vtb-custom.scss
+835471a2635efdabe1a2ec068fa41efb *inst/examples/WinBox/apply-method.R
 602be889bb11b45f47c874c050248a00 *inst/examples/WinBox/basic.R
 1b90beb5629d3b9e4914ab426429765a *inst/examples/WinBox/close.R
 f29c14efc5111095efe1186b9ad0ef97 *inst/examples/WinBox/controls.R
@@ -449,7 +450,7 @@ d7a28bd2c8230eba3f20050cdfb1084c *inst/examples/virtual-select/choices-format/ap
 6cc28f91b5ff0dfb6b827fd6e9a8e50b *inst/examples/virtual-select/default/app.R
 c6121f0e4fb4624fa447a9f1954ac5ef *inst/examples/virtual-select/prepare-choices/app.R
 d9e9420df5fdaa68a7268f30c0c17845 *inst/examples/virtual-select/update/app.R
-d7141178c4856fccba73199f5ada13a7 *inst/packer/WinBox.js
+428eb36abc448c4db6c84d9a929eae6c *inst/packer/WinBox.js
 56795e9d9a3869fc9c4e91e661eb86d5 *inst/packer/air-datepicker.js
 fbad0721dff50380b82d51cf0db1a255 *inst/packer/autonumeric.js
 15b41d4dc269c194a9a2ef2b28a21b60 *inst/packer/buttons-group.js
@@ -463,7 +464,7 @@ ef1f09e9b27802e257fefb07017669c0 *inst/packer/input-time.js
 451ea2eab06210c457619731e9da4360 *inst/packer/tree.js
 f5f8a471a21ee5d54c618a1b87e0bf4e *inst/packer/virtual-select.js
 ea710fb7bf9f4ea60bb65647589ad758 *inst/packer/virtual-select.js.LICENSE.txt
-7b1c829c314d092bbd608123c38fadd4 *man/WinBox.Rd
+45429f3e02efe4c38a12347e31892892 *man/WinBox.Rd
 3a15e88e0b780cd308b1b010c7c3254a *man/actionBttn.Rd
 6d513d5593e2e1f5d405084a458867d6 *man/actionGroupButtons.Rd
 b86a06d0d87024879127e98b51e5396f *man/addSpinner.Rd
@@ -518,7 +519,7 @@ d871b259682983448b6c20a27cf47889 *man/html-dependencies.Rd
 74681dd965572aa4cbe396270d22c9e4 *man/knobInput.Rd
 da5a71805f03412182c3993c27092153 *man/materialSwitch.Rd
 37ca63e92f872e9774c573514e073859 *man/multiInput.Rd
-dc90c638277144225779269c3ffec5df *man/noUiSliderInput.Rd
+4b0e70cef9e207341764357dbc6e1d02 *man/noUiSliderInput.Rd
 30ee3302e97b4247f641a4d0f8eddcf6 *man/numericInputIcon.Rd
 d06b0a8273ecdd4a8f08363816602c33 *man/numericRangeInput.Rd
 911e25c12d5c294c7ccd1689857bd414 *man/pickerGroup-module.Rd
@@ -585,7 +586,7 @@ f05d315aaa67390afe647232a65855e2 *man/useSweetAlert.Rd
 dd787c43cd537f069d1c5e5303d0e7d4 *man/virtualSelectInput.Rd
 a85f252ce9a269d03011ebeb2e0a42be *man/wNumbFormat.Rd
 6c71def8b81a7e8b9fbac0e080806087 *man/wbControls.Rd
-7283412b1f62cf916f6cc53644b276d7 *man/wbOptions.Rd
+24970159d311077ff6c95a5e7ba8b8fd *man/wbOptions.Rd
 7afa48b11c2daa97aa6f94cd9e05cff4 *tests/testthat.R
 58b239555d5ffb0fe2c1362d6d81413e *tests/testthat/helper.R
 e2eabcbf654e1fda689607daec687778 *tests/testthat/test-SweetAlert.R
