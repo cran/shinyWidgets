@@ -1,6 +1,6 @@
-b062f489a013317b9d05f3b4ce85b161 *DESCRIPTION
+3f82d8215e81650f8dca586371ac581c *DESCRIPTION
 d50f1c3b2f400a9b0b04ac01b00cd793 *NAMESPACE
-b9d8e2979b14f913ec7b3f2a593a158c *NEWS.md
+d6526af173141c35267e0887d27f6556 *NEWS.md
 21318fe42a7b7e7338bbb3a83b39da33 *R/WinBox.R
 4876cd1553157e33391ce9aa9d41b6d1 *R/actionBttn.R
 46b7eb55bcef9d9c03785e9da76addf1 *R/addSpinner.R
@@ -54,7 +54,7 @@ adf70a88ebdd1feca070e26ef9256d1c *R/tree-utils.R
 d9870895ca744a603b39256d5a9beef0 *R/vertical-tab.R
 cf37bd15a31405e2199132fc6ef66cb1 *R/virtual-select-utils.R
 6a0e3ca02c7ab5f77dbe7b4d714c0a95 *R/virtual-select.R
-28674af270fe2c905547a9f4dc2b88ae *README.md
+7fdbd2f8bc40e82d68f629a649d32731 *README.md
 33b16666f1ae9f6639346e9a94c76a45 *data/animations.rda
 410cdbcaf9fdc8c14f181068504cadcb *inst/assets/animate/LICENSE
 8774afdb7a269d3ca191f22b92411fc1 *inst/assets/animate/animate-config.json
@@ -451,7 +451,7 @@ d7a28bd2c8230eba3f20050cdfb1084c *inst/examples/virtual-select/choices-format/ap
 c6121f0e4fb4624fa447a9f1954ac5ef *inst/examples/virtual-select/prepare-choices/app.R
 d9e9420df5fdaa68a7268f30c0c17845 *inst/examples/virtual-select/update/app.R
 428eb36abc448c4db6c84d9a929eae6c *inst/packer/WinBox.js
-56795e9d9a3869fc9c4e91e661eb86d5 *inst/packer/air-datepicker.js
+a19e95f261d279152e9be90c33f1dee5 *inst/packer/air-datepicker.js
 fbad0721dff50380b82d51cf0db1a255 *inst/packer/autonumeric.js
 15b41d4dc269c194a9a2ef2b28a21b60 *inst/packer/buttons-group.js
 c3b17b77bcde14b256696e8c53ccf354 *inst/packer/colorpickr.js
@@ -462,8 +462,8 @@ ef1f09e9b27802e257fefb07017669c0 *inst/packer/input-time.js
 8923fa2e1924a819ea849b6de151782b *inst/packer/multi.js.LICENSE.txt
 5b2c3278ebba732d33f06173140f06fb *inst/packer/nouislider.js
 451ea2eab06210c457619731e9da4360 *inst/packer/tree.js
-f5f8a471a21ee5d54c618a1b87e0bf4e *inst/packer/virtual-select.js
-ea710fb7bf9f4ea60bb65647589ad758 *inst/packer/virtual-select.js.LICENSE.txt
+19b021a7f322b9beac24a2a3d5a144c2 *inst/packer/virtual-select.js
+658ebcde262deacf3a80c75435953bf3 *inst/packer/virtual-select.js.LICENSE.txt
 45429f3e02efe4c38a12347e31892892 *man/WinBox.Rd
 3a15e88e0b780cd308b1b010c7c3254a *man/actionBttn.Rd
 6d513d5593e2e1f5d405084a458867d6 *man/actionGroupButtons.Rd
