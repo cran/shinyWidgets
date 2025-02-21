@@ -15,14 +15,14 @@ attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
     if (widget == "picker") {
       dependencies <- list(
         dependencies,
-        # htmltools::htmlDependencies(shiny::fluidPage())[[1]],
+        # htmlDependencies(shiny::fluidPage())[[1]],
         html_dependency_picker()
       )
     } else if (widget == "awesome") {
       dependencies <- list(
         dependencies,
         html_dependency_awesome(),
-        htmltools::findDependencies(shiny::icon("rebel"))[[1]]
+        findDependencies(shiny::icon("rebel"))[[1]]
       )
     } else if (widget == "bsswitch") {
       dependencies <- c(
@@ -42,7 +42,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
     } else if (widget == "dropdown") {
       dependencies <- list(
         dependencies,
-        htmltools::htmlDependency(
+        htmlDependency(
           name = "dropdown-patch",
           version = packageVersion("shinyWidgets"),
           src = c(href = "shinyWidgets/dropdown"),
@@ -52,7 +52,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
     } else if (widget == "sw-dropdown") {
       dependencies <- list(
         dependencies,
-        htmltools::htmlDependency(
+        htmlDependency(
           name = "sw-dropdown",
           version = packageVersion("shinyWidgets"),
           src = c(href = "shinyWidgets/sw-dropdown"),
@@ -95,7 +95,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
   } else {
     dependencies <- c(list(dependencies), extra_deps)
   }
-  htmltools::attachDependencies(
+  attachDependencies(
     x = tag,
     value = dependencies,
     append = TRUE
@@ -104,7 +104,7 @@ attachShinyWidgetsDep <- function(tag, widget = NULL, extra_deps = NULL) {
 
 
 html_dependency_shinyWidgets <- function() {
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "shinyWidgets",
     version = packageVersion("shinyWidgets"),
     src = c(href = "shinyWidgets", file = "assets"),
@@ -487,29 +487,6 @@ html_dependency_stati <- function() {
 }
 
 
-html_dependency_pickr <- function() {
-  # htmlDependency(
-  #   name = "pickr",
-  #   version = "1.6.0",
-  #   src = list(href = "shinyWidgets/pickr-1.6.0", file = "assets/pickr-1.6.0"),
-  #   package = "shinyWidgets",
-  #   script = "js/pickr.min.js",
-  #   stylesheet = c(
-  #     "css/classic.min.css",
-  #     "css/monolith.min.css",
-  #     "css/nano.min.css"
-  #   ),
-  #   head = "<style>.pickr-color.disabled{cursor:not-allowed;}</style>",
-  #   all_files = FALSE
-  # )
-  htmlDependency(
-    name = "colorpickr",
-    version = "1.6.0",
-    src = c(file = "packer"),
-    package = "shinyWidgets",
-    script = "colorpickr.js"
-  )
-}
 
 
 
